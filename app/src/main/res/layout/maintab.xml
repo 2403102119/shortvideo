@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="64dp"
+    android:layout_height="@dimen/tab_bottom_h"
+    android:layout_weight="1"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/tab_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_tab_libao"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="5dp"
+            android:scaleType="centerInside" />
+        <TextView
+            android:gravity="center"
+            android:id="@+id/tvUnreadCount"
+            android:visibility="gone"
+            android:text="0"
+            android:textSize="10sp"
+            android:textColor="@color/white"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/shape_point1"
+            android:layout_width="15dp"
+            android:layout_height="15dp"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tab_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:text="首页"
+        android:duplicateParentState="true"
+        android:textColor="@drawable/txt_main_tab"
+        android:textSize="@dimen/txt_size_10" />
+
+</LinearLayout>

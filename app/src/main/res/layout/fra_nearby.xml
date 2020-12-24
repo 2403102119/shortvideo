@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+      <LinearLayout
+          android:layout_marginTop="25dp"
+          android:gravity="center"
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+          <org.angmarch.views.NiceSpinner
+              android:id="@+id/spinner"
+              android:gravity="center"
+              app:hideArrow="true"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"/>
+         <ImageView
+             android:src="@mipmap/jiantou"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"/>
+      </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="12dp">
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:imeOptions="actionSearch"
+            android:background="@drawable/bg_border_eeeeee_50dp"
+            android:drawableLeft="@mipmap/ic_search_top"
+            android:drawablePadding="5dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:hint="请输入商品名称"
+            android:textColor="#ff999999"
+            android:textSize="14sp" />
+        <LinearLayout
+            android:background="@drawable/bg_border_eeeeee_50dp"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="7dp"
+                android:paddingBottom="7dp"
+                android:text="开始时间"
+                android:textColor="#ff999999"
+                android:textSize="14sp" />
+            <TextView
+                android:text="-"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
+                android:drawablePadding="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="7dp"
+                android:paddingBottom="7dp"
+                android:text="结束时间"
+                android:textColor="#ff999999"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+    
+    <View
+        android:background="#FAFAFA"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"/>
+
+    <com.flyco.tablayout.SlidingTabLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center_vertical"
+        app:tl_indicator_height="2dp"
+        app:tl_indicator_width="35dp"
+        app:tl_indicator_corner_radius="1dp"
+        app:tl_textSelectColor="#333333"
+        app:tl_textBold="SELECT"
+        app:tl_textUnselectColor="#333333"
+        app:tl_textsize="@dimen/txt_size_15"
+        app:tl_indicator_color="@color/main_color">
+    </com.flyco.tablayout.SlidingTabLayout>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </androidx.viewpager.widget.ViewPager>
+
+
+
+
+</LinearLayout>

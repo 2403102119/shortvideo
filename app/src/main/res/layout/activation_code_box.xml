@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/ll_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"></FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_code1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_border_efefef_5dp"
+            android:gravity="center"
+            android:inputType="numberPassword"
+            android:textColor="#ff0f0f0f"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"></FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_code2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_border_efefef_5dp"
+            android:gravity="center"
+            android:inputType="numberPassword"
+            android:textColor="#ff0f0f0f"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"></FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_code3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_border_efefef_5dp"
+            android:gravity="center"
+            android:inputType="numberPassword"
+            android:textColor="#ff0f0f0f"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"></FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_code4"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:background="@drawable/bg_border_efefef_5dp"
+            android:gravity="center"
+            android:inputType="numberPassword"
+            android:textColor="#ff0f0f0f"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"></FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_code5"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_border_efefef_5dp"
+            android:gravity="center"
+            android:inputType="numberPassword"
+            android:textColor="#ff0f0f0f"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"></FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_code6"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_border_efefef_5dp"
+            android:gravity="center"
+            android:inputType="numberPassword"
+            android:textColor="#ff0f0f0f"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"></FrameLayout>
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ll_code"
+        android:layout_alignBottom="@+id/ll_code"
+        android:background="@android:color/transparent"
+        android:cursorVisible="false"
+        android:inputType="number"
+        android:textColor="@android:color/transparent" />
+</RelativeLayout>

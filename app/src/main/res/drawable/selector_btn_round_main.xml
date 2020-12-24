@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/color_women">    <!--波纹颜色-->
+    <item>
+        <selector>
+            <!-- 未点击背景图-->
+            <item
+                android:drawable="@drawable/btn_main_rect_50dp"
+                android:state_pressed="false" />
+        </selector>
+    </item>
+</ripple>

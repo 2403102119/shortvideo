@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <!--圆形头像圆环颜色、宽度-->
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension" />
+        <attr name="civ_border_color" format="color" />
+        <attr name="civ_border_overlay" format="boolean" />
+        <attr name="civ_fill_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="CycleProgress">
+        <attr name="circleBgStrokeWidth" format="dimension" />  <!--圈的宽度 -->
+        <attr name="progressStrokeWidth" format="dimension" />  <!--进度条的宽度 -->
+
+        <attr name="circleBgColor" format="color" />    <!--圈的颜色 -->
+        <attr name="progressColor" format="color" />    <!--进度条的颜色 -->
+
+        <attr name="circleAnimationDuration" format="integer" />  <!--进度条时长 -->
+
+        <attr name="isDrawCenterProgressText" format="boolean" /> <!--是否显示圈内文字 -->
+
+        <attr name="centerProgressTextColor" format="color"/>  <!--圈内文字的颜色 -->
+        <attr name="centerProgressTextSize" format="dimension"/> <!--圈内文字的大小 -->
+    </declare-styleable>
+
+
+    <declare-styleable name="SwitchView">
+        <attr name="hasShadow" format="boolean" />
+        <attr name="primaryColor" format="color" />
+        <attr name="primaryColorDark" format="color" />
+        <attr name="isOpened" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="WebViewWithProgress">
+        <attr name="progressStyle" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="circle" value="1" />
+        </attr>
+        <attr name="barHeight" format="dimension" />
+    </declare-styleable>
+
+
+    <!--二维码扫描
+    corner_color 边角颜色，
+        scanner_color 扫描线颜色
+        possible_result_color 扫描点颜色
+        frame_color 扫描框边线颜色
+        mask_color 模糊区域颜色
+        label_text  框上方提示
+    -->
+    <declare-styleable name="ViewfinderView">
+        <attr name="corner_color" format="color" />
+        <attr name="laser_color" format="color" />
+        <attr name="frame_color" format="color" />
+        <attr name="mask_color" format="color" />
+        <attr name="result_point_color" format="color" />
+        <attr name="result_color" format="color" />
+        <attr name="label_text_color" format="color" />
+        <attr name="label_text" format="string" />
+        <attr name="label_text_size" format="float" />
+    </declare-styleable>
+
+
+    <declare-styleable name="PileLayout">
+        <attr name="PileLayout_vertivalSpace" format="dimension" />
+        <attr name="PileLayout_pileWidth" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="FoldTextView">
+        <attr name="showMaxLine" format="integer" />
+        <attr name="tipGravity" format="integer" />
+        <attr name="tipColor" format="reference|color" />
+        <attr name="tipClickable" format="boolean" />
+        <attr name="foldText" format="string" />
+        <attr name="expandText" format="string" />
+        <attr name="showTipAfterExpand" format="boolean" />
+        <attr name="isSetParentClick" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="PayPsdInputView">
+
+        <attr name="maxCount" format="integer" />
+        <attr name="circleColor" format="color" />
+        <attr name="bottomLineColor" format="color" />
+        <attr name="radius" format="dimension" />
+        <attr name="divideLineWidth" format="dimension" />
+        <attr name="divideLineColor" format="color" />
+        <attr name="rectAngle" format="dimension" />
+        <attr name="focusedColor" format="color" />
+        <attr name="psdType" format="enum">
+            <enum name="weChat" value="0" />
+            <enum name="bottomLine" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="RadarWaveView">
+
+        <attr name="waveColor" format="color" />
+
+        <attr name="waveAmplitude" format="dimension" />
+
+        <attr name="waveSpeed" format="float" />
+
+        <attr name="waveStartPeriod" format="float" />
+        <attr name="waveStart" format="boolean" />
+
+        <attr name="waveFillTop" format="boolean" />
+        <attr name="waveFillBottom" format="boolean" />
+
+        <attr name="waveFillType" format="enum">
+            <enum name="top" value="0" />
+            <enum name="bottom" value="1" />
+        </attr>
+
+        <attr name="waveType" format="enum">
+            <enum name="sin" value="0" />
+            <enum name="cos" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="TwoWayRattingBar">
+        <attr name="color_line_normal" format="color" />
+        <attr name="color_line_select" format="color" />
+        <attr name="stroke_width_normal" format="dimension" />
+        <attr name="stroke_width_select" format="dimension" />
+        <attr name="progress_icon" format="reference" />
+        <attr name="text_size" format="dimension" />
+        <attr name="text_color" format="color" />
+        <attr name="min" format="integer" />
+        <attr name="max" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="Banner">
+
+        <attr name="delay_time" format="integer"/>
+
+        <attr name="scroll_time" format="integer"/>
+
+        <attr name="is_auto_play" format="boolean"/>
+
+        <attr name="is_loop" format="boolean"/>
+
+        <attr name="title_background" format="color|reference"/>
+
+        <attr name="title_textcolor" format="color"/>
+
+        <attr name="title_textsize" format="dimension"/>
+
+        <attr name="title_height" format="dimension"/>
+
+        <attr name="indicator_width" format="dimension"/>
+
+        <attr name="indicator_height" format="dimension"/>
+
+        <attr name="indicator_margin" format="dimension"/>
+
+        <attr name="indicator_drawable_selected" format="reference"/>
+
+        <attr name="indicator_drawable_unselected" format="reference"/>
+
+        <attr name="banner_layout" format="reference"/>
+
+        <attr name="banner_default_image" format="reference"/>
+
+
+        -<attr name="image_scale_type" format="enum">
+
+        <enum name="center" value="0"/>
+
+        <enum name="center_crop" value="1"/>
+
+        <enum name="center_inside" value="2"/>
+
+        <enum name="fit_center" value="3"/>
+
+        <enum name="fit_end" value="4"/>
+
+        <enum name="fit_start" value="5"/>
+
+        <enum name="fit_xy" value="6"/>
+
+        <enum name="matrix" value="7"/>
+
+    </attr>
+
+        <!--<attr name="indicator_animator" format="reference" />-->
+
+
+        <!--<attr name="indicator_animator_reverse" format="reference" />-->
+
+
+    </declare-styleable>
+</resources>

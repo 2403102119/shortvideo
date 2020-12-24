@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF2B56</color>
+    <color name="colorPrimaryDark">#FF2B56</color>
+    <color name="colorAccent">#FF2B56</color>
+    <color name="main_color">#0CC460</color>
+    <color name="white">#FFFFFF</color>
+    <color name="color_women">#FF7592</color>
+    <color name="colorBlack">#000000</color>
+    <color name="txt_33">#333333</color>
+    <color name="txt_66">#666666</color>
+    <color name="txt_99">#999999</color>
+
+    <color name="txt_lv1">#939393</color>
+    <color name="txt_lv3">#64676C</color>
+    <color name="txt_lv5">#403A35</color>
+    <color name="txt_lv6">#333333</color>
+    <color name="txt_lv7">#1A1A1A</color>
+    <color name="txt_lv8">#000000</color>
+    <color name="line">#EEEEEE</color>
+    <color name="et_line">#F3F3F3</color>
+    <color name="space">#F6F6F6</color>
+
+
+</resources>

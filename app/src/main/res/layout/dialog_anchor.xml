@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="60dp"
+          android:background="@drawable/bg_rect_white_15dp"
+          android:orientation="vertical">
+
+          <TextView
+              android:id="@+id/tvName"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:layout_marginTop="80dp"
+              android:text="标题内容"
+              android:textColor="#ff333333"
+              android:textSize="19sp"
+              android:textStyle="bold" />
+
+          <TextView
+              android:id="@+id/tvLabel"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="30dp"
+              android:layout_marginTop="20dp"
+              android:layout_marginRight="30dp"
+              android:gravity="center"
+              android:text="发现新版本，请前往AppStore更新"
+              android:textColor="#FF333333"
+              android:textSize="16sp" />
+          <TextView
+              android:id="@+id/tvBottom"
+              android:layout_width="match_parent"
+              android:layout_marginTop="30dp"
+              android:layout_marginBottom="30dp"
+              android:layout_marginLeft="50dp"
+              android:layout_marginRight="50dp"
+              android:layout_height="wrap_content"
+              style="@style/button_stytle"
+              android:text="进入直播间"
+              android:textColor="#ffffffff"
+              android:textSize="18sp"
+              />
+
+      </LinearLayout>
+      <de.hdodenhof.circleimageview.CircleImageView
+          android:id="@+id/ivAnchorIcon"
+          android:layout_width="120dp"
+          android:layout_height="120dp"
+          app:civ_border_color="@color/white"
+          app:civ_border_width="1dp"
+          android:src="@mipmap/ic_head_default"
+          android:layout_gravity="center_horizontal"/>
+  </FrameLayout>
+
+    <ImageView
+        android:id="@+id/ivClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:padding="30dp"
+        android:src="@mipmap/ic_close_white"/>
+
+
+</LinearLayout>

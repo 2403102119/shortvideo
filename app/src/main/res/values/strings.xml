@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">花园苗木</string>
+    <string name="httperror">网络请求失败...</string>
+    <string name="press_again_to_leave">再按一次退出程序</string>
+
+    <string name="home">首页</string>
+    <string name="shop">附近</string>
+    <string name="car">消息</string>
+    <string name="mine">我的</string>
+    <string name="add"></string>
+
+    <string name="save">保存</string>
+
+</resources>
