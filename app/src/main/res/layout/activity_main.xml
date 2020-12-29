@@ -15,8 +15,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
              />
-
-
         <androidx.fragment.app.FragmentTabHost
             android:id="@+id/tabhost"
             android:layout_width="match_parent"

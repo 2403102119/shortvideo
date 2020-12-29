@@ -1,114 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
-      <LinearLayout
-          android:layout_marginTop="25dp"
-          android:gravity="center"
-          android:orientation="horizontal"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-          <org.angmarch.views.NiceSpinner
-              android:id="@+id/spinner"
-              android:gravity="center"
-              app:hideArrow="true"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"/>
-         <ImageView
-             android:src="@mipmap/jiantou"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"/>
-      </LinearLayout>
+    android:orientation="vertical"
+    android:background="@color/white">
+
     <LinearLayout
+        android:orientation="vertical"
+        android:background="@color/main_color"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="12dp">
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:singleLine="true"
-            android:imeOptions="actionSearch"
-            android:background="@drawable/bg_border_eeeeee_50dp"
-            android:drawableLeft="@mipmap/ic_search_top"
-            android:drawablePadding="5dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="7dp"
-            android:paddingBottom="7dp"
-            android:hint="请输入商品名称"
-            android:textColor="#ff999999"
-            android:textSize="14sp" />
+        android:layout_height="wrap_content">
         <LinearLayout
-            android:background="@drawable/bg_border_eeeeee_50dp"
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawablePadding="5dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="7dp"
-                android:paddingBottom="7dp"
-                android:text="开始时间"
-                android:textColor="#ff999999"
-                android:textSize="14sp" />
-            <TextView
-                android:text="-"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
-                android:layout_weight="1"
-                android:drawablePadding="5dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="7dp"
-                android:paddingBottom="7dp"
-                android:text="结束时间"
-                android:textColor="#ff999999"
-                android:textSize="14sp" />
+            android:gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="23dp"
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+           <TextView
+               android:text="视频列表"
+               android:textColor="@color/white"
+
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"/>
         </LinearLayout>
 
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.flyco.tablayout.SlidingTabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="45dp"
+                app:tl_indicator_height="2dp"
+                app:tl_indicator_width="35dp"
+                app:tl_tab_space_equal="true"
+                app:tl_divider_width="0.5dp"
+                app:tl_divider_color="@color/white"
+                app:tl_indicator_corner_radius="1dp"
+                app:tl_textSelectColor="#F4FAFF"
+                app:tl_textBold="SELECT"
+                app:tl_textUnselectColor="#F4FAFF"
+                app:tl_textsize="@dimen/txt_size_13"
+                app:tl_indicator_color="@color/white">
+            </com.flyco.tablayout.SlidingTabLayout>
+            <ImageView
+                android:id="@+id/imClassify"
+                android:src="@mipmap/caidan"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
+        <LinearLayout
+            android:background="#F6F6F6"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:background="@drawable/bg_rect_white_15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="33dp">
+                <ImageView
+                    android:src="@mipmap/im_sousuo"
+                    android:layout_width="15dp"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:hint="请输入关键词进行搜索"
+                    android:gravity="center_vertical"
+                    android:textSize="13sp"
+                    android:layout_marginLeft="8dp"
+                    android:textColorHint="#B4B4B7"
+                    android:background="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
-    
-    <View
-        android:background="#FAFAFA"
-        android:layout_width="match_parent"
-        android:layout_height="8dp"/>
-
-    <com.flyco.tablayout.SlidingTabLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_gravity="center_vertical"
-        app:tl_indicator_height="2dp"
-        app:tl_indicator_width="35dp"
-        app:tl_indicator_corner_radius="1dp"
-        app:tl_textSelectColor="#333333"
-        app:tl_textBold="SELECT"
-        app:tl_textUnselectColor="#333333"
-        app:tl_textsize="@dimen/txt_size_15"
-        app:tl_indicator_color="@color/main_color">
-    </com.flyco.tablayout.SlidingTabLayout>
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </androidx.viewpager.widget.ViewPager>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </androidx.viewpager.widget.ViewPager>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/llClassify"
+            android:background="@color/yinying"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:paddingBottom="15dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/imGuanbi"
+                    android:layout_marginRight="11dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_gravity="right"
+                    android:src="@mipmap/guanbi"
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"/>
+                <com.zhy.view.flowlayout.TagFlowLayout
+                    android:id="@+id/taglay"
+                    app:max_select="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
 
-
+        </LinearLayout>
+    </RelativeLayout>
 
 
 </LinearLayout>

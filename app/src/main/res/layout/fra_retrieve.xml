@@ -42,53 +42,53 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:background="@color/et_line" />
-        <LinearLayout
-            android:layout_marginTop="15dp"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:text="验证码"
-                android:textSize="14sp"
-                android:textColor="#111111"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+       <LinearLayout
+           android:layout_marginTop="15dp"
+           android:orientation="vertical"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+           <TextView
+               android:text="验证码"
+               android:textSize="14sp"
+               android:textColor="#111111"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"/>
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:gravity="center_vertical"
+               android:orientation="horizontal">
 
 
-                <EditText
-                    android:id="@+id/etCode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="47dp"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:hint="请输入验证码"
-                    android:maxLength="12"
-                    android:inputType="phone"
-                    android:textColorHint="#FF8B8C91"
-                    android:textColor="#FF8B8C91"
-                    android:singleLine="true"
-                    android:textSize="13sp" />
+               <EditText
+                   android:id="@+id/etCode"
+                   android:layout_width="wrap_content"
+                   android:layout_height="47dp"
+                   android:layout_weight="1"
+                   android:background="@null"
+                   android:hint="请输入验证码"
+                   android:maxLength="12"
+                   android:inputType="phone"
+                   android:textColorHint="#FF8B8C91"
+                   android:textColor="#FF8B8C91"
+                   android:singleLine="true"
+                   android:textSize="13sp" />
 
-                <TextView
-                    android:id="@+id/tvGetCode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/chongzhi"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="7dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="7dp"
-                    android:text="获取验证码"
-                    android:textStyle="normal"
-                    android:textSize="12sp" />
+               <TextView
+                   android:id="@+id/tvGetCode"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:background="@drawable/chongzhi"
+                   android:paddingLeft="10dp"
+                   android:paddingTop="7dp"
+                   android:paddingRight="10dp"
+                   android:paddingBottom="7dp"
+                   android:text="获取验证码"
+                   android:textStyle="normal"
+                   android:textSize="12sp" />
 
-            </LinearLayout>
-        </LinearLayout>
+           </LinearLayout>
+       </LinearLayout>
 
         <View
             android:layout_width="match_parent"
@@ -131,40 +131,18 @@
 
         </LinearLayout>
 
+
+
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:background="@color/et_line" />
 
-        <LinearLayout
-            android:gravity="center_vertical"
-            android:layout_marginTop="35dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:src="@mipmap/weixuan"
-                android:layout_width="12dp"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:text="我已阅读并同意"
-                android:layout_marginLeft="8dp"
-                android:textSize="12sp"
-                android:textColor="@color/txt_66"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:text="《用户协议》"
-                android:textSize="12sp"
-                android:textColor="@color/main_color"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
 
         <TextView
             android:id="@+id/tvConfirm"
-            android:background="@drawable/zhuce"
+            android:background="@drawable/chongzhi"
             android:layout_width="match_parent"
             android:layout_height="39dp"
             android:textColor="@color/colorBlack"
@@ -173,7 +151,7 @@
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
             android:gravity="center"
-            android:text="注册" />
+            android:text="重置" />
 
 
     </LinearLayout>

@@ -106,10 +106,10 @@ public class MainActivity extends BaseFragAct
             final TabDesc td = tabs.get(i);
             final View vTab = makeTabView();
             TextView tab = ((TextView) vTab.findViewById(R.id.tab_label));
-            if (i==1)
-                tvUnreadCount = ((TextView) vTab.findViewById(R.id.tvUnreadCount));
-            if (i==2)
-                tab.setVisibility(View.GONE);
+//            if (i==1)
+//                tvUnreadCount = ((TextView) vTab.findViewById(R.id.tvUnreadCount));
+//            if (i==2)
+//                tab.setVisibility(View.GONE);
 
             tab.setText(td.name);
             refreshTab(vTab, td, false);
@@ -135,16 +135,16 @@ public class MainActivity extends BaseFragAct
     }
     private final List<TabDesc> tabs = new ArrayList<TabDesc>() {
         {
-            add(TabDesc.make("home", R.string.home,//首页
-                    R.mipmap.dianpugaunli, R.mipmap.dianpuguanli_se, HomeFra.class));
+            add(TabDesc.make("home", R.string.home,//赛事
+                    R.drawable.saishi, R.drawable.saishi_xuan, HomeFra.class));
+            add(TabDesc.make("shop", R.string.shop,//短视频
+                    R.drawable.duanshipin, R.drawable.duanshipin_se, NearbyFra.class));
+            add(TabDesc.make("add", R.string.add,//经典
+                    R.drawable.jingdian, R.drawable.jingdian_se, IssueFra.class));
             add(TabDesc.make("tg", R.string.car,//消息
-                    R.mipmap.xiaoxi, R.mipmap.xiaoxi_se, MessageListFra.class));
-            add(TabDesc.make("add", R.string.add,//发布
-                    R.mipmap.xiaoxi, R.mipmap.xiaoxi_se, IssueFra.class));
-            add(TabDesc.make("shop", R.string.shop,//附近
-                    R.mipmap.dingdangaunli, R.mipmap.dingdanguanli, NearbyFra.class));
+                    R.drawable.xiaoxi, R.drawable.xiaoxi_xuan, MessageListFra.class));
             add(TabDesc.make("mine", R.string.mine,//我的
-                    R.mipmap.dianpuzhongxin, R.mipmap.dianpuzhongxin_se, HomeMineFra.class));
+                    R.drawable.wode, R.drawable.wode_se, HomeMineFra.class));
         }
     };
 

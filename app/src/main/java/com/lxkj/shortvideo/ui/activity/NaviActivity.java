@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lxkj.shortvideo.R;
@@ -23,12 +24,15 @@ import com.lxkj.shortvideo.utils.TypeSafer;
 
 public class NaviActivity extends BaseFragAct {
 
+
     public static final String EXT_FRAGMENT = "fragment_name";
 
     protected TitleFragment fragment;
 
     protected boolean isDestroyed;
     public TextView titleTv;
+    public ImageView navi_left;
+    public RelativeLayout relBackGroundView;
     public TextView right;
 
     public interface NaviRigthImageListener {
@@ -119,7 +123,6 @@ public class NaviActivity extends BaseFragAct {
         initTitle();
         initLeft();
         initRight();
-
     }
 
     public ImageView arrowLeft;
@@ -152,6 +155,15 @@ public class NaviActivity extends BaseFragAct {
         }
     }
 
+    public void ConversionColor(){
+        findViewById(R.id.act_navi).setBackgroundColor(getResources().getColor(R.color.main_color));
+        ImageView navi_left=  findViewById(R.id.navi_left);
+        TextView navi_title=  findViewById(R.id.navi_title);
+        navi_left.setImageResource(R.mipmap.fanhui_bai);
+        navi_title.setTextColor(getResources().getColor(R.color.white));
+//        ImmersionBar.with(this).navigationBarColor(R.color.main_color).statusBarDarkFont(true).init();
+    }
+
     private boolean isHindLeft = false;
 
     public void hindLeft() {
@@ -163,6 +175,8 @@ public class NaviActivity extends BaseFragAct {
 
     public void initTitle() {
         titleTv = (TextView) findViewById(R.id.navi_title);
+        navi_left = (ImageView) findViewById(R.id.navi_left);
+        relBackGroundView = (RelativeLayout) findViewById(R.id.relBackGroundView);
         final int title = fragment.getTitleId();
         final String titleName = fragment.getTitleName();
         if (title > 0) {
@@ -233,6 +247,7 @@ public class NaviActivity extends BaseFragAct {
 
     @Override
     protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+        super.onActivityResult(arg0, arg1, arg2);
         fragment.onActivityResult(arg0, arg1, arg2);
 //        UMShareAPI.get(this).onActivityResult(arg0, arg1, arg2);
     }
@@ -281,3 +296,4 @@ public class NaviActivity extends BaseFragAct {
     }
 
 }
+

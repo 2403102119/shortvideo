@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gyf.immersionbar.ImmersionBar;
 import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.GlobalBeans;
 import com.lxkj.shortvideo.biz.EventCenter;
