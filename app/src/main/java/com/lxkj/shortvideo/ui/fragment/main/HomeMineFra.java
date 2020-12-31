@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.R;
@@ -15,21 +16,22 @@ import com.zhy.m.permission.MPermissions;
 import com.zhy.m.permission.PermissionDenied;
 import com.zhy.m.permission.PermissionGrant;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
-
- *Time:2020/10/28
-
- *Author:李迪迦
-
- *Description:我的
-
+ * Time:2020/10/28
+ * <p>
+ * Author:李迪迦
+ * <p>
+ * Description:我的
  */
 public class HomeMineFra extends CachableFrg implements View.OnClickListener {
 
     Unbinder unbinder;
+    @BindView(R.id.tvHomepage)
+    TextView tvHomepage;
 
 
     @Override
@@ -41,9 +43,7 @@ public class HomeMineFra extends CachableFrg implements View.OnClickListener {
     protected void initView() {
         eventCenter.registEvent(this, EventCenter.EventType.EVT_EDITINFO);
 
-
-
-//        info();
+        tvHomepage.setOnClickListener(this);
     }
 
     @Override
@@ -54,12 +54,11 @@ public class HomeMineFra extends CachableFrg implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.tvHomepage://个人主页
 
+                break;
         }
     }
-
-
-
 
 
     @Override
@@ -106,7 +105,6 @@ public class HomeMineFra extends CachableFrg implements View.OnClickListener {
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
-
 
 
     @Override

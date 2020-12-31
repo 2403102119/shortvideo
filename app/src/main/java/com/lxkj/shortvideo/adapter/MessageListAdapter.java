@@ -41,57 +41,48 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
     @Override
     public void onBindViewHolder(MessageListAdapter.MyHolder holder, final int position) {
-        holder.tvTitle.setText(list.get(position).nick);
-        holder.tvCreateDate.setText(list.get(position).chatDate);
-        holder.tvContent.setText(list.get(position).content);
-        holder.tvUnreadCount.setText(list.get(position).unreadCount);
-        if (StringUtil.isEmpty(list.get(position).unreadCount)||list.get(position).unreadCount.equals("0")){
-            holder.tvUnreadCount.setVisibility(View.GONE);
-        }else {
-            holder.tvUnreadCount.setVisibility(View.VISIBLE);
-        }
-        Glide.with(context).applyDefaultRequestOptions(new RequestOptions()
-                .placeholder(R.mipmap.logo)
-                .error(R.mipmap.logo))
-                .load(list.get(position).avatar)
-                .into(holder.imAvatar);
-        holder.ll_item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemClickListener.OnItemClickListener(position);
-            }
-        });
-        holder.btnDel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemClickListener.OnDelateClickListener(position);
-            }
-        });
+//        holder.tvTitle.setText(list.get(position).nick);
+//        holder.tvCreateDate.setText(list.get(position).chatDate);
+//        holder.tvContent.setText(list.get(position).content);
+//        holder.tvUnreadCount.setText(list.get(position).unreadCount);
+//        if (StringUtil.isEmpty(list.get(position).unreadCount)||list.get(position).unreadCount.equals("0")){
+//            holder.tvUnreadCount.setVisibility(View.GONE);
+//        }else {
+//            holder.tvUnreadCount.setVisibility(View.VISIBLE);
+//        }
+//        Glide.with(context).applyDefaultRequestOptions(new RequestOptions()
+//                .placeholder(R.mipmap.logo)
+//                .error(R.mipmap.logo))
+//                .load(list.get(position).avatar)
+//                .into(holder.imAvatar);
+//        holder.ll_item.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onItemClickListener.OnItemClickListener(position);
+//            }
+//        });
+//        holder.btnDel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onItemClickListener.OnDelateClickListener(position);
+//            }
+//        });
     }
 
     @Override
     public int getItemCount() {
-        if (list == null) {
-            return 0;
-        } else {
-            return list.size();
-        }
+//        if (list == null) {
+//            return 0;
+//        } else {
+//            return list.size();
+//        }
+        return 8;
     }
 
 
     public class MyHolder extends RecyclerView.ViewHolder {
-        private TextView tvTitle,tvCreateDate,btnDel,tvContent,tvUnreadCount;
-        private LinearLayout ll_item;
-        private RoundedImageView imAvatar;
         public MyHolder(View itemView) {
             super(itemView);
-            tvTitle = itemView.findViewById(R.id.tvTitle);
-            tvCreateDate = itemView.findViewById(R.id.tvCreateDate);
-            imAvatar = itemView.findViewById(R.id.imAvatar);
-            tvUnreadCount = itemView.findViewById(R.id.tvUnreadCount);
-            ll_item = itemView.findViewById(R.id.ll_item);
-            btnDel = itemView.findViewById(R.id.btnDel);
-            tvContent = itemView.findViewById(R.id.tvContent);
         }
     }
     private MessageListAdapter.OnItemClickListener onItemClickListener;

@@ -11,11 +11,13 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.adapter.MFragmentStatePagerAdapter;
 import com.lxkj.shortvideo.ui.fragment.CachableFrg;
-import com.lxkj.shortvideo.ui.fragment.competition.CompetitionFra;
+import com.lxkj.shortvideo.ui.fragment.classical.ClassicalFra;
 import com.lxkj.shortvideo.ui.fragment.shortvideo.ShortVideoFra;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +27,13 @@ import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 
 /**
- * Time:2020/8/24
+ * Time:2020/10/28
  * <p>
  * Author:李迪迦
  * <p>
- * Description:附近
+ * Interface:经典
  */
-public class NearbyFra extends CachableFrg implements View.OnClickListener {
+public class HomeClassicalFra extends CachableFrg implements View.OnClickListener {
 
 
     @BindView(R.id.tabLayout)
@@ -49,9 +51,10 @@ public class NearbyFra extends CachableFrg implements View.OnClickListener {
     TagAdapter<String> adapter;
     List<String> hot_list = new ArrayList<>();
     private List<Fragment> fragments = new ArrayList<>();
+
     @Override
     protected int rootLayout() {
-        return R.layout.fra_nearby;
+        return R.layout.fra_issue;
     }
 
     @Override
@@ -82,22 +85,22 @@ public class NearbyFra extends CachableFrg implements View.OnClickListener {
         titles[1] = "舞蹈";
         titles[2] = "音乐";
         titles[3] = "分类";
-        ShortVideoFra allOrderListFra = new ShortVideoFra();
+        ClassicalFra allOrderListFra = new ClassicalFra();
         Bundle all = new Bundle();
         all.putString("state", "0");
         allOrderListFra.setArguments(all);
 
-        ShortVideoFra dfkOrderListFra = new ShortVideoFra();
+        ClassicalFra dfkOrderListFra = new ClassicalFra();
         Bundle dfk = new Bundle();
         dfk.putString("state", "1");
         dfkOrderListFra.setArguments(dfk);
 
-        ShortVideoFra dfhOrderListFra = new ShortVideoFra();
+        ClassicalFra dfhOrderListFra = new ClassicalFra();
         Bundle dfh = new Bundle();
         dfh.putString("state", "2");
         dfhOrderListFra.setArguments(dfh);
 
-        ShortVideoFra dshOrderListFra = new ShortVideoFra();
+        ClassicalFra dshOrderListFra = new ClassicalFra();
         Bundle dsh = new Bundle();
         dsh.putString("state", "3");
         dshOrderListFra.setArguments(dsh);
@@ -109,13 +112,12 @@ public class NearbyFra extends CachableFrg implements View.OnClickListener {
 
         viewPager.setAdapter(new MFragmentStatePagerAdapter(getChildFragmentManager(), fragments, titles));
         tabLayout.setViewPager(viewPager);
-
     }
 
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.imClassify://更多分类
                 llClassify.setVisibility(View.VISIBLE);
                 break;
@@ -125,4 +127,17 @@ public class NearbyFra extends CachableFrg implements View.OnClickListener {
         }
     }
 
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
 }
+

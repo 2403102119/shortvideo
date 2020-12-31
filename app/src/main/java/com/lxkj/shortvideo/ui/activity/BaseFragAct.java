@@ -30,9 +30,10 @@ public class BaseFragAct extends AppCompatActivity {
         //在BaseActivity里初始化
         mImmersionBar = ImmersionBar.with(this);
         mImmersionBar.transparentStatusBar();
-        mImmersionBar.statusBarDarkFont(false);
-        mImmersionBar.statusBarColor(R.color.main_color);
-        mImmersionBar.autoDarkModeEnable(true);
+        mImmersionBar.statusBarDarkFont(true);
+//        mImmersionBar.statusBarDarkFont(false);
+//        mImmersionBar.statusBarColor(R.color.main_color);
+//        mImmersionBar.autoDarkModeEnable(true);
         mImmersionBar.init();
 
     }

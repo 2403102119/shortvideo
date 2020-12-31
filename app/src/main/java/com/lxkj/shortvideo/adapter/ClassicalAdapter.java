@@ -13,28 +13,28 @@ import java.util.List;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
- * Time:2020/12/29
+ * Time:2020/12/30
  * <p>
  * Author:李迪迦
  * <p>
  * Interface:
  */
-public class ShortVideoAdapter extends RecyclerView.Adapter<ShortVideoAdapter.MyHolder> {
+public class ClassicalAdapter extends RecyclerView.Adapter<ClassicalAdapter.MyHolder> {
     private Context context;
     private List<DataListBean> list;
-    public ShortVideoAdapter(Context context, List<DataListBean> list) {
+    public ClassicalAdapter(Context context, List<DataListBean> list) {
         this.context = context;
         this.list = list;
 
     }
     @Override
-    public ShortVideoAdapter.MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_shortvideo, parent, false);
-        return new ShortVideoAdapter.MyHolder(view);
+    public ClassicalAdapter.MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_classical, parent, false);
+        return new ClassicalAdapter.MyHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ShortVideoAdapter.MyHolder holder, final int position) {
+    public void onBindViewHolder(ClassicalAdapter.MyHolder holder, final int position) {
 
     }
 
@@ -55,9 +55,9 @@ public class ShortVideoAdapter extends RecyclerView.Adapter<ShortVideoAdapter.My
             super(itemView);
         }
     }
-    private ShortVideoAdapter.OnItemClickListener onItemClickListener;
+    private ClassicalAdapter.OnItemClickListener onItemClickListener;
 
-    public void setOnItemClickListener(ShortVideoAdapter.OnItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(ClassicalAdapter.OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 

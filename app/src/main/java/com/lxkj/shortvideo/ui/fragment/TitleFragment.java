@@ -55,7 +55,7 @@ public abstract class TitleFragment extends ImmersionFragment implements EventCe
 
     @Override
     public void initImmersionBar() {
-        ImmersionBar.with(this).transparentStatusBar().statusBarDarkFont(false).statusBarColor(R.color.white).autoDarkModeEnable(true).init();
+        ImmersionBar.with(this).transparentStatusBar().statusBarDarkFont(true).init();
     }
 
     @Override

@@ -22,11 +22,11 @@ import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.bean.SendmessageBean;
 import com.lxkj.shortvideo.biz.EventCenter;
 import com.lxkj.shortvideo.socket.WsManager;
+import com.lxkj.shortvideo.ui.fragment.main.HomeClassicalFra;
 import com.lxkj.shortvideo.ui.fragment.main.HomeFra;
 import com.lxkj.shortvideo.ui.fragment.main.HomeMineFra;
-import com.lxkj.shortvideo.ui.fragment.main.IssueFra;
 import com.lxkj.shortvideo.ui.fragment.main.MessageListFra;
-import com.lxkj.shortvideo.ui.fragment.main.NearbyFra;
+import com.lxkj.shortvideo.ui.fragment.main.HomeShortVideoFra;
 import com.lxkj.shortvideo.utils.SharePrefUtil;
 import com.lxkj.shortvideo.utils.ToastUtil;
 
@@ -138,9 +138,9 @@ public class MainActivity extends BaseFragAct
             add(TabDesc.make("home", R.string.home,//赛事
                     R.drawable.saishi, R.drawable.saishi_xuan, HomeFra.class));
             add(TabDesc.make("shop", R.string.shop,//短视频
-                    R.drawable.duanshipin, R.drawable.duanshipin_se, NearbyFra.class));
+                    R.drawable.duanshipin, R.drawable.duanshipin_se, HomeShortVideoFra.class));
             add(TabDesc.make("add", R.string.add,//经典
-                    R.drawable.jingdian, R.drawable.jingdian_se, IssueFra.class));
+                    R.drawable.jingdian, R.drawable.jingdian_se, HomeClassicalFra.class));
             add(TabDesc.make("tg", R.string.car,//消息
                     R.drawable.xiaoxi, R.drawable.xiaoxi_xuan, MessageListFra.class));
             add(TabDesc.make("mine", R.string.mine,//我的
