@@ -68,6 +68,7 @@
            android:layout_width="match_parent"
            android:layout_height="75dp">
            <LinearLayout
+               android:id="@+id/llAttention"
                android:gravity="center"
                android:orientation="vertical"
                android:layout_width="0dp"
@@ -91,6 +92,7 @@
                android:layout_width="0.5dp"
                android:layout_height="13dp"/>
            <LinearLayout
+               android:id="@+id/llFans"
                android:gravity="center"
                android:orientation="vertical"
                android:layout_width="0dp"
@@ -110,11 +112,13 @@
                    android:layout_height="wrap_content"/>
            </LinearLayout>
            <View
+               android:visibility="gone"
                android:background="#E7E7E7"
                android:layout_width="0.5dp"
                android:layout_height="13dp"/>
            <LinearLayout
                android:gravity="center"
+               android:visibility="gone"
                android:orientation="vertical"
                android:layout_width="0dp"
                android:layout_weight="1"

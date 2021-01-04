@@ -4,12 +4,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.R;
+import com.lxkj.shortvideo.biz.ActivitySwitcher;
 import com.lxkj.shortvideo.biz.EventCenter;
 import com.lxkj.shortvideo.ui.fragment.CachableFrg;
+import com.lxkj.shortvideo.ui.fragment.homemine.AttentionFra;
+import com.lxkj.shortvideo.ui.fragment.homemine.FansFra;
+import com.lxkj.shortvideo.ui.fragment.homemine.HomepageFra;
 import com.lxkj.shortvideo.utils.SharePrefUtil;
 import com.lxkj.shortvideo.utils.ToastUtil;
 import com.zhy.m.permission.MPermissions;
@@ -32,6 +37,10 @@ public class HomeMineFra extends CachableFrg implements View.OnClickListener {
     Unbinder unbinder;
     @BindView(R.id.tvHomepage)
     TextView tvHomepage;
+    @BindView(R.id.llAttention)
+    LinearLayout llAttention;
+    @BindView(R.id.llFans)
+    LinearLayout llFans;
 
 
     @Override
@@ -44,6 +53,8 @@ public class HomeMineFra extends CachableFrg implements View.OnClickListener {
         eventCenter.registEvent(this, EventCenter.EventType.EVT_EDITINFO);
 
         tvHomepage.setOnClickListener(this);
+        llAttention.setOnClickListener(this);
+        llFans.setOnClickListener(this);
     }
 
     @Override
@@ -55,7 +66,13 @@ public class HomeMineFra extends CachableFrg implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvHomepage://个人主页
-
+                ActivitySwitcher.startFragment(getActivity(), HomepageFra.class);
+                break;
+            case R.id.llAttention://关注
+                ActivitySwitcher.startFragment(getActivity(), AttentionFra.class);
+                break;
+            case R.id.llFans://粉丝
+                ActivitySwitcher.startFragment(getActivity(), FansFra.class);
                 break;
         }
     }
