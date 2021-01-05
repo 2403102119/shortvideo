@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp">
             <LinearLayout
+                android:id="@+id/llSeach"
                 android:gravity="center_vertical"
                 android:paddingLeft="20dp"
                 android:background="@drawable/jingdiansousuo"

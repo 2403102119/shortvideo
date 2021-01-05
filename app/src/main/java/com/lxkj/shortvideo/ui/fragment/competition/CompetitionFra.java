@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.adapter.CompetitionAdapter;
 import com.lxkj.shortvideo.bean.DataListBean;
+import com.lxkj.shortvideo.biz.ActivitySwitcher;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -69,9 +70,11 @@ public class CompetitionFra extends TitleFragment {
         recyclerView.setAdapter(competitionAdapter);
         competitionAdapter.setOnItemClickListener(new CompetitionAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClickListener(int firstPosition) {
+            public void OnItemClickListener(int firstPosition) {//赛事详情
+                ActivitySwitcher.startFragment(getActivity(), EventDetailsFra.class);
             }
         });
+
         smart.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {

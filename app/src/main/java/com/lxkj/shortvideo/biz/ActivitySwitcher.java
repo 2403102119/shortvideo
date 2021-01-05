@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 public class ActivitySwitcher {
 
+
     public static void showBigPicture(final Activity from, final String url) {
         showBigPicture(from, new ArrayList<String>() {{
             add(url);
@@ -37,6 +38,13 @@ public class ActivitySwitcher {
 //        new PictureShowDlg().setImageUrls(urls).setInitPos(pos).setAvatar()
 //                .show(((FragmentActivity) from).getSupportFragmentManager(), "big_picture");
     }
+    public static void startFrgForResultBun(final Activity from,
+                                            final Class<? extends TitleFragment> to,
+                                            final int requestCode,final Bundle bundle) {
+        startForResultbun(from,
+                new Intent(from, NaviActivity.class).putExtra(NaviActivity.EXT_FRAGMENT, to.getName()),
+                requestCode,bundle);
+    }
 
 
     public static void startFragment(final Activity from,
@@ -44,6 +52,11 @@ public class ActivitySwitcher {
         final Bundle bundle = new Bundle();
         bundle.putString(NaviActivity.EXT_FRAGMENT, to.getName());
         start(from, NaviActivity.class, bundle);
+    }
+    public static void startForResultbun(final Activity from,
+                                         final Intent intent, final int requestCode,final Bundle bundle) {
+        from.startActivityForResult(intent, requestCode,bundle);
+        addAnimR2L(from);
     }
 
     public static void startFragment(final Activity from,
@@ -132,6 +145,8 @@ public class ActivitySwitcher {
         from.startActivityForResult(intent, requestCode);
         addAnimR2L(from);
     }
+
+
 
     public static void addAnimR2L(final Activity act) {
         act.overridePendingTransition(R.anim.in_from_right,

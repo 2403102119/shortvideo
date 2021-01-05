@@ -77,7 +77,7 @@ public class AppConsts {
     public static String SHAREURL = "https://www.baidu.com";
     public static String SHAREDES = "欢迎使用花园苗木";
     public static String MSGSIGN = "lixinkeji";
-
+    public static final String  History = "History";
     public static String ViDEOEND = "?x-oss-process=video/snapshot,t_1000,f_jpg,w_0,h_0,m_fast";
 
 }

@@ -35,6 +35,7 @@
                 android:layout_height="match_parent"/>
         </LinearLayout>
         <TextView
+            android:id="@+id/tvPushState"
             android:text="发布动态"
             android:textSize="13sp"
             android:layout_marginRight="10dp"

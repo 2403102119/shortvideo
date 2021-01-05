@@ -1,4 +1,4 @@
-package com.lxkj.shortvideo.ui.fragment.message;
+package com.lxkj.shortvideo.ui.fragment.competition;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,11 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lxkj.shortvideo.R;
-import com.lxkj.shortvideo.adapter.DynamicAdapter;
+import com.lxkj.shortvideo.adapter.ClassicalAdapter;
 import com.lxkj.shortvideo.bean.DataListBean;
-import com.lxkj.shortvideo.biz.ActivitySwitcher;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
-import com.lxkj.shortvideo.ui.fragment.homemine.SetFra;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -30,13 +28,13 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * Time:2020/12/30
+ * Time:2021/1/5
  * <p>
  * Author:李迪迦
  * <p>
- * Interface:动态
+ * Interface:
  */
-public class DynamicFra extends TitleFragment implements View.OnClickListener {
+public class SearchResultFra extends TitleFragment{
     Unbinder unbinder;
     @BindView(R.id.ivNoData)
     ImageView ivNoData;
@@ -48,18 +46,19 @@ public class DynamicFra extends TitleFragment implements View.OnClickListener {
     RecyclerView recyclerView;
     @BindView(R.id.smart)
     SmartRefreshLayout smart;
-    @BindView(R.id.tvPushState)
-    TextView tvPushState;
-
     private ArrayList<DataListBean> listBeans;
     private int page = 1, totalPage = 1;
-    private DynamicAdapter dynamicAdapter;
+    private ClassicalAdapter classicalAdapter;
+    @Override
+    public String getTitleName() {
+        return "搜索结果";
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        rootView = inflater.inflate(R.layout.layout_dynamic, container, false);
+        rootView = inflater.inflate(R.layout.layout_list, container, false);
         unbinder = ButterKnife.bind(this, rootView);
         initView();
         return rootView;
@@ -69,9 +68,9 @@ public class DynamicFra extends TitleFragment implements View.OnClickListener {
         listBeans = new ArrayList<DataListBean>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        dynamicAdapter = new DynamicAdapter(getContext(), listBeans);
-        recyclerView.setAdapter(dynamicAdapter);
-        dynamicAdapter.setOnItemClickListener(new DynamicAdapter.OnItemClickListener() {
+        classicalAdapter = new ClassicalAdapter(getContext(), listBeans);
+        recyclerView.setAdapter(classicalAdapter);
+        classicalAdapter.setOnItemClickListener(new ClassicalAdapter.OnItemClickListener() {
             @Override
             public void OnItemClickListener(int firstPosition) {
             }
@@ -94,26 +93,11 @@ public class DynamicFra extends TitleFragment implements View.OnClickListener {
                 refreshLayout.setNoMoreData(false);
             }
         });
-
-
-        tvPushState.setOnClickListener(this);
     }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.tvPushState://发表动态
-                ActivitySwitcher.startFragment(getActivity(), PushStateFra.class);
-                break;
-        }
-    }
-
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
-
-
 }

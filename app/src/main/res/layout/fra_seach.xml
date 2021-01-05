@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_h"
+        android:background="@color/white">
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="33dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/sousuoyesousuo"
+            android:drawableLeft="@mipmap/ic_search_top"
+            android:drawablePadding="5dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="7dp"
+            android:singleLine="true"
+            android:imeOptions="actionSearch"
+            android:paddingBottom="7dp"
+            android:hint="输入关键词搜索"
+            android:textColor="#ff999999"
+            android:textSize="12sp" />
+    </LinearLayout>
+    <TextView
+        android:text="历史搜索"
+        android:layout_marginTop="36dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="15sp"
+        android:textColor="@color/txt_33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <com.zhy.view.flowlayout.TagFlowLayout
+        android:id="@+id/tag"
+        app:max_select="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+
+</LinearLayout>

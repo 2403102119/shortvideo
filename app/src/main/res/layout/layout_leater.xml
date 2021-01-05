@@ -34,6 +34,7 @@
                 android:layout_height="match_parent"/>
         </LinearLayout>
         <TextView
+            android:id="@+id/tvSelectFriend"
             android:text="选择好友"
             android:textSize="13sp"
             android:layout_marginRight="10dp"

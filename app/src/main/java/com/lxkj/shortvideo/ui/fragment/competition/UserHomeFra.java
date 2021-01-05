@@ -1,4 +1,4 @@
-package com.lxkj.shortvideo.ui.fragment.homemine;
+package com.lxkj.shortvideo.ui.fragment.competition;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +15,9 @@ import com.lxkj.shortvideo.adapter.LikeAdapter;
 import com.lxkj.shortvideo.bean.DataListBean;
 import com.lxkj.shortvideo.biz.ActivitySwitcher;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
+import com.lxkj.shortvideo.ui.fragment.homemine.AttentionFra;
+import com.lxkj.shortvideo.ui.fragment.homemine.CompileFra;
+import com.lxkj.shortvideo.ui.fragment.homemine.FansFra;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,16 +30,22 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * Time:2021/1/4
+ * Time:2021/1/5
  * <p>
  * Author:李迪迦
  * <p>
- * Interface:个人主页
+ * Interface:用户主页
  */
-public class HomepageFra extends TitleFragment implements View.OnClickListener {
+public class UserHomeFra extends TitleFragment implements View.OnClickListener {
     Unbinder unbinder;
+    @BindView(R.id.imFinish)
+    ImageView imFinish;
     @BindView(R.id.llTitle)
     LinearLayout llTitle;
+    @BindView(R.id.llFans)
+    LinearLayout llFans;
+    @BindView(R.id.llAttention)
+    LinearLayout llAttention;
     @BindView(R.id.tvLike)
     TextView tvLike;
     @BindView(R.id.viLike)
@@ -57,14 +66,7 @@ public class HomepageFra extends TitleFragment implements View.OnClickListener {
     LinearLayout llDynamic;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.imFinish)
-    ImageView imFinish;
-    @BindView(R.id.llFans)
-    LinearLayout llFans;
-    @BindView(R.id.llAttention)
-    LinearLayout llAttention;
-    @BindView(R.id.tvCompile)
-    TextView tvCompile;
+
     private List<DataListBean> listBeans;
     private LikeAdapter likeAdapter;
     private HomeDynamicAdapter dynamicAdapter;
@@ -73,12 +75,13 @@ public class HomepageFra extends TitleFragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        rootView = inflater.inflate(R.layout.fra_homepage, container, false);
+        rootView = inflater.inflate(R.layout.fra_userhome, container, false);
         unbinder = ButterKnife.bind(this, rootView);
         act.hindNaviBar();
         initView();
         return rootView;
     }
+
 
     public void initView() {
         llLike.setOnClickListener(this);
@@ -87,7 +90,6 @@ public class HomepageFra extends TitleFragment implements View.OnClickListener {
         imFinish.setOnClickListener(this);
         llFans.setOnClickListener(this);
         llAttention.setOnClickListener(this);
-        tvCompile.setOnClickListener(this);
 
         listBeans = new ArrayList<DataListBean>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -187,9 +189,6 @@ public class HomepageFra extends TitleFragment implements View.OnClickListener {
             case R.id.llAttention://关注
                 ActivitySwitcher.startFragment(getActivity(), AttentionFra.class);
                 break;
-            case R.id.tvCompile://编辑个人资料
-                ActivitySwitcher.startFragment(getActivity(), CompileFra.class);
-                break;
         }
     }
 
@@ -198,5 +197,4 @@ public class HomepageFra extends TitleFragment implements View.OnClickListener {
         super.onDestroyView();
         unbinder.unbind();
     }
-
 }

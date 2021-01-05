@@ -10,8 +10,11 @@ import android.widget.TextView;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.adapter.MFragmentStatePagerAdapter;
+import com.lxkj.shortvideo.biz.ActivitySwitcher;
 import com.lxkj.shortvideo.ui.fragment.CachableFrg;
 import com.lxkj.shortvideo.ui.fragment.competition.CompetitionFra;
+import com.lxkj.shortvideo.ui.fragment.competition.SeachFra;
+import com.lxkj.shortvideo.ui.fragment.homemine.SetFra;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -45,6 +48,8 @@ public class HomeFra extends CachableFrg implements View.OnClickListener {
     ImageView imGuanbi;
     @BindView(R.id.llClassify)
     LinearLayout llClassify;
+    @BindView(R.id.llSeach)
+    LinearLayout llSeach;
     private List<Fragment> fragments = new ArrayList<>();
     TagAdapter<String> adapter;
     List<String> hot_list = new ArrayList<>();
@@ -99,6 +104,7 @@ public class HomeFra extends CachableFrg implements View.OnClickListener {
 
         imClassify.setOnClickListener(this);
         imGuanbi.setOnClickListener(this);
+        llSeach.setOnClickListener(this);
 
         adapter = new TagAdapter<String>(hot_list) {
             @Override
@@ -119,6 +125,9 @@ public class HomeFra extends CachableFrg implements View.OnClickListener {
                 break;
             case R.id.imGuanbi:
                 llClassify.setVisibility(View.GONE);
+                break;
+            case R.id.llSeach://搜索
+                ActivitySwitcher.startFragment(getActivity(), SeachFra.class);
                 break;
 
         }

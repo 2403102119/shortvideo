@@ -10,19 +10,40 @@
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-     <LinearLayout
-         android:id="@+id/llTitle"
-         android:layout_marginLeft="15dp"
-         android:layout_marginTop="30dp"
-         android:orientation="horizontal"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content">
-           <ImageView
-               android:id="@+id/imFinish"
-               android:src="@mipmap/fanhui"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"/>
-     </LinearLayout>
+    <LinearLayout
+        android:gravity="center"
+        android:layout_marginTop="48dp"
+        android:layout_marginRight="11dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/login_20"
+        android:layout_width="59dp"
+        android:layout_height="22dp">
+         <ImageView
+             android:src="@mipmap/sixin_bai"
+             android:layout_width="12dp"
+             android:layout_height="wrap_content"/>
+        <TextView
+            android:text="私信"
+            android:layout_marginLeft="3dp"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/llTitle"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imFinish"
+            android:padding="16dp"
+            android:src="@mipmap/fanhui"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+    </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
         android:layout_marginTop="40dp"
@@ -105,16 +126,31 @@
                     </LinearLayout>
 
                 </LinearLayout>
-                <TextView
-                    android:id="@+id/tvCompile"
+                <LinearLayout
                     android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:text="编辑个人资料"
-                    android:textSize="13sp"
-                    android:background="@drawable/bianjiziliao"
-                    android:textColor="@color/colorBlack"
-                    android:layout_width="147dp"
-                    android:layout_height="25dp"/>
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:gravity="center"
+                        android:text="互相关注"
+                        android:textSize="13sp"
+                        android:background="@drawable/bianjiziliao"
+                        android:textColor="@color/colorBlack"
+                        android:layout_width="147dp"
+                        android:layout_height="25dp"/>
+                    <TextView
+                        android:gravity="center"
+                        android:text="屏蔽此人"
+                        android:layout_marginLeft="20dp"
+                        android:textSize="13sp"
+                        android:background="@drawable/bianjiziliao"
+                        android:textColor="@color/colorBlack"
+                        android:layout_width="81dp"
+                        android:layout_height="25dp"/>
+                </LinearLayout>
+
+
             </LinearLayout>
         </LinearLayout>
 
@@ -135,41 +171,41 @@
             android:layout_marginTop="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-       <LinearLayout
-           android:layout_marginTop="12dp"
-           android:layout_marginLeft="13dp"
-           android:orientation="horizontal"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content">
-           <TextView
-               android:text="男"
-               android:gravity="center"
-               android:textSize="11sp"
-               android:textColor="@color/txt_66"
-               android:background="@drawable/homepagelable"
-               android:layout_width="40dp"
-               android:layout_height="18dp"/>
-           <TextView
-               android:text="29岁"
-               android:layout_marginLeft="10dp"
-               android:gravity="center"
-               android:textSize="11sp"
-               android:textColor="@color/txt_66"
-               android:background="@drawable/homepagelable"
-               android:layout_width="40dp"
-               android:layout_height="18dp"/>
-           <TextView
-               android:text="河南郑州市"
-               android:layout_marginLeft="10dp"
-               android:gravity="center"
-               android:textSize="11sp"
-               android:textColor="@color/txt_66"
-               android:paddingLeft="10dp"
-               android:paddingRight="10dp"
-               android:background="@drawable/homepagelable"
-               android:layout_width="wrap_content"
-               android:layout_height="18dp"/>
-       </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="13dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="男"
+                android:gravity="center"
+                android:textSize="11sp"
+                android:textColor="@color/txt_66"
+                android:background="@drawable/homepagelable"
+                android:layout_width="40dp"
+                android:layout_height="18dp"/>
+            <TextView
+                android:text="29岁"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:textSize="11sp"
+                android:textColor="@color/txt_66"
+                android:background="@drawable/homepagelable"
+                android:layout_width="40dp"
+                android:layout_height="18dp"/>
+            <TextView
+                android:text="河南郑州市"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:textSize="11sp"
+                android:textColor="@color/txt_66"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="@drawable/homepagelable"
+                android:layout_width="wrap_content"
+                android:layout_height="18dp"/>
+        </LinearLayout>
         <LinearLayout
             android:layout_marginTop="40dp"
             android:orientation="vertical"

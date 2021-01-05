@@ -15,6 +15,8 @@ import com.lxkj.shortvideo.ui.fragment.CachableFrg;
 import com.lxkj.shortvideo.ui.fragment.homemine.AttentionFra;
 import com.lxkj.shortvideo.ui.fragment.homemine.FansFra;
 import com.lxkj.shortvideo.ui.fragment.homemine.HomepageFra;
+import com.lxkj.shortvideo.ui.fragment.homemine.IssueFra;
+import com.lxkj.shortvideo.ui.fragment.homemine.SetFra;
 import com.lxkj.shortvideo.utils.SharePrefUtil;
 import com.lxkj.shortvideo.utils.ToastUtil;
 import com.zhy.m.permission.MPermissions;
@@ -41,6 +43,10 @@ public class HomeMineFra extends CachableFrg implements View.OnClickListener {
     LinearLayout llAttention;
     @BindView(R.id.llFans)
     LinearLayout llFans;
+    @BindView(R.id.llIssue)
+    LinearLayout llIssue;
+    @BindView(R.id.llSet)
+    LinearLayout llSet;
 
 
     @Override
@@ -55,6 +61,8 @@ public class HomeMineFra extends CachableFrg implements View.OnClickListener {
         tvHomepage.setOnClickListener(this);
         llAttention.setOnClickListener(this);
         llFans.setOnClickListener(this);
+        llIssue.setOnClickListener(this);
+        llSet.setOnClickListener(this);
     }
 
     @Override
@@ -73,6 +81,12 @@ public class HomeMineFra extends CachableFrg implements View.OnClickListener {
                 break;
             case R.id.llFans://粉丝
                 ActivitySwitcher.startFragment(getActivity(), FansFra.class);
+                break;
+            case R.id.llIssue://意见反馈
+                ActivitySwitcher.startFragment(getActivity(), IssueFra.class);
+                break;
+            case R.id.llSet://设置
+                ActivitySwitcher.startFragment(getActivity(), SetFra.class);
                 break;
         }
     }
