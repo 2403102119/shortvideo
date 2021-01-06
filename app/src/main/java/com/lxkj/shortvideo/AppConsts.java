@@ -8,32 +8,21 @@ public class AppConsts {
     public static String anchorId = "";
     public static String city = "郑州市"; //选择的市
     public static String province = "河南省"; //选择的市
-    public static String blance = "0"; //余额
-    public static String userName = "用户"; //余额
+    public static String userName = "用户";
     public static String userIcon = "";
     public static String userId = ""; //余额
-    public static String type = "0"; // 0普通用户 1内部员工 2企业用户
-    public static String authstate = "0";//0未认证 1已认证 2认证失败
     public static String paypassword = "";//支付密码
     public static final String ISAGREE = "isAgree";//是否同意
     public static final String TOKEN = "token"; //融云token
 
-    public static int zuType = 0; //租车类型 0 短租 1 长租
 
-    public static final String Notification = "Notification"; //是否免打扰
-    public static final String ACCOUNTS = "accounts"; //保存的账号
 
     public static final String UID = "uid";
-    public static final String SHOPID = "shopIp";
-    public static final String TYPE = "type";
+    public static final String username = "username";
     public static final String PHONE = "phone";
+    public static final String user_icon = "user_icon";
 
 
-    public static final String USERNAME = "username";
-    public static final String SYSTEMID = "systemid";//系统消息 targetID
-    public static final String USERHEAD = "userhead";
-    public static final String USERLEVEL = "userlevel";
-    public static final String USERBALANCE = "userbalance";
 
     public static final String DEFAULTCITYID = "defaultcityid";//默认城市id
     public static final String CURRENTCITYID = "currentcityid";//定位城市id
@@ -45,26 +34,14 @@ public class AppConsts {
     public static final String DEFAULTLAT = "116.403981";//默认纬度
     public static final String DEFAULTLNG = "39.91095";//默认经度
 
-    public static final String ISGUIDE = "isguide";
 
 
     public static final String RMB = "¥";
 
-    public static Double BitCoinNum = 0.00;
-    public static String PayPassword = "";
-    public static String liaotiantouxiang = "liaotiantouxiang";
-    public static String liaotianduifangtouxiang = "liaotianduifangtouxiang";
-    public static boolean isSet = false;
 
     public static final int PMS_LOCATION = 1003;// 权限编号，自定义
     public static final int PMS_TELL = 1004;// 权限编号，自定义
     public static final int PMS_LOCATION_VIDEO = 1005;// 权限编号，自定义
-
-
-    public static final String ADPIC = "adpic";//广告页 图片链接
-    public static final String ADURL = "adurl";//广告页 跳转
-
-    public static String label = "广场";
 
 
     public static String WXAPPID = "wxa8532f2fe14ac79f";

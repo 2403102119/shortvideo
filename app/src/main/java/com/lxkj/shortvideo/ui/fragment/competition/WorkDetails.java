@@ -6,14 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.adapter.CommentAdapter;
 import com.lxkj.shortvideo.bean.DataListBean;
-import com.lxkj.shortvideo.biz.ActivitySwitcher;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -27,44 +24,34 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * Time:2021/1/5
+ * Time:2021/1/6
  * <p>
  * Author:李迪迦
  * <p>
- * Interface:赛事详情
+ * Interface:
  */
-public class EventDetailsFra extends TitleFragment implements View.OnClickListener {
+public class WorkDetails extends TitleFragment implements View.OnClickListener {
     Unbinder unbinder;
-    @BindView(R.id.navi_title)
-    TextView naviTitle;
-    @BindView(R.id.navi_left)
-    ImageView naviLeft;
-    @BindView(R.id.navi_right_txt)
-    TextView naviRightTxt;
-    @BindView(R.id.navi_right_img)
-    ImageView naviRightImg;
-    @BindView(R.id.relBackGroundView)
-    RelativeLayout relBackGroundView;
+    @BindView(R.id.riIcon)
+    RoundedImageView riIcon;
     @BindView(R.id.tvGuanzhu)
     TextView tvGuanzhu;
     @BindView(R.id.rycomment)
     RecyclerView rycomment;
-    @BindView(R.id.riIcon)
-    RoundedImageView riIcon;
-    @BindView(R.id.llRank)
-    LinearLayout llRank;
-    @BindView(R.id.tvLookDetail)
-    TextView tvLookDetail;
+    @BindView(R.id.navi_title)
+    TextView naviTitle;
+    @BindView(R.id.navi_left)
+    ImageView naviLeft;
+
     private ArrayList<DataListBean> listBeans;
     private int page = 1, totalPage = 1;
     private CommentAdapter commentAdapter;
-
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        rootView = inflater.inflate(R.layout.fra_eventdetails, container, false);
+        rootView = inflater.inflate(R.layout.fra_workdetaile, container, false);
         unbinder = ButterKnife.bind(this, rootView);
         act.hindNaviBar();
         initView();
@@ -72,6 +59,7 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
     }
 
     public void initView() {
+
         listBeans = new ArrayList<DataListBean>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         rycomment.setLayoutManager(layoutManager);
@@ -84,31 +72,15 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
         });
 
 
-        riIcon.setOnClickListener(this);
-        llRank.setOnClickListener(this);
         naviLeft.setOnClickListener(this);
-        tvLookDetail.setOnClickListener(this);
-        naviRightTxt.setOnClickListener(this);
-
     }
+
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.riIcon://用户主页
-                ActivitySwitcher.startFragment(getActivity(), UserHomeFra.class);
-                break;
-            case R.id.llRank://排行榜
-                ActivitySwitcher.startFragment(getActivity(), RankFra.class);
-                break;
+        switch (v.getId()){
             case R.id.navi_left:
                 act.finishSelf();
-                break;
-            case R.id.tvLookDetail://查看详情
-                ActivitySwitcher.startFragment(getActivity(), LookDetailFra.class);
-                break;
-            case R.id.navi_right_txt://报名
-                ActivitySwitcher.startFragment(getActivity(), ApplyFra.class);
                 break;
         }
     }

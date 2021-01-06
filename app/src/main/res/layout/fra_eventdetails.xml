@@ -46,6 +46,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/txt_size_13" />
         <LinearLayout
+            android:id="@+id/llRank"
             android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -89,6 +90,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
                     <TextView
+                        android:id="@+id/tvLookDetail"
                         android:text="查看详情"
                         android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"

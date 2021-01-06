@@ -13,38 +13,34 @@ import java.util.List;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
- * Time:2021/1/4
+ * Time:2021/1/6
  * <p>
  * Author:李迪迦
  * <p>
  * Interface:
  */
-public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.MyHolder> {
+public class LoveRateAdapter extends RecyclerView.Adapter<LoveRateAdapter.MyHolder> {
     private Context context;
     private List<DataListBean> list;
-    public LikeAdapter(Context context, List<DataListBean> list) {
+    public LoveRateAdapter(Context context, List<DataListBean> list) {
         this.context = context;
         this.list = list;
 
     }
     @Override
-    public LikeAdapter.MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_like, parent, false);
-        return new LikeAdapter.MyHolder(view);
+    public LoveRateAdapter.MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_loverate, parent, false);
+        return new LoveRateAdapter.MyHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(LikeAdapter.MyHolder holder, final int position) {
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemClickListener.OnItemClickListener(position);
-            }
-        });
+    public void onBindViewHolder(LoveRateAdapter.MyHolder holder, final int position) {
+
     }
 
     @Override
     public int getItemCount() {
+
 //        if (list == null) {
 //            return 0;
 //        } else {
@@ -59,14 +55,15 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.MyHolder> {
             super(itemView);
         }
     }
-    private LikeAdapter.OnItemClickListener onItemClickListener;
+    private LoveRateAdapter.OnItemClickListener onItemClickListener;
 
-    public void setOnItemClickListener(LikeAdapter.OnItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(LoveRateAdapter.OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
     public interface OnItemClickListener {
         void OnItemClickListener(int firstPosition);
-        void OnDelateClickListener(int firstPosition);
     }
 }
+
+

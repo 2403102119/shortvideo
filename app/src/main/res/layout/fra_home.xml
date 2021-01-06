@@ -47,18 +47,19 @@
              android:layout_width="0dp"
              android:layout_weight="1"
              android:layout_height="45dp"
+             android:layout_gravity="center_vertical"
              app:tl_indicator_height="2dp"
              app:tl_indicator_width="35dp"
-             app:tl_tab_space_equal="true"
+             app:tl_indicator_corner_radius="1dp"
              app:tl_divider_width="0.5dp"
              app:tl_divider_color="@color/white"
-             app:tl_indicator_corner_radius="1dp"
-             app:tl_textSelectColor="#F4FAFF"
+             app:tl_textSelectColor="@color/white"
              app:tl_textBold="SELECT"
-             app:tl_textUnselectColor="#F4FAFF"
-             app:tl_textsize="@dimen/txt_size_13"
+             app:tl_textUnselectColor="@color/white"
+             app:tl_textsize="@dimen/txt_size_15"
              app:tl_indicator_color="@color/white">
          </com.flyco.tablayout.SlidingTabLayout>
+
          <ImageView
              android:id="@+id/imClassify"
              android:src="@mipmap/caidan"

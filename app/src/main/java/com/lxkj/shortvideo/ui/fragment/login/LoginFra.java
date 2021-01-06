@@ -2,6 +2,8 @@ package com.lxkj.shortvideo.ui.fragment.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,16 +12,34 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hys.utils.MD5Utils;
+import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.R;
+import com.lxkj.shortvideo.bean.ResultBean;
 import com.lxkj.shortvideo.biz.ActivitySwitcher;
 import com.lxkj.shortvideo.biz.EventCenter;
+import com.lxkj.shortvideo.http.BaseCallback;
+import com.lxkj.shortvideo.http.OkHttpHelper;
+import com.lxkj.shortvideo.http.SpotsCallBack;
+import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.ui.activity.MainActivity;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
+import com.lxkj.shortvideo.ui.fragment.system.WebFra;
+import com.lxkj.shortvideo.utils.Md5;
+import com.lxkj.shortvideo.utils.SharePrefUtil;
+import com.lxkj.shortvideo.utils.StringUtil;
+import com.lxkj.shortvideo.utils.ToastUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.jpush.android.api.JPushInterface;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by kxn on 2020/1/9 0009.
@@ -43,6 +63,10 @@ public class LoginFra extends TitleFragment implements View.OnClickListener, Eve
     TextView tvRegister;
     @BindView(R.id.imWeChat)
     ImageView imWeChat;
+    @BindView(R.id.imEys)
+    ImageView imEys;
+
+    private boolean eyes = false;
 
 
     @Override
@@ -70,6 +94,9 @@ public class LoginFra extends TitleFragment implements View.OnClickListener, Eve
         tvRetrieve.setOnClickListener(this);
         tvRegister.setOnClickListener(this);
         tvLogin.setOnClickListener(this);
+        imEys.setOnClickListener(this);
+        tvYonghu.setOnClickListener(this);
+        tvYinsi.setOnClickListener(this);
     }
 
     @Override
@@ -81,6 +108,7 @@ public class LoginFra extends TitleFragment implements View.OnClickListener, Eve
 
     @Override
     public void onClick(View view) {
+        Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.tvRetrieve://忘记密码
                 ActivitySwitcher.startFragment(getActivity(), RetrieveFra.class);
@@ -89,13 +117,106 @@ public class LoginFra extends TitleFragment implements View.OnClickListener, Eve
                 ActivitySwitcher.startFragment(getActivity(), RegisterFra.class);
                 break;
             case R.id.tvLogin://登录
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
+                if (StringUtil.isEmpty(etPhone.getText().toString())) {
+                    ToastUtil.show("请输入手机号码");
+                    return;
+                }
+                if (StringUtil.isEmpty(etPassword.getText().toString())) {
+                    ToastUtil.show("请输入密码");
+                    return;
+                }
+                mobileExist();
+                break;
+            case R.id.imEys://查看密碼
+                 if (eyes){
+                     eyes= false;
+                     imEys.setImageResource(R.mipmap.biyan);
+                     etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                 }else {
+                     eyes= true;
+                     imEys.setImageResource(R.mipmap.zhengyan);
+                     etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                 }
+                break;
+            case R.id.tvYonghu://用户协议
+                bundle.putString("title", "用户协议");
+                bundle.putString("url", "http://122.114.49.242:8081/apiService/common/protocol/2");
+                ActivitySwitcher.startFragment(getContext(), WebFra.class, bundle);
+                break;
+            case R.id.tvYinsi://隐私政策
+                bundle.putString("title", "隐私政策");
+                bundle.putString("url", "http://122.114.49.242:8081/apiService/common/protocol/1");
+                ActivitySwitcher.startFragment(getContext(), WebFra.class, bundle);
                 break;
         }
     }
 
 
+    //登录
+    private void userLogin() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("mobile", etPhone.getText().toString());
+        params.put("authCode", "");
+        params.put("password", MD5Utils.md5(etPassword.getText().toString()));
+        params.put("type", "1");
+        params.put("openid", "");
+        params.put("rid", JPushInterface.getRegistrationID(mContext));//推送标识
+        mOkHttpHelper.post_json(mContext, Url.login, params, new SpotsCallBack<ResultBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, ResultBean resultBean) {
+                eventCenter.sendType(EventCenter.EventType.EVT_LOGOUT); //关闭 重新打开
+
+                SharePrefUtil.saveString(mContext, AppConsts.UID, resultBean.mid);
+                SharePrefUtil.saveString(mContext, AppConsts.username, resultBean.nickname);
+                SharePrefUtil.saveString(mContext, AppConsts.user_icon, resultBean.avatar);
+                AppConsts.userId = resultBean.mid;
+                AppConsts.userName = resultBean.nickname;
+                SharePrefUtil.saveString(mContext, AppConsts.PHONE, etPhone.getText().toString());
+                ActivitySwitcher.start(act, MainActivity.class);
+                act.finishSelf();
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+    }
+
+    /**
+     * 手机号是否已注册
+     */
+    private void mobileExist() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("mobile",etPhone.getText().toString());
+        OkHttpHelper.getInstance().post_json(getContext(), Url.mobileExist, params, new BaseCallback<ResultBean>() {
+            @Override
+            public void onBeforeRequest(Request request) {
+            }
+            @Override
+            public void onFailure(Request request, Exception e) {
+            }
+            @Override
+            public void onResponse(Response response) {
+            }
+
+            @Override
+            public void onSuccess(Response response, ResultBean resultBean) {
+
+                 if (resultBean.state.equals("1")){//1已注册，0未注册
+                     userLogin();
+                 }else {
+                     ToastUtil.show("手机号未注册");
+                 }
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+            }
+        });
+    }
 
 
     @Override

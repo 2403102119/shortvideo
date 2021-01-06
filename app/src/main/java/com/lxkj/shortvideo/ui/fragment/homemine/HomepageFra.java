@@ -15,6 +15,7 @@ import com.lxkj.shortvideo.adapter.LikeAdapter;
 import com.lxkj.shortvideo.bean.DataListBean;
 import com.lxkj.shortvideo.biz.ActivitySwitcher;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
+import com.lxkj.shortvideo.ui.fragment.competition.WorkDetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,6 +98,7 @@ public class HomepageFra extends TitleFragment implements View.OnClickListener {
         likeAdapter.setOnItemClickListener(new LikeAdapter.OnItemClickListener() {
             @Override
             public void OnItemClickListener(int firstPosition) {
+                ActivitySwitcher.startFragment(getActivity(), WorkDetails.class);
             }
 
             @Override
@@ -127,7 +129,8 @@ public class HomepageFra extends TitleFragment implements View.OnClickListener {
                 recyclerView.setAdapter(likeAdapter);
                 likeAdapter.setOnItemClickListener(new LikeAdapter.OnItemClickListener() {
                     @Override
-                    public void OnItemClickListener(int firstPosition) {
+                    public void OnItemClickListener(int firstPosition) {//详情
+                        ActivitySwitcher.startFragment(getActivity(), WorkDetails.class);
                     }
 
                     @Override
@@ -151,6 +154,7 @@ public class HomepageFra extends TitleFragment implements View.OnClickListener {
                 likeAdapter.setOnItemClickListener(new LikeAdapter.OnItemClickListener() {
                     @Override
                     public void OnItemClickListener(int firstPosition) {
+                        ActivitySwitcher.startFragment(getActivity(), WorkDetails.class);
                     }
 
                     @Override

@@ -18,6 +18,7 @@ import com.lxkj.shortvideo.ui.fragment.TitleFragment;
 import com.lxkj.shortvideo.ui.fragment.homemine.AttentionFra;
 import com.lxkj.shortvideo.ui.fragment.homemine.CompileFra;
 import com.lxkj.shortvideo.ui.fragment.homemine.FansFra;
+import com.lxkj.shortvideo.ui.fragment.homemine.SetFra;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +99,8 @@ public class UserHomeFra extends TitleFragment implements View.OnClickListener {
         recyclerView.setAdapter(likeAdapter);
         likeAdapter.setOnItemClickListener(new LikeAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClickListener(int firstPosition) {
+            public void OnItemClickListener(int firstPosition) {//详情
+                ActivitySwitcher.startFragment(getActivity(), WorkDetails.class);
             }
 
             @Override
@@ -130,6 +132,7 @@ public class UserHomeFra extends TitleFragment implements View.OnClickListener {
                 likeAdapter.setOnItemClickListener(new LikeAdapter.OnItemClickListener() {
                     @Override
                     public void OnItemClickListener(int firstPosition) {
+                        ActivitySwitcher.startFragment(getActivity(), WorkDetails.class);
                     }
 
                     @Override
@@ -153,6 +156,7 @@ public class UserHomeFra extends TitleFragment implements View.OnClickListener {
                 likeAdapter.setOnItemClickListener(new LikeAdapter.OnItemClickListener() {
                     @Override
                     public void OnItemClickListener(int firstPosition) {
+                        ActivitySwitcher.startFragment(getActivity(), WorkDetails.class);
                     }
 
                     @Override

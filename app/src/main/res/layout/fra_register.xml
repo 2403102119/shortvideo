@@ -124,7 +124,8 @@
                     android:singleLine="true"
                     android:textSize="13sp" />
                 <ImageView
-                    android:src="@mipmap/zhengyan"
+                    android:id="@+id/imEys"
+                    android:src="@mipmap/biyan"
                     android:layout_width="15dp"
                     android:layout_height="match_parent"/>
             </LinearLayout>
@@ -143,6 +144,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
+                android:id="@+id/imSelect"
                 android:src="@mipmap/weixuan"
                 android:layout_width="12dp"
                 android:layout_height="wrap_content"/>
@@ -154,6 +156,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
+                android:id="@+id/tvYonghu"
                 android:text="《用户协议》"
                 android:textSize="12sp"
                 android:textColor="@color/main_color"

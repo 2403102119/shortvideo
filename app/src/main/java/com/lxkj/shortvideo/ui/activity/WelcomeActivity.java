@@ -102,38 +102,10 @@ public class WelcomeActivity extends BaseFragAct {
 
 
         AppConsts.city = SharePrefUtil.getString(context, AppConsts.CITY, "");
-        if (!StringUtil.isEmpty(SharePrefUtil.getString(context, AppConsts.UID, "")))
-            getUserInfo();
+//        if (!StringUtil.isEmpty(SharePrefUtil.getString(context, AppConsts.UID, "")))
+//            getUserInfo();
     }
 
-    /**
-     * 获取个人信息
-     */
-    private void getUserInfo() {
-        Map<String, Object> params = new HashMap<>();
-        params.put("sid", SharePrefUtil.getString(this, AppConsts.UID, ""));
-        OkHttpHelper.getInstance().post_json(this, Url.home, params, new BaseCallback<ResultBean>() {
-            @Override
-            public void onBeforeRequest(Request request) {
-            }
-            @Override
-            public void onFailure(Request request, Exception e) {
-            }
-            @Override
-            public void onResponse(Response response) {
-            }
-
-            @Override
-            public void onSuccess(Response response, ResultBean resultBean) {
-                AppConsts.userIcon = resultBean.logo;
-                AppConsts.userName = resultBean.name;
-            }
-
-            @Override
-            public void onError(Response response, int code, Exception e) {
-            }
-        });
-    }
 
 
 

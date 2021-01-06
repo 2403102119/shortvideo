@@ -12,7 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/riIcon"
         android:src="@mipmap/logo"
+        android:scaleType="centerCrop"
         app:riv_corner_radius="5dp"
         android:layout_width="107dp"
         android:layout_height="94dp"/>
@@ -22,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
+            android:id="@+id/tvTitle"
             android:text="首届星洲社区脑洞大赛（第一轮）"
             android:textSize="15sp"
             android:textColor="@color/txt_33"
@@ -29,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/tvTime"
             android:text="截止时间：2020.11.24  10:12"
             android:textColor="@color/txt_99"
             android:textSize="12sp"
@@ -44,6 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
            <TextView
+               android:id="@+id/tvNumber"
                android:text="56人参赛"
                android:textSize="11sp"
                android:paddingLeft="12dp"
@@ -58,6 +63,7 @@
                 android:layout_weight="1"
                 android:layout_height="1dp"/>
             <TextView
+                android:id="@+id/tvState"
                 android:text="进行中"
                 android:textSize="11sp"
                 android:paddingLeft="12dp"

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+     <LinearLayout
+         android:layout_marginTop="26dp"
+         android:layout_marginLeft="10dp"
+         android:layout_marginRight="10dp"
+         android:orientation="horizontal"
+         android:layout_width="match_parent"
+         android:layout_height="33dp">
+         <TextView
+             android:gravity="center"
+             android:text="PASS (喜爱) 90%"
+             android:textColor="@color/white"
+             android:textSize="16sp"
+             android:background="@drawable/xiailv"
+             android:layout_width="0dp"
+             android:layout_weight="1"
+             android:layout_height="match_parent"/>
+         <TextView
+             android:gravity="center"
+             android:text="NG 10%"
+             android:textColor="@color/white"
+             android:textSize="16sp"
+             android:background="@drawable/ng"
+             android:layout_width="0dp"
+             android:layout_weight="1"
+             android:layout_height="match_parent"/>
+     </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
