@@ -83,6 +83,7 @@ public class CompetitionFra extends TitleFragment {
         competitionAdapter.setOnItemClickListener(new CompetitionAdapter.OnItemClickListener() {
             @Override
             public void OnItemClickListener(int firstPosition) {//赛事详情
+
                 ActivitySwitcher.startFragment(getActivity(), EventDetailsFra.class);
             }
         });

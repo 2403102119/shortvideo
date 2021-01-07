@@ -1,6 +1,7 @@
 package com.lxkj.shortvideo.ui.fragment.competition;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -55,9 +57,26 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
     LinearLayout llRank;
     @BindView(R.id.tvLookDetail)
     TextView tvLookDetail;
+    @BindView(R.id.tvTime)
+    TextView tvTime;
+    @BindView(R.id.tvTime2)
+    TextView tvTime2;
+    @BindView(R.id.imVideo)
+    ImageView imVideo;
+    @BindView(R.id.llTime)
+    LinearLayout llTime;
+    @BindView(R.id.imComment)
+    ImageView imComment;
+    @BindView(R.id.llComment)
+    LinearLayout llComment;
+    @BindView(R.id.ns)
+    NestedScrollView ns;
+    @BindView(R.id.llRecycle)
+    LinearLayout llRecycle;
     private ArrayList<DataListBean> listBeans;
     private int page = 1, totalPage = 1;
     private CommentAdapter commentAdapter;
+    private boolean CountDownTime = false;
 
 
     @Nullable
@@ -80,6 +99,7 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
         commentAdapter.setOnItemClickListener(new CommentAdapter.OnItemClickListener() {
             @Override
             public void OnItemClickListener(int firstPosition) {
+
             }
         });
 
@@ -90,7 +110,37 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
         tvLookDetail.setOnClickListener(this);
         naviRightTxt.setOnClickListener(this);
 
+        ns.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (CountDownTime) {
+                    llTime.setVisibility(View.GONE);
+                    imVideo.setVisibility(View.GONE);
+                    llComment.setVisibility(View.GONE);
+                    imComment.setVisibility(View.GONE);
+                    llRecycle.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
+
+        timer.start();
+
     }
+
+    public CountDownTimer timer = new CountDownTimer(10000, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            tvTime.setText("倒计时" + (millisUntilFinished / 1000) + "s");
+            tvTime2.setText("倒计时" + (millisUntilFinished / 1000) + "s");
+            CountDownTime = false;
+        }
+
+        @Override
+        public void onFinish() {
+            CountDownTime = true;
+        }
+    };
 
     @Override
     public void onClick(View v) {
