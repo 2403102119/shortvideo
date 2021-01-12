@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/riIcon"
             android:src="@mipmap/touxiang"
             android:scaleType="fitXY"
             app:riv_oval="true"
@@ -23,12 +24,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
+                android:id="@+id/tvName"
                 android:text="用户名称"
                 android:textColor="@color/txt_33"
                 android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
+                android:id="@+id/tvcompetitionName"
                 android:text="来源：首届星洲社区舞蹈大赛 >"
                 android:textSize="12sp"
                 android:layout_marginTop="5dp"
@@ -38,12 +41,14 @@
         </LinearLayout>
     </LinearLayout>
     <cn.jzvd.JzvdStd
+        android:id="@+id/jzVideo"
         android:layout_marginLeft="11dp"
         android:layout_marginRight="11dp"
         android:layout_marginTop="13dp"
         android:layout_width="match_parent"
         android:layout_height="198dp"/>
     <TextView
+        android:id="@+id/tvTitle"
         android:layout_marginLeft="11dp"
         android:layout_marginRight="11dp"
         android:text="视频标题"
@@ -66,6 +71,7 @@
              android:layout_width="wrap_content"
              android:layout_height="18dp"/>
         <TextView
+            android:id="@+id/tvcommentCount"
             android:text="0"
             android:textSize="11sp"
             android:textColor="#A7A7A7"
@@ -77,6 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="18dp"/>
         <TextView
+            android:id="@+id/tvcollectCount"
             android:text="0"
             android:textSize="11sp"
             android:textColor="#A7A7A7"
@@ -89,6 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="18dp"/>
         <TextView
+            android:id="@+id/tvshareCount"
             android:text="0"
             android:textSize="11sp"
             android:textColor="#A7A7A7"

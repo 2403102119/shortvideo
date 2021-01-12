@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <EditText
-        android:id="@+id/et_itea"
+        android:id="@+id/etIdea"
         android:hint="请留下您宝贵的意见！"
         android:gravity="top"
         android:textColor="@color/colorBlack"
@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp" />
     <TextView
-        android:id="@+id/tv_login"
+        android:id="@+id/tvIssue"
         android:layout_width="287dp"
         android:layout_height="44dp"
         android:layout_gravity="center_horizontal"

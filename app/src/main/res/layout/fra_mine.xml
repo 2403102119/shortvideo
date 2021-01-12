@@ -22,6 +22,7 @@
            android:layout_width="match_parent"
            android:layout_height="wrap_content">
            <com.makeramen.roundedimageview.RoundedImageView
+               android:id="@+id/riIcon"
                app:riv_oval="true"
                android:scaleType="fitXY"
                android:src="@mipmap/touxiang"
@@ -34,6 +35,7 @@
                android:layout_weight="1"
                android:layout_height="wrap_content">
                <TextView
+                   android:id="@+id/tvName"
                    android:text="柠檬不酸"
                    android:textColor="@color/white"
                    android:textSize="16sp"
@@ -41,6 +43,7 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"/>
                <TextView
+                   android:id="@+id/tvMotto"
                    android:layout_marginTop="8dp"
                    android:text="生活很苦，但你很甜呐~"
                    android:textSize="12sp"
@@ -75,6 +78,7 @@
                android:layout_weight="1"
                android:layout_height="match_parent">
                <TextView
+                   android:id="@+id/tvtoFocusedCount"
                    android:text="100"
                    android:textSize="22dp"
                    android:textColor="@color/colorBlack"
@@ -99,6 +103,7 @@
                android:layout_weight="1"
                android:layout_height="match_parent">
                <TextView
+                   android:id="@+id/tvfocusedCount"
                    android:text="1584"
                    android:textSize="22dp"
                    android:textColor="@color/colorBlack"
@@ -147,6 +152,7 @@
            android:layout_width="match_parent"
            android:layout_height="wrap_content">
            <LinearLayout
+               android:id="@+id/llAbout"
                android:gravity="center_vertical"
                android:orientation="horizontal"
                android:layout_width="match_parent"

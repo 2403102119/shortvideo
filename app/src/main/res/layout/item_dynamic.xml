@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_margin="11dp"
     android:layout_width="match_parent"
@@ -11,6 +11,9 @@
          android:layout_width="match_parent"
          android:layout_height="wrap_content">
          <com.makeramen.roundedimageview.RoundedImageView
+             android:id="@+id/riIcon"
+             android:scaleType="fitXY"
+             app:riv_oval="true"
              android:src="@mipmap/touxiang"
              android:layout_width="28dp"
              android:layout_height="28dp"/>
@@ -21,12 +24,14 @@
              android:layout_weight="1"
              android:layout_height="wrap_content">
              <TextView
+                 android:id="@+id/tvTitle"
                  android:text="用户昵称"
                  android:textColor="@color/txt_33"
                  android:textSize="13sp"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"/>
              <TextView
+                 android:id="@+id/tvTime"
                  android:layout_marginTop="7dp"
                  android:text="2020.11.24   14:00"
                  android:textSize="11sp"
@@ -35,6 +40,7 @@
                  android:layout_height="wrap_content"/>
          </LinearLayout>
          <TextView
+             android:id="@+id/tvGuanzhu"
              android:text="互相关注"
              android:textSize="13sp"
              android:gravity="center"
@@ -44,6 +50,7 @@
              android:layout_height="27dp"/>
      </LinearLayout>
     <TextView
+        android:id="@+id/tvConten"
         android:layout_marginTop="15dp"
         android:text="小姐姐的嗓子是天使吻过的吗？好漂亮啊~"
         android:textSize="12sp"
@@ -67,17 +74,20 @@
             android:layout_width="wrap_content"
             android:layout_height="18dp"/>
         <TextView
+            android:id="@+id/tvcommentCount"
             android:text="0"
             android:textSize="11sp"
             android:textColor="#A7A7A7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <ImageView
+            android:id="@+id/imShoucang"
             android:src="@mipmap/dianzan"
             android:layout_marginLeft="26dp"
             android:layout_width="wrap_content"
             android:layout_height="18dp"/>
         <TextView
+            android:id="@+id/tvcollectCount"
             android:text="0"
             android:textSize="11sp"
             android:textColor="#A7A7A7"
@@ -90,6 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="18dp"/>
         <TextView
+            android:id="@+id/tvshareCount"
             android:text="0"
             android:textSize="11sp"
             android:textColor="#A7A7A7"

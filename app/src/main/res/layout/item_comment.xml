@@ -56,10 +56,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageView
-                android:src="@mipmap/yidianzan"
+                android:id="@+id/imDianzan"
+                android:src="@mipmap/weidianzan"
                 android:layout_width="17dp"
                 android:layout_height="18dp"/>
             <TextView
+                android:id="@+id/tvDianzan"
                 android:text="0"
                 android:textSize="12sp"
                 android:layout_marginLeft="5dp"
@@ -68,6 +70,7 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/llComment"
             android:layout_marginLeft="20dp"
             android:gravity="center"
             android:orientation="horizontal"
@@ -78,6 +81,7 @@
                 android:layout_width="17dp"
                 android:layout_height="18dp"/>
             <TextView
+                android:id="@+id/imsubCommentList"
                 android:text="0"
                 android:textSize="12sp"
                 android:layout_marginLeft="5dp"

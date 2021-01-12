@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
@@ -15,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="首届星洲社区大赛"
+            android:text=""
             android:textStyle="bold"
             android:textColor="@color/txt_lv6"
             android:textSize="@dimen/txt_title" />
@@ -87,7 +89,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="63dp">
-                    <com.youth.banner.Banner
+                    <cn.ymex.widget.banner.Banner
+                        android:id="@+id/banner"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
                     <TextView
@@ -111,13 +114,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="42dp">
                     <TextView
-                        android:text="未来的未来"
+                        android:id="@+id/tvtitle"
+                        android:text=""
                         android:textSize="15sp"
                         android:textColor="@color/colorBlack"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"/>
                     <TextView
+                        android:id="@+id/tvPass"
                         android:text="PASS"
                         android:background="@drawable/pass"
                         android:textColor="@color/white"
@@ -127,6 +132,7 @@
                         android:layout_width="61dp"
                         android:layout_height="22dp"/>
                     <TextView
+                        android:id="@+id/tvNg"
                         android:text="NG"
                         android:background="@drawable/login_20"
                         android:textColor="@color/white"
@@ -138,12 +144,39 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="208dp">
-                    <cn.jzvd.JzvdStd
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent">
+                        <cn.jzvd.JzvdStd
+                            android:id="@+id/jzVideo"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+                        <LinearLayout
+                            android:layout_centerVertical="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:id="@+id/imretreat"
+                                android:layout_marginLeft="6.5dp"
+                                android:src="@mipmap/zuo"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"/>
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="1dp"/>
+                            <ImageView
+                                android:id="@+id/imadvance"
+                                android:layout_marginRight="6.5dp"
+                                android:src="@mipmap/you"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"/>
+                        </LinearLayout>
+                    </RelativeLayout>
+
                     <ImageView
                         android:id="@+id/imVideo"
-                        android:src="@mipmap/guide1"
+                        android:src="@mipmap/imageerror"
                         android:scaleType="centerCrop"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
@@ -181,22 +214,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <ImageView
+                        android:visibility="gone"
                         android:src="@mipmap/hua"
                         android:layout_width="16dp"
                         android:layout_height="18dp"/>
                     <TextView
                         android:text="0"
+                        android:visibility="gone"
                         android:layout_marginLeft="7dp"
                         android:textSize="11sp"
                         android:textColor="#A7A7A7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <ImageView
+                        android:id="@+id/imCollected"
                         android:src="@mipmap/dianzan"
                         android:layout_marginLeft="26dp"
                         android:layout_width="wrap_content"
                         android:layout_height="18dp"/>
                     <TextView
+                        android:id="@+id/tvCollectCount"
                         android:text="0"
                         android:textSize="11sp"
                         android:textColor="#A7A7A7"
@@ -209,6 +246,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="18dp"/>
                     <TextView
+                        android:id="@+id/tvshareCount"
                         android:text="0"
                         android:textSize="11sp"
                         android:textColor="#A7A7A7"
@@ -216,6 +254,7 @@
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/llUser"
                     android:orientation="horizontal"
                     android:layout_marginTop="27dp"
                     android:layout_marginLeft="11dp"
@@ -228,8 +267,10 @@
                         android:src="@mipmap/touxiang"
                         android:scaleType="fitXY"
                         android:layout_width="40dp"
+                        app:riv_oval="true"
                         android:layout_height="40dp"/>
                     <TextView
+                        android:id="@+id/tvnickname"
                         android:text="桑娜啊~"
                         android:textSize="15sp"
                         android:textColor="@color/colorBlack"
@@ -278,10 +319,13 @@
                                 android:layout_height="wrap_content"/>
                         </LinearLayout>
                         <com.zhy.view.flowlayout.TagFlowLayout
-                            android:layout_marginTop="15dp"
+                            android:id="@+id/tagFlow"
+                            app:max_select="1"
+                            android:layout_marginTop="10dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                         <TextView
+                            android:id="@+id/tvcommentCount"
                             android:layout_marginTop="15dp"
                             android:text="共计188条评论"
                             android:textSize="13sp"
@@ -299,7 +343,7 @@
                         android:layout_height="350dp">
                         <ImageView
                             android:id="@+id/imComment"
-                            android:src="@mipmap/guide1"
+                            android:src="@mipmap/imageerror"
                             android:scaleType="centerCrop"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"/>
@@ -351,12 +395,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/riCommentIcon"
                     android:src="@mipmap/touxiang"
+                    app:riv_oval="true"
                     android:scaleType="fitXY"
                     android:layout_marginLeft="7dp"
                     android:layout_width="28dp"
                     android:layout_height="28dp"/>
                 <TextView
+                    android:id="@+id/tvCommentName"
                     android:text="桑娜啊~"
                     android:textSize="15sp"
                     android:textColor="@color/colorBlack"
@@ -373,6 +420,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <EditText
+                    android:id="@+id/etPinglun"
                     android:hint="节奏的魅力，全被你洞悉~"
                     android:textSize="13sp"
                     android:textColor="@color/txt_33"
@@ -382,6 +430,7 @@
                     android:layout_weight="1"
                     android:layout_height="33dp"/>
                 <TextView
+                    android:id="@+id/tvPinglun"
                     android:text="评论"
                     android:layout_marginLeft="15dp"
                     android:gravity="center_vertical"

@@ -41,48 +41,40 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
     @Override
     public void onBindViewHolder(MessageListAdapter.MyHolder holder, final int position) {
-//        holder.tvTitle.setText(list.get(position).nick);
-//        holder.tvCreateDate.setText(list.get(position).chatDate);
-//        holder.tvContent.setText(list.get(position).content);
-//        holder.tvUnreadCount.setText(list.get(position).unreadCount);
-//        if (StringUtil.isEmpty(list.get(position).unreadCount)||list.get(position).unreadCount.equals("0")){
-//            holder.tvUnreadCount.setVisibility(View.GONE);
-//        }else {
-//            holder.tvUnreadCount.setVisibility(View.VISIBLE);
-//        }
-//        Glide.with(context).applyDefaultRequestOptions(new RequestOptions()
-//                .placeholder(R.mipmap.logo)
-//                .error(R.mipmap.logo))
-//                .load(list.get(position).avatar)
-//                .into(holder.imAvatar);
-//        holder.ll_item.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onItemClickListener.OnItemClickListener(position);
-//            }
-//        });
-//        holder.btnDel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onItemClickListener.OnDelateClickListener(position);
-//            }
-//        });
+        holder.tvTitle.setText(list.get(position).title);
+        holder.tvCreateDate.setText(list.get(position).createDate);
+        if (list.get(position).unread.equals("1")){
+            holder.view_unread.setVisibility(View.VISIBLE);
+        }else {
+            holder.view_unread.setVisibility(View.INVISIBLE);
+        }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.OnDelateClickListener(position);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-//        if (list == null) {
-//            return 0;
-//        } else {
-//            return list.size();
-//        }
-        return 8;
+        if (list == null) {
+            return 0;
+        } else {
+            return list.size();
+        }
     }
 
 
     public class MyHolder extends RecyclerView.ViewHolder {
+        TextView tvTitle;
+        TextView tvCreateDate;
+        View view_unread;
         public MyHolder(View itemView) {
             super(itemView);
+            tvTitle = itemView.findViewById(R.id.tvTitle);
+            tvCreateDate = itemView.findViewById(R.id.tvCreateDate);
+            view_unread = itemView.findViewById(R.id.view_unread);
         }
     }
     private MessageListAdapter.OnItemClickListener onItemClickListener;

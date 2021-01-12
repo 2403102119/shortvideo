@@ -4,9 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.bean.DataListBean;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
 
@@ -35,24 +39,46 @@ public class FansAdapter extends RecyclerView.Adapter<FansAdapter.MyHolder> {
 
     @Override
     public void onBindViewHolder(FansAdapter.MyHolder holder, final int position) {
-
+        Glide.with(context).applyDefaultRequestOptions(new RequestOptions()
+                .error(R.mipmap.touxiang)
+                .placeholder(R.mipmap.touxiang))
+                .load(list.get(position).avatar)
+                .into(holder.riIcon);
+        holder.tvTitle.setText(list.get(position).nickname);
+        holder.tvTime.setText(list.get(position).createDate);
+        if (list.get(position).focused.equals("1")){
+           if (list.get(position).beFocused.equals("1")){
+               holder.tvGuanzhu.setText("互相关注");
+           }else {
+               holder.tvGuanzhu.setText("已关注");
+           }
+        }else {
+            holder.tvGuanzhu.setText("+关注");
+        }
     }
 
     @Override
     public int getItemCount() {
 
-//        if (list == null) {
-//            return 0;
-//        } else {
-//            return list.size();
-//        }
-        return 8;
+        if (list == null) {
+            return 0;
+        } else {
+            return list.size();
+        }
     }
 
 
     public class MyHolder extends RecyclerView.ViewHolder {
+        RoundedImageView riIcon;
+        TextView tvTitle;
+        TextView tvTime;
+        TextView tvGuanzhu;
         public MyHolder(View itemView) {
             super(itemView);
+            riIcon = itemView.findViewById(R.id.riIcon);
+            tvTitle = itemView.findViewById(R.id.tvTitle);
+            tvTime = itemView.findViewById(R.id.tvTime);
+            tvGuanzhu = itemView.findViewById(R.id.tvGuanzhu);
         }
     }
     private FansAdapter.OnItemClickListener onItemClickListener;

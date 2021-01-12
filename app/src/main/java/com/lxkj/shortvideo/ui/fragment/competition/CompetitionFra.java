@@ -83,8 +83,10 @@ public class CompetitionFra extends TitleFragment {
         competitionAdapter.setOnItemClickListener(new CompetitionAdapter.OnItemClickListener() {
             @Override
             public void OnItemClickListener(int firstPosition) {//赛事详情
-
-                ActivitySwitcher.startFragment(getActivity(), EventDetailsFra.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("id",listBeans.get(firstPosition).id);
+                bundle.putString("title",listBeans.get(firstPosition).name);
+                ActivitySwitcher.startFragment(getActivity(), EventDetailsFra.class,bundle);
             }
         });
 

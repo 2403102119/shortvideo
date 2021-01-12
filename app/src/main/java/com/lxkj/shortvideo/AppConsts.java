@@ -6,6 +6,7 @@ package com.lxkj.shortvideo;
 public class AppConsts {
 
     public static String anchorId = "";
+    public static String titile = "";
     public static String city = "郑州市"; //选择的市
     public static String province = "河南省"; //选择的市
     public static String userName = "用户";

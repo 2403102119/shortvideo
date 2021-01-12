@@ -27,20 +27,25 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"/>
       <EditText
+          android:id="@+id/etTitle"
           android:background="@null"
           android:textSize="12sp"
           android:hint="请输入视频标题"
           android:layout_marginLeft="11dp"
           android:layout_marginTop="8dp"
+          android:gravity="top"
           android:textColor="@color/txt_66"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"/>
+          android:layout_height="40dp"/>
+
       <ImageView
-          android:layout_marginTop="25dp"
-          android:layout_marginLeft="13dp"
-          android:src="@mipmap/shangchuanshipin"
+          android:id="@+id/imShipin"
           android:layout_width="80dp"
-          android:layout_height="80dp"/>
+          android:scaleType="centerCrop"
+          android:layout_height="80dp"
+          android:layout_marginLeft="13dp"
+          android:src="@mipmap/shangchuanshipin" />
+
       <TextView
           android:layout_marginTop="21dp"
           android:gravity="center_vertical"
@@ -61,17 +66,20 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"/>
       <EditText
+          android:id="@+id/etLable"
           android:background="@null"
           android:textSize="12sp"
           android:hint="请输入视频标签"
           android:layout_marginLeft="11dp"
           android:layout_marginTop="8dp"
+          android:gravity="top"
           android:textColor="@color/txt_66"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"/>
+          android:layout_height="40dp"/>
       <ImageView
-          android:layout_marginTop="25dp"
+          android:id="@+id/imLableVideo"
           android:layout_marginLeft="13dp"
+          android:scaleType="centerCrop"
           android:src="@mipmap/shangchuanshipin"
           android:layout_width="80dp"
           android:layout_height="80dp"/>
@@ -83,6 +91,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content">
           <ImageView
+              android:id="@+id/imAll"
               android:src="@mipmap/yixuan"
               android:layout_width="15dp"
               android:layout_height="15dp"/>
@@ -94,6 +103,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"/>
           <ImageView
+              android:id="@+id/imNoAll"
               android:layout_marginLeft="40dp"
               android:src="@mipmap/weixuan"
               android:layout_width="15dp"

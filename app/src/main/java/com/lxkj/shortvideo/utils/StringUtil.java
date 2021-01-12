@@ -101,4 +101,31 @@ public class StringUtil {
         SimpleDateFormat formatter = new SimpleDateFormat(format);
         return formatter.format(date);
     }
+    /*
+     * 将时分秒转为秒数
+     * */
+    public static long formatTurnSecond(String time) {
+        String[] ti = time.split(":");
+        long OKtime = 0;
+        if (ti.length == 3) {
+            String s = time;
+            int index1 = s.indexOf(":");
+            int index2 = s.indexOf(":", index1 + 1);
+            int hh = Integer.parseInt(s.substring(0, index1));
+            int mi = Integer.parseInt(s.substring(index1 + 1, index2));
+            int ss = Integer.parseInt(s.substring(index2 + 1));
+            OKtime = hh * 60 * 60 + mi * 60 + ss;
+
+        } else if (ti.length == 2) {
+            String s = time;
+            String[] ti1 = time.split(":");
+
+            int mi = Integer.parseInt(ti1[0]);
+            int ss = Integer.parseInt(ti1[1]);
+            OKtime = mi * 60 + ss;
+
+        }
+        return OKtime ;
+    }
+
 }

@@ -11,13 +11,21 @@ import android.widget.TextView;
 
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.adapter.ClassicalAdapter;
+import com.lxkj.shortvideo.adapter.CompetitionAdapter;
 import com.lxkj.shortvideo.bean.DataListBean;
+import com.lxkj.shortvideo.bean.ResultBean;
+import com.lxkj.shortvideo.biz.ActivitySwitcher;
+import com.lxkj.shortvideo.http.BaseCallback;
+import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
+import com.lxkj.shortvideo.utils.StringUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,6 +34,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Time:2021/1/5
@@ -48,7 +58,8 @@ public class SearchResultFra extends TitleFragment{
     SmartRefreshLayout smart;
     private ArrayList<DataListBean> listBeans;
     private int page = 1, totalPage = 1;
-    private ClassicalAdapter classicalAdapter;
+    private CompetitionAdapter competitionAdapter;
+    private String name;
     @Override
     public String getTitleName() {
         return "搜索结果";
@@ -65,16 +76,24 @@ public class SearchResultFra extends TitleFragment{
     }
 
     public void initView() {
+
+        name = getArguments().getString("name");
+
         listBeans = new ArrayList<DataListBean>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        classicalAdapter = new ClassicalAdapter(getContext(), listBeans);
-        recyclerView.setAdapter(classicalAdapter);
-        classicalAdapter.setOnItemClickListener(new ClassicalAdapter.OnItemClickListener() {
+        competitionAdapter = new CompetitionAdapter(getContext(), listBeans);
+        recyclerView.setAdapter(competitionAdapter);
+        competitionAdapter.setOnItemClickListener(new CompetitionAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClickListener(int firstPosition) {
+            public void OnItemClickListener(int firstPosition) {//赛事详情
+                Bundle bundle = new Bundle();
+                bundle.putString("id",listBeans.get(firstPosition).id);
+                bundle.putString("title",listBeans.get(firstPosition).name);
+                ActivitySwitcher.startFragment(getActivity(), EventDetailsFra.class,bundle);
             }
         });
+
         smart.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -83,14 +102,70 @@ public class SearchResultFra extends TitleFragment{
                     return;
                 }
                 page++;
-//                getMsgList();
+                competitionList();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 page = 1;
-//                getMsgList();
+                competitionList();
                 refreshLayout.setNoMoreData(false);
+            }
+        });
+        competitionList();
+    }
+
+
+    /**
+     * 赛事列表
+     */
+    private void competitionList() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("mid", userId);
+        params.put("ccid", "");
+        params.put("keywords", name);
+        params.put("pageNo", page + "");
+        params.put("pageSize", "10");
+        mOkHttpHelper.post_json(getContext(), Url.competitionList, params, new BaseCallback<ResultBean>() {
+            @Override
+            public void onBeforeRequest(Request request) {
+            }
+
+            @Override
+            public void onFailure(Request request, Exception e) {
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, ResultBean resultBean) {
+                if (!StringUtil.isEmpty(resultBean.totalPage))
+                    totalPage = Integer.parseInt(resultBean.totalPage);
+                smart.finishLoadMore();
+                smart.finishRefresh();
+                if (page == 1) {
+                    listBeans.clear();
+                    competitionAdapter.notifyDataSetChanged();
+                }
+                if (null != resultBean.dataList)
+                    listBeans.addAll(resultBean.dataList);
+                if (listBeans.size() == 0) {
+                    llNoData.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                } else {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    llNoData.setVisibility(View.GONE);
+                }
+                competitionAdapter.notifyDataSetChanged();
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
             }
         });
     }

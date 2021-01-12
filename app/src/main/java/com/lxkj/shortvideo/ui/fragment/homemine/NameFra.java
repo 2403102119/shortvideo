@@ -50,7 +50,7 @@ public class NameFra extends TitleFragment implements NaviRightListener {
     }
 
     public void initView() {
-        act.titleTv.setText(getArguments().getString("title"));
+        act.titleTv.setText(AppConsts.titile);
     }
 
     @Override

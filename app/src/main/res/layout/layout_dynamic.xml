@@ -24,10 +24,13 @@
                 android:src="@mipmap/im_sousuo"
                 android:layout_width="15dp"
                 android:layout_height="wrap_content"/>
-            <TextView
+            <EditText
+                android:id="@+id/etSearch"
                 android:hint="请输入关键词进行搜索"
                 android:gravity="center_vertical"
                 android:textSize="13sp"
+                android:singleLine="true"
+                android:imeOptions="actionSearch"
                 android:layout_marginLeft="8dp"
                 android:textColorHint="#B4B4B7"
                 android:background="@null"

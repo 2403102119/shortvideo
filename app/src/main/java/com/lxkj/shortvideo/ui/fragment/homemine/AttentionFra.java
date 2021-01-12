@@ -66,14 +66,17 @@ public class AttentionFra extends TitleFragment {
         titles[2] = "附近";
         AttentionListFra allOrderListFra = new AttentionListFra();
         Bundle all = new Bundle();
+        all.putString("type","1");
         allOrderListFra.setArguments(all);
 
         AttentionListFra dfkOrderListFra = new AttentionListFra();
         Bundle dfk = new Bundle();
+        dfk.putString("type","2");
         dfkOrderListFra.setArguments(dfk);
 
         AttentionListFra dfhOrderListFra = new AttentionListFra();
         Bundle dfh = new Bundle();
+        dfh.putString("type","3");
         dfhOrderListFra.setArguments(dfh);
 
         fragments.add(allOrderListFra);

@@ -104,16 +104,19 @@ public class SeachFra extends TitleFragment {
         tag.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
             @Override
             public boolean onTagClick(View view, int position, FlowLayout parent) {
-                list.add(etSearch.getText().toString());
-                SharePrefUtil.addSessionMap(AppConsts.History, list);
-                setData();
-                String edStr = etSearch.getText().toString().trim();
+//                list.add(etSearch.getText().toString());
+//                SharePrefUtil.addSessionMap(AppConsts.History, list);
+//                setData();
+                String edStr = list.get(position);
                 Bundle bundle = new Bundle();
                 bundle.putString("name", edStr);
                 ActivitySwitcher.startFragment(getActivity(), SearchResultFra.class, bundle);
                 return true;
             }
         });
+
+        setData();
+
     }
 
     public void setData(){

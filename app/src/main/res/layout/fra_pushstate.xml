@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="225dp" />
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvImg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <LinearLayout
@@ -27,6 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
+            android:id="@+id/imAll"
             android:src="@mipmap/yixuan"
             android:layout_width="15dp"
             android:layout_height="15dp"/>
@@ -38,6 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <ImageView
+            android:id="@+id/imJinjin"
             android:layout_marginLeft="40dp"
             android:src="@mipmap/weixuan"
             android:layout_width="15dp"
@@ -58,6 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
+            android:id="@+id/imHaoyou"
             android:src="@mipmap/weixuan"
             android:layout_width="15dp"
             android:layout_height="15dp"/>

@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_marginTop="25dp"
     android:gravity="center_vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <com.makeramen.roundedimageview.RoundedImageView
+       android:id="@+id/riIcon"
         android:src="@mipmap/touxiang"
+        app:riv_oval="true"
         android:scaleType="fitXY"
         android:layout_width="40dp"
         android:layout_height="40dp"/>
@@ -23,12 +25,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
+                android:id="@+id/tvName"
                 android:text="桑娜啊~"
                 android:textSize="15sp"
                 android:textColor="@color/colorBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
+                android:id="@+id/tvCountTime"
                 android:text="1’35’’"
                 android:textSize="12sp"
                 android:layout_marginLeft="15dp"
@@ -49,6 +53,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/tvTime"
                 android:textSize="11sp"
                 android:textColor="#CCCCCC"
                 android:text="2020.11.24 10:12"
@@ -58,6 +63,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tvGuanzhu"
         android:background="@drawable/bianjiziliao"
         android:gravity="center"
         android:textColor="@color/colorBlack"

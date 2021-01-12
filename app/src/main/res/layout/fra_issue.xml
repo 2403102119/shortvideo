@@ -47,36 +47,42 @@
             android:layout_width="match_parent"
             android:layout_height="41dp">
               <LinearLayout
+                  android:id="@+id/llShoucang"
                   android:gravity="center"
                   android:layout_marginLeft="11dp"
                   android:orientation="vertical"
                   android:layout_width="wrap_content"
                   android:layout_height="match_parent">
                   <TextView
+                      android:id="@+id/tvShoucang"
                       android:text="收藏"
                       android:textColor="@color/colorBlack"
                       android:textSize="14sp"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"/>
                   <View
+                      android:id="@+id/viewShoucang"
                       android:layout_marginTop="5dp"
                       android:background="@color/colorBlack"
                       android:layout_width="13dp"
                       android:layout_height="3dp"/>
               </LinearLayout>
             <LinearLayout
+                android:id="@+id/llCanping"
                 android:gravity="center"
                 android:layout_marginLeft="50dp"
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
                 <TextView
+                    android:id="@+id/tvCanping"
                     android:text="参评"
                     android:textColor="@color/txt_66"
                     android:textSize="13sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <View
+                    android:id="@+id/viewCanping"
                     android:layout_marginTop="5dp"
                     android:background="@color/white"
                     android:layout_width="13dp"
@@ -94,16 +100,16 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="45dp"
+                android:layout_gravity="center_vertical"
                 app:tl_indicator_height="2dp"
                 app:tl_indicator_width="35dp"
-                app:tl_tab_space_equal="true"
+                app:tl_indicator_corner_radius="1dp"
                 app:tl_divider_width="0.5dp"
                 app:tl_divider_color="@color/white"
-                app:tl_indicator_corner_radius="1dp"
                 app:tl_textSelectColor="@color/main_color"
                 app:tl_textBold="SELECT"
-                app:tl_textUnselectColor="@color/txt_66"
-                app:tl_textsize="@dimen/txt_size_13"
+                app:tl_textUnselectColor="@color/txt_33"
+                app:tl_textsize="@dimen/txt_size_15"
                 app:tl_indicator_color="@color/white">
             </com.flyco.tablayout.SlidingTabLayout>
             <ImageView

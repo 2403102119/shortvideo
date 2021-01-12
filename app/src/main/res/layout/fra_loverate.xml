@@ -12,6 +12,7 @@
          android:layout_width="match_parent"
          android:layout_height="33dp">
          <TextView
+             android:id="@+id/tvPass"
              android:gravity="center"
              android:text="PASS (喜爱) 90%"
              android:textColor="@color/white"
@@ -21,6 +22,7 @@
              android:layout_weight="1"
              android:layout_height="match_parent"/>
          <TextView
+             android:id="@+id/tvNG"
              android:gravity="center"
              android:text="NG 10%"
              android:textColor="@color/white"
@@ -30,10 +32,19 @@
              android:layout_weight="1"
              android:layout_height="match_parent"/>
      </LinearLayout>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
 </LinearLayout>

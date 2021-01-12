@@ -74,6 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/tvSex"
             android:hint="点击设置"
             android:textSize="14sp"
             android:textColor="@color/txt_33"
@@ -89,6 +90,7 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/llAge"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -100,6 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/tvTime"
             android:hint="点击设置"
             android:textSize="14sp"
             android:textColor="@color/txt_33"
@@ -132,6 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/tvSite"
             android:hint="点击设置"
             android:textSize="14sp"
             android:textColor="@color/txt_33"
@@ -159,11 +163,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/tvSigature"
             android:hint="点击设置"
             android:textSize="14sp"
             android:textColor="@color/txt_33"
             android:gravity="right|center_vertical"
             android:background="@null"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>

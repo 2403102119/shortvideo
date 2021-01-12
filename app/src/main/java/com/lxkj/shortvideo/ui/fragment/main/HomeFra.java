@@ -119,6 +119,7 @@ public class HomeFra extends CachableFrg implements View.OnClickListener {
     }
 
     public void setData(List<DataListBean> listBeans){
+        fragments.clear();
         String[] titles = new String[listBeans.size()+1];
         titles[0] = "全部";
         CompetitionFra allOrderListFra1 = new CompetitionFra();
@@ -146,7 +147,7 @@ public class HomeFra extends CachableFrg implements View.OnClickListener {
      */
     private void competitionCategoryList() {
         Map<String, Object> params = new HashMap<>();
-        params.put("sid", SharePrefUtil.getString(getContext(), AppConsts.UID, ""));
+        params.put("mid", SharePrefUtil.getString(getContext(), AppConsts.UID, ""));
         OkHttpHelper.getInstance().post_json(getContext(), Url.competitionCategoryList, params, new BaseCallback<ResultBean>() {
             @Override
             public void onBeforeRequest(Request request) {

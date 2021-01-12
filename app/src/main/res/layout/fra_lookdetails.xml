@@ -18,6 +18,7 @@
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"/>
     <TextView
+        android:id="@+id/tvTitle"
         android:text="首届星洲社区舞蹈大赛（第一轮）"
         android:textSize="12sp"
         android:layout_marginTop="8dp"
@@ -25,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
-        android:text="赛事名称"
+        android:text="赛事介绍"
         android:layout_marginTop="28dp"
         android:textColor="@color/txt_33"
         android:textSize="14sp"
@@ -33,7 +34,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
+        android:id="@+id/tvSaishijieshao"
         android:layout_marginTop="12dp"
+        android:padding="5dp"
         android:background="@drawable/saishijieshao"
         android:minHeight="147dp"
         android:layout_width="match_parent"
@@ -47,6 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
+        android:id="@+id/tvJiangpinjieshao"
         android:text=""
         android:textSize="12sp"
         android:layout_marginTop="8dp"
@@ -62,6 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
+        android:id="@+id/tvShuoming"
         android:text=""
         android:textSize="12sp"
         android:layout_marginTop="8dp"
@@ -77,6 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
+        android:id="@+id/tvTime"
         android:text=""
         android:textSize="12sp"
         android:layout_marginTop="8dp"
@@ -92,6 +98,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
+        android:id="@+id/tvNumber"
         android:text=""
         android:textSize="12sp"
         android:layout_marginTop="8dp"

@@ -7,25 +7,38 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.R;
+import com.lxkj.shortvideo.bean.ResultBean;
 import com.lxkj.shortvideo.biz.ActivitySwitcher;
 import com.lxkj.shortvideo.biz.EventCenter;
+import com.lxkj.shortvideo.http.BaseCallback;
+import com.lxkj.shortvideo.http.OkHttpHelper;
+import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.ui.fragment.CachableFrg;
 import com.lxkj.shortvideo.ui.fragment.homemine.AttentionFra;
 import com.lxkj.shortvideo.ui.fragment.homemine.FansFra;
 import com.lxkj.shortvideo.ui.fragment.homemine.HomepageFra;
 import com.lxkj.shortvideo.ui.fragment.homemine.IssueFra;
 import com.lxkj.shortvideo.ui.fragment.homemine.SetFra;
+import com.lxkj.shortvideo.ui.fragment.system.WebFra;
 import com.lxkj.shortvideo.utils.SharePrefUtil;
 import com.lxkj.shortvideo.utils.ToastUtil;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.zhy.m.permission.MPermissions;
 import com.zhy.m.permission.PermissionDenied;
 import com.zhy.m.permission.PermissionGrant;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Time:2020/10/28
@@ -47,6 +60,18 @@ public class HomeMineFra extends CachableFrg implements View.OnClickListener {
     LinearLayout llIssue;
     @BindView(R.id.llSet)
     LinearLayout llSet;
+    @BindView(R.id.riIcon)
+    RoundedImageView riIcon;
+    @BindView(R.id.tvName)
+    TextView tvName;
+    @BindView(R.id.tvMotto)
+    TextView tvMotto;
+    @BindView(R.id.tvtoFocusedCount)
+    TextView tvtoFocusedCount;
+    @BindView(R.id.tvfocusedCount)
+    TextView tvfocusedCount;
+    @BindView(R.id.llAbout)
+    LinearLayout llAbout;
 
 
     @Override
@@ -63,11 +88,14 @@ public class HomeMineFra extends CachableFrg implements View.OnClickListener {
         llFans.setOnClickListener(this);
         llIssue.setOnClickListener(this);
         llSet.setOnClickListener(this);
+        llAbout.setOnClickListener(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        memberHome();
+
     }
 
     @Override
@@ -88,7 +116,54 @@ public class HomeMineFra extends CachableFrg implements View.OnClickListener {
             case R.id.llSet://设置
                 ActivitySwitcher.startFragment(getActivity(), SetFra.class);
                 break;
+            case R.id.llAbout://关于我们
+                Bundle bundle = new Bundle();
+                bundle.putString("title", "关于我们");
+                bundle.putString("url","http://122.114.49.242:8081/apiService/common/protocol/3");
+                ActivitySwitcher.startFragment(getActivity(), WebFra.class, bundle);
+                break;
         }
+    }
+
+
+    /**
+     * 我的主页
+     */
+    private void memberHome() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("mid", SharePrefUtil.getString(getContext(), AppConsts.UID, ""));
+        OkHttpHelper.getInstance().post_json(getContext(), Url.memberHome, params, new BaseCallback<ResultBean>() {
+            @Override
+            public void onBeforeRequest(Request request) {
+            }
+
+            @Override
+            public void onFailure(Request request, Exception e) {
+            }
+
+            @Override
+            public void onResponse(Response response) {
+            }
+
+            @Override
+            public void onSuccess(Response response, ResultBean resultBean) {
+                Glide.with(getContext()).applyDefaultRequestOptions(new RequestOptions()
+                        .error(R.mipmap.touxiang)
+                        .placeholder(R.mipmap.touxiang))
+                        .load(resultBean.avatar)
+                        .into(riIcon);
+
+                tvName.setText(resultBean.nickname);
+                tvMotto.setText(resultBean.motto);
+                tvtoFocusedCount.setText(resultBean.toFocusedCount);
+                tvfocusedCount.setText(resultBean.focusedCount);
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+            }
+        });
     }
 
 

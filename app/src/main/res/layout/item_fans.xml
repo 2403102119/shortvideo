@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_marginTop="27dp"
     android:layout_marginLeft="11dp"
@@ -9,8 +9,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/riIcon"
         android:src="@mipmap/touxiang"
         android:scaleType="fitXY"
+        app:riv_oval="true"
         android:layout_width="40dp"
         android:layout_height="40dp"/>
     <LinearLayout
@@ -20,10 +22,10 @@
         android:layout_weight="1"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/tvTitle"
             android:text="桑娜啊~"
             android:textSize="15sp"
             android:textColor="@color/colorBlack"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <LinearLayout
@@ -45,6 +47,7 @@
                 android:layout_width="1dp"
                 android:layout_height="10dp"/>
             <TextView
+                android:id="@+id/tvTime"
                 android:textSize="11sp"
                 android:textColor="#CCCCCC"
                 android:text="2020.11.24 10:12"
@@ -52,25 +55,10 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:layout_marginRight="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-        <ImageView
-            android:src="@mipmap/sixin"
-            android:layout_width="11dp"
-            android:layout_height="13dp"/>
-        <TextView
-            android:text="私信"
-            android:textSize="11sp"
-            android:textColor="@color/main_color"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+
 
     <TextView
+        android:id="@+id/tvGuanzhu"
         android:background="@drawable/bianjiziliao"
         android:gravity="center"
         android:textColor="@color/colorBlack"

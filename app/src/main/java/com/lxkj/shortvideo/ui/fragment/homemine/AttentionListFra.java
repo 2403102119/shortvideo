@@ -13,12 +13,18 @@ import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.adapter.AttentionListAdapter;
 import com.lxkj.shortvideo.adapter.ClassicalAdapter;
 import com.lxkj.shortvideo.bean.DataListBean;
+import com.lxkj.shortvideo.bean.ResultBean;
+import com.lxkj.shortvideo.http.BaseCallback;
+import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
+import com.lxkj.shortvideo.utils.StringUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +33,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Time:2021/1/4
@@ -51,6 +59,7 @@ public class AttentionListFra extends TitleFragment {
     private ArrayList<DataListBean> listBeans;
     private int page = 1, totalPage = 1;
     private AttentionListAdapter classicalAdapter;
+    private String type;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,6 +71,9 @@ public class AttentionListFra extends TitleFragment {
     }
 
     public void initView() {
+
+        type = getArguments().getString("type");
+
         listBeans = new ArrayList<DataListBean>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -80,18 +92,72 @@ public class AttentionListFra extends TitleFragment {
                     return;
                 }
                 page++;
-//                getMsgList();
+                memberFocusList();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 page = 1;
-//                getMsgList();
+                memberFocusList();
                 refreshLayout.setNoMoreData(false);
             }
         });
-//        smart.autoRefresh();
 
+        memberFocusList();
+    }
+
+
+    /**
+     * memberFocusList
+     */
+    private void memberFocusList() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("mid", userId);
+        params.put("type", type);
+        params.put("pageNo", page + "");
+        params.put("pageSize", "10");
+        mOkHttpHelper.post_json(getContext(), Url.memberFocusList, params, new BaseCallback<ResultBean>() {
+            @Override
+            public void onBeforeRequest(Request request) {
+            }
+
+            @Override
+            public void onFailure(Request request, Exception e) {
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, ResultBean resultBean) {
+                if (!StringUtil.isEmpty(resultBean.totalPage))
+                    totalPage = Integer.parseInt(resultBean.totalPage);
+                smart.finishLoadMore();
+                smart.finishRefresh();
+                if (page == 1) {
+                    listBeans.clear();
+                    classicalAdapter.notifyDataSetChanged();
+                }
+                if (null != resultBean.dataList)
+                    listBeans.addAll(resultBean.dataList);
+                if (listBeans.size() == 0) {
+                    llNoData.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                } else {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    llNoData.setVisibility(View.GONE);
+                }
+                classicalAdapter.notifyDataSetChanged();
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+            }
+        });
     }
 
     @Override

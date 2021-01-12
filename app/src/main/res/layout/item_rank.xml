@@ -15,7 +15,8 @@
             android:layout_width="80dp"
             android:layout_height="85dp">
             <com.makeramen.roundedimageview.RoundedImageView
-                android:src="@mipmap/guide1"
+                android:id="@+id/riIcon"
+                android:src="@mipmap/imageerror"
                 app:riv_corner_radius="5dp"
                 android:scaleType="centerCrop"
                 android:layout_alignParentBottom="true"
@@ -29,6 +30,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"/>
                 <TextView
+                    android:id="@+id/tvNumber"
                     android:text="1"
                     android:textSize="13sp"
                     android:textColor="#010101"
@@ -49,13 +51,17 @@
             android:layout_weight="1"
             android:layout_height="match_parent">
             <TextView
+                android:id="@+id/tvTitle"
                 android:text="这里是视频标题"
+                android:lines="1"
+                android:ellipsize="end"
                 android:textColor="@color/txt_33"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
+                android:id="@+id/tvTime"
                 android:layout_marginTop="11dp"
                 android:text="2020.11.24  10:12"
                 android:textSize="11sp"
@@ -63,6 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
+                android:id="@+id/tvName"
                 android:layout_marginTop="11dp"
                 android:text="作者：张三"
                 android:textColor="@color/txt_66"
@@ -93,6 +100,7 @@
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/tvCanping"
             android:text="1251"
             android:textSize="12sp"
             android:textColor="@color/txt_66"
@@ -119,6 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
+                android:id="@+id/tvXiAi"
                 android:text="80%"
                 android:textSize="12sp"
                 android:textColor="@color/txt_66"
@@ -134,10 +143,12 @@
         </LinearLayout>
 
         <ImageView
-            android:src="@mipmap/yishoucang"
+            android:id="@+id/imXihuan"
+            android:src="@mipmap/dianzan"
             android:layout_width="16dp"
             android:layout_height="13dp"/>
         <TextView
+            android:id="@+id/tvXihuan"
             android:layout_marginLeft="5dp"
             android:text="145"
             android:textSize="12sp"
