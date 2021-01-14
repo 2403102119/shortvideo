@@ -1,5 +1,6 @@
 package com.lxkj.shortvideo.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -7,7 +8,10 @@ import android.os.SystemClock;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTabHost;
 
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TabHost;
@@ -19,16 +23,26 @@ import com.gyf.immersionbar.ImmersionBar;
 import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.GlobalBeans;
 import com.lxkj.shortvideo.R;
+import com.lxkj.shortvideo.bean.ResultBean;
 import com.lxkj.shortvideo.bean.SendmessageBean;
 import com.lxkj.shortvideo.biz.EventCenter;
+import com.lxkj.shortvideo.http.BaseCallback;
+import com.lxkj.shortvideo.http.OkHttpHelper;
+import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.socket.WsManager;
 import com.lxkj.shortvideo.ui.fragment.main.HomeClassicalFra;
 import com.lxkj.shortvideo.ui.fragment.main.HomeFra;
 import com.lxkj.shortvideo.ui.fragment.main.HomeMineFra;
 import com.lxkj.shortvideo.ui.fragment.main.MessageListFra;
 import com.lxkj.shortvideo.ui.fragment.main.HomeShortVideoFra;
+import com.lxkj.shortvideo.utils.PicassoUtil;
 import com.lxkj.shortvideo.utils.SharePrefUtil;
 import com.lxkj.shortvideo.utils.ToastUtil;
+import com.lzy.ninegrid.ImageInfo;
+import com.makeramen.roundedimageview.RoundedImageView;
+import com.tencent.imsdk.TIMManager;
+import com.tencent.qcloud.tim.uikit.TUIKit;
+import com.tencent.qcloud.tim.uikit.base.IUIKitCallBack;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -41,6 +55,11 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.ymex.widget.banner.callback.BindViewCallBack;
+import cn.ymex.widget.banner.callback.CreateViewCallBack;
+import cn.ymex.widget.banner.callback.OnClickBannerListener;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainActivity extends BaseFragAct
         implements TabHost.OnTabChangeListener, EventCenter.EventListener {
@@ -72,6 +91,7 @@ public class MainActivity extends BaseFragAct
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
         }
 
+        getUserSig();
     }
 
 
@@ -90,6 +110,50 @@ public class MainActivity extends BaseFragAct
             String requestData = gson.toJson(map);
             wsManager.sendMessage(requestData);
         }
+    }
+
+    /**
+     * 获取UserSig
+     */
+    private void getUserSig() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("mid",  SharePrefUtil.getString(this,AppConsts.UID,null));
+        OkHttpHelper.getInstance().post_json(this, Url.getUserSig, params, new BaseCallback<ResultBean>() {
+            @Override
+            public void onBeforeRequest(Request request) {
+            }
+
+            @Override
+            public void onFailure(Request request, Exception e) {
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, ResultBean resultBean) {
+                TUIKit.login(SharePrefUtil.getString(MainActivity.this, AppConsts.UID, ""),resultBean.userSig, new IUIKitCallBack() {
+                    @Override
+                    public void onSuccess(Object data) {
+                        // 登录成功
+                        TIMManager.getInstance().getConversationList();
+                    }
+
+                    @Override
+                    public void onError(String module, final int code, final String desc) {
+                        // 登录失败
+                        Log.e("TAG", "onError: "+module+"---"+code+"---"+desc );
+                    }
+                });
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+            }
+        });
     }
 
 

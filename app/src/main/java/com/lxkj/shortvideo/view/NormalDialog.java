@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.lxkj.shortvideo.R;
+import com.lxkj.shortvideo.utils.StringUtil;
 
 
 /**
@@ -43,6 +44,12 @@ public class NormalDialog extends Dialog {
         tvHint.setText(title);
         tvLeft.setText(left);
         tvRight.setText(right);
+
+        if (StringUtil.isEmpty(left)){
+            tvLeft.setVisibility(View.GONE);
+        }else {
+            tvLeft.setVisibility(View.VISIBLE);
+        }
 
         tvLeft.setOnClickListener(new View.OnClickListener() {
             @Override

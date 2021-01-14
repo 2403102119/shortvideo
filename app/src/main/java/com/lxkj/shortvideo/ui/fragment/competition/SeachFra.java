@@ -138,7 +138,7 @@ public class SeachFra extends TitleFragment {
         adapter = new TagAdapter<String>(list) {
             @Override
             public View getView(FlowLayout parent, int position, String s) {
-                TextView view = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.item_choose, parent, false);
+                TextView view = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.item_seach, parent, false);
                 view.setText(s);
                 return view;
             }

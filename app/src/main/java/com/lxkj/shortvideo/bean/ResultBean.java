@@ -52,6 +52,7 @@ public class ResultBean extends BaseBean implements Serializable {
     public String commentCount;
     public String content;
     public String shielded;
+    public String userSig;
     public Member member;
     public List<String> carouselImages;
     public List<String> urls;

@@ -13,6 +13,7 @@ public class AppConsts {
     public static String userIcon = "";
     public static String userId = ""; //余额
     public static String paypassword = "";//支付密码
+    public static String keywords = "";
     public static final String ISAGREE = "isAgree";//是否同意
     public static final String TOKEN = "token"; //融云token
 
@@ -53,7 +54,7 @@ public class AppConsts {
     public static String BeeCloudAppId = "432e7fb8-7ab4-48b3-bc3c-5da0d90d2aa6";
     public static String BeeCloudAppSecret = "ce9a5d61-8edb-40d6-8727-9649eb53c04b";
     public static String SHAREURL = "https://www.baidu.com";
-    public static String SHAREDES = "欢迎使用花园苗木";
+    public static String SHAREDES = "欢迎使用秀评";
     public static String MSGSIGN = "lixinkeji";
     public static final String  History = "History";
     public static String ViDEOEND = "?x-oss-process=video/snapshot,t_1000,f_jpg,w_0,h_0,m_fast";

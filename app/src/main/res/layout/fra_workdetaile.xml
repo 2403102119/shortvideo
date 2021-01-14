@@ -5,43 +5,52 @@
     android:focusableInTouchMode="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="208dp">
+        <cn.jzvd.JzvdStd
+            android:id="@+id/jzVideo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginLeft="6.5dp"
+                android:src="@mipmap/zuo"
+                android:layout_width="25dp"
+                android:layout_height="25dp"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="1dp"/>
+            <ImageView
+                android:layout_marginRight="6.5dp"
+                android:src="@mipmap/you"
+                android:layout_width="25dp"
+                android:layout_height="25dp"/>
+        </LinearLayout>
+    </RelativeLayout>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smart"
+        android:layout_marginTop="208dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     <androidx.core.widget.NestedScrollView
         android:layout_marginBottom="110dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="208dp">
-                <cn.jzvd.JzvdStd
-                    android:id="@+id/jzVideo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-               <LinearLayout
-                   android:visibility="gone"
-                   android:layout_centerVertical="true"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content">
-                   <ImageView
-                       android:layout_marginLeft="6.5dp"
-                       android:src="@mipmap/zuo"
-                       android:layout_width="25dp"
-                       android:layout_height="25dp"/>
-                   <View
-                       android:layout_width="0dp"
-                       android:layout_weight="1"
-                       android:layout_height="1dp"/>
-                   <ImageView
-                       android:layout_marginRight="6.5dp"
-                       android:src="@mipmap/you"
-                       android:layout_width="25dp"
-                       android:layout_height="25dp"/>
-               </LinearLayout>
-            </RelativeLayout>
+
             <LinearLayout
                 android:layout_marginLeft="11dp"
                 android:layout_marginRight="11dp"
@@ -79,6 +88,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"/>
                 <ImageView
+                    android:id="@+id/imfenxiang"
                     android:src="@mipmap/fenxiang"
                     android:layout_marginLeft="26dp"
                     android:layout_width="wrap_content"
@@ -91,10 +101,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
+            <TextView
+                android:id="@+id/tvVideoTitle"
+                android:text="视频标题"
+                android:layout_marginLeft="11dp"
+                android:layout_marginRight="11dp"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
             <LinearLayout
                 android:id="@+id/llDetail"
                 android:orientation="horizontal"
-                android:layout_marginTop="27dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginLeft="11dp"
                 android:layout_marginRight="11dp"
                 android:gravity="center_vertical"
@@ -175,7 +196,9 @@
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     <LinearLayout
         android:background="@color/white"
         android:paddingLeft="10dp"

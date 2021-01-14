@@ -1,9 +1,13 @@
 package com.lxkj.shortvideo.ui.fragment.login;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +33,12 @@ import com.lxkj.shortvideo.utils.Md5;
 import com.lxkj.shortvideo.utils.SharePrefUtil;
 import com.lxkj.shortvideo.utils.StringUtil;
 import com.lxkj.shortvideo.utils.ToastUtil;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.Nullable;
@@ -65,9 +73,9 @@ public class LoginFra extends TitleFragment implements View.OnClickListener, Eve
     ImageView imWeChat;
     @BindView(R.id.imEys)
     ImageView imEys;
-
+    private UMShareAPI mShareAPI;
     private boolean eyes = false;
-
+    private String nickName,userIcon ,thirdUid;
 
     @Override
     public String getTitleName() {
@@ -97,6 +105,9 @@ public class LoginFra extends TitleFragment implements View.OnClickListener, Eve
         imEys.setOnClickListener(this);
         tvYonghu.setOnClickListener(this);
         tvYinsi.setOnClickListener(this);
+        imWeChat.setOnClickListener(this);
+
+        mShareAPI = UMShareAPI.get(mContext);
     }
 
     @Override
@@ -147,6 +158,14 @@ public class LoginFra extends TitleFragment implements View.OnClickListener, Eve
                 bundle.putString("title", "隐私政策");
                 bundle.putString("url", "http://122.114.49.242:8081/apiService/common/protocol/1");
                 ActivitySwitcher.startFragment(getContext(), WebFra.class, bundle);
+                break;
+            case R.id.imWeChat://微信登录
+                if (!isWeixinAvilible(mContext)) {
+                    ToastUtil.show("请安装微信客户端");
+                    return;
+                }
+                ToastUtil.show("正在跳转微信登录...");
+                UMShareAPI.get(mContext).doOauthVerify(getActivity(), SHARE_MEDIA.WEIXIN, umOauthListener);
                 break;
         }
     }
@@ -216,6 +235,123 @@ public class LoginFra extends TitleFragment implements View.OnClickListener, Eve
             public void onError(Response response, int code, Exception e) {
             }
         });
+    }
+
+
+    //登录
+    private void thirdLogin(String openid) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("mobile", "");
+        params.put("authCode", "");
+        params.put("password","");
+        params.put("type", "3");
+        params.put("openid",openid);
+        params.put("rid", JPushInterface.getRegistrationID(mContext));//推送标识
+        mOkHttpHelper.post_json(mContext, Url.login, params, new SpotsCallBack<ResultBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, ResultBean resultBean) {
+                eventCenter.sendType(EventCenter.EventType.EVT_LOGOUT); //关闭 重新打开
+
+                if (StringUtil.isEmpty( resultBean.mid)){
+                    Bundle bundle = new Bundle();
+                    bundle.putString("wx","0");
+                    bundle.putString("nickName",nickName);
+                    bundle.putString("userIcon",userIcon);
+                    bundle.putString("thirdUid",thirdUid);
+                    ActivitySwitcher.startFragment(getActivity(), RegisterFra.class,bundle);
+                }else {
+                    SharePrefUtil.saveString(mContext, AppConsts.UID, resultBean.mid);
+                    SharePrefUtil.saveString(mContext, AppConsts.username, resultBean.nickname);
+                    SharePrefUtil.saveString(mContext, AppConsts.user_icon, resultBean.avatar);
+                    AppConsts.userId = resultBean.mid;
+                    AppConsts.userName = resultBean.nickname;
+                    SharePrefUtil.saveString(mContext, AppConsts.PHONE, etPhone.getText().toString());
+                    ActivitySwitcher.start(act, MainActivity.class);
+                    act.finishSelf();
+                }
+
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+    }
+
+    /**
+     * 授权监听
+     */
+    private UMAuthListener umOauthListener = new UMAuthListener() {
+        @Override
+        public void onStart(SHARE_MEDIA share_media) {
+            Log.i("onStart", "onStart: ");
+        }
+
+        @Override
+        public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+            if (SHARE_MEDIA.QQ.equals(share_media))
+                mShareAPI.getPlatformInfo(getActivity(), SHARE_MEDIA.QQ, umAuthListener);
+            else if (SHARE_MEDIA.WEIXIN.equals(share_media))
+                mShareAPI.getPlatformInfo(getActivity(), SHARE_MEDIA.WEIXIN, umAuthListener);
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+            Log.i("onError", "onError: " + "授权失败");
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA share_media, int i) {
+            Log.i("onCancel", "onCancel: " + "授权取消");
+        }
+    };
+
+    /**
+     * 登陆监听
+     */
+    private UMAuthListener umAuthListener = new UMAuthListener() {
+        @Override
+        public void onStart(SHARE_MEDIA share_media) {
+            Log.i("onStart", "onStart: ");
+        }
+
+        @Override
+        public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+            nickName = map.get("name");//昵称
+            userIcon = map.get("iconurl");//头像
+            thirdUid = map.get("openid");//第三方平台id
+            thirdLogin(map.get("openid"));
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+            Log.i("onError", "onError: " + "授權失敗");
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA share_media, int i) {
+            Log.i("onCancel", "onCancel: " + "授權取消");
+        }
+    };
+
+    /**
+     * 判断 用户是否安装微信客户端
+     */
+    public static boolean isWeixinAvilible(Context context) {
+        final PackageManager packageManager = context.getPackageManager();// 获取packagemanager
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);// 获取所有已安装程序的包信息
+        if (pinfo != null) {
+            for (int i = 0; i < pinfo.size(); i++) {
+                String pn = pinfo.get(i).packageName;
+                if (pn.equals("com.tencent.mm")) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 

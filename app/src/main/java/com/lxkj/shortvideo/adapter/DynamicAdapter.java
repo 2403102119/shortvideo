@@ -92,6 +92,13 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.MyHolder
             }
         });
 
+        holder.imfenxiang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.OnFenxiangClickListener(position);
+            }
+        });
+
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         holder.recyclerView.setLayoutManager(layoutManager);
         Recycle_one_itemAdapter recycletwoItemAdapter=new Recycle_one_itemAdapter(context,list.get(position).images);
@@ -128,6 +135,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.MyHolder
         TextView tvshareCount;
         TextView tvGuanzhu;
         ImageView imShoucang;
+        ImageView imfenxiang;
         public MyHolder(View itemView) {
             super(itemView);
             recyclerView = itemView.findViewById(R.id.recyclerView);
@@ -140,6 +148,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.MyHolder
             tvshareCount = itemView.findViewById(R.id.tvshareCount);
             tvGuanzhu = itemView.findViewById(R.id.tvGuanzhu);
             imShoucang = itemView.findViewById(R.id.imShoucang);
+            imfenxiang = itemView.findViewById(R.id.imfenxiang);
         }
     }
     private DynamicAdapter.OnItemClickListener onItemClickListener;
@@ -151,6 +160,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.MyHolder
     public interface OnItemClickListener {
         void OnItemClickListener(int firstPosition);
         void OnDetailClickListener(int firstPosition);
+        void OnFenxiangClickListener(int firstPosition);
     }
 }
 

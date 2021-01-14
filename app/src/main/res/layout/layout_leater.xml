@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp">
         <LinearLayout
+            android:visibility="invisible"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
             android:background="@drawable/jingdiansousuo"
@@ -44,4 +45,9 @@
             android:layout_width="83dp"
             android:layout_height="30dp"/>
     </LinearLayout>
+
+    <com.tencent.qcloud.tim.uikit.modules.conversation.ConversationLayout
+        android:id="@+id/conversation_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

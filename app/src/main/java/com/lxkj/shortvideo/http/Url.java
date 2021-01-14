@@ -100,6 +100,26 @@ public class Url {
     public static String shieldMember = IP + "shieldMember";
     //作品PASS或NG
     public static String PNWorks = IP + "PNWorks";
+    //获取UserSig
+    public static String getUserSig = IP + "getUserSig";
+    //绑定手机号
+    public static String bindMobile = IP + "bindMobile";
+    //获取话题列表
+    public static String topicList = IP + "topicList";
+    //保存聊天记录至话题
+    public static String saveTopicMsg = IP + "saveTopicMsg";
+    //保存话题
+    public static String saveTopic = IP + "saveTopic";
+    //获取存储的聊天记录
+    public static String topicMsgList = IP + "topicMsgList";
+    //读消息
+    public static String readSysMessage = IP + "readSysMessage";
+    //发布评论
+    public static String pubMomentsComment = IP + "pubMomentsComment";
+    //分享好友动态
+    public static String shareFriendMoments = IP + "shareFriendMoments";
+    //作品分享
+    public static String shareWorks = IP + "shareWorks";
 
 
 }

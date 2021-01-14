@@ -14,6 +14,7 @@ import com.lxkj.shortvideo.adapter.ClassicalAdapter;
 import com.lxkj.shortvideo.adapter.SelectFriendAdapter;
 import com.lxkj.shortvideo.bean.DataListBean;
 import com.lxkj.shortvideo.bean.ResultBean;
+import com.lxkj.shortvideo.biz.ActivitySwitcher;
 import com.lxkj.shortvideo.http.BaseCallback;
 import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
@@ -82,6 +83,10 @@ public class SelectFriendFra extends TitleFragment {
         selectFriendAdapter.setOnItemClickListener(new SelectFriendAdapter.OnItemClickListener() {
             @Override
             public void OnItemClickListener(int firstPosition) {
+                Bundle bundle = new Bundle();
+                bundle.putString("id",listBeans.get(firstPosition).id);
+                bundle.putString("title",listBeans.get(firstPosition).nickname);
+                ActivitySwitcher.startFragment(getActivity(), ChatFra.class,bundle);
             }
         });
         smart.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {

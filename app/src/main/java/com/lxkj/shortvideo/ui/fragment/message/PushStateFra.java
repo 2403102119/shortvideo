@@ -224,7 +224,7 @@ public class PushStateFra extends TitleFragment implements View.OnClickListener 
                 .maxSelectNum(select_number)
                 .minSelectNum(1)
                 .imageSpanCount(3)// 每行显示个数 int
-                .isCamera(false)// 是否显示拍照按钮 true or false
+                .isCamera(true)// 是否显示拍照按钮 true or false
                 .sizeMultiplier(0.5f)// glide 加载图片大小 0~1之间 如设置 .glideOverride()无效
                 .compress(true)// 是否压缩 true or false
                 .minimumCompressSize(100)// 小于100kb的图片不压缩

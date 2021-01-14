@@ -46,6 +46,13 @@ public class SelectFriendAdapter extends RecyclerView.Adapter<SelectFriendAdapte
                 .load(list.get(position).avatar)
                 .into(holder.riIcon);
         holder.tvName.setText(list.get(position).nickname);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.OnItemClickListener(position);
+            }
+        });
     }
 
     @Override

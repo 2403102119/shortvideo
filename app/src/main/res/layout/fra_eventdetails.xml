@@ -41,8 +41,6 @@
             android:layout_centerVertical="true"
             android:paddingRight="12dp"
             android:paddingLeft="12dp"
-            android:paddingTop="3dp"
-            android:paddingBottom="3dp"
             android:background="@drawable/login_20"
             android:text="报名"
             android:textColor="@color/white"
@@ -241,6 +239,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"/>
                     <ImageView
+                        android:id="@+id/imfenxiang"
                         android:src="@mipmap/fenxiang"
                         android:layout_marginLeft="26dp"
                         android:layout_width="wrap_content"

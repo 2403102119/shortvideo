@@ -55,7 +55,25 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>
-
+    <LinearLayout
+        android:id="@+id/llSixin"
+        android:visibility="gone"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginRight="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <ImageView
+            android:src="@mipmap/sixin"
+            android:layout_width="11dp"
+            android:layout_height="13dp"/>
+        <TextView
+            android:text="私信"
+            android:textSize="11sp"
+            android:textColor="@color/main_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvGuanzhu"

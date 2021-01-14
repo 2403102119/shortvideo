@@ -14,6 +14,11 @@ import com.lxkj.shortvideo.biz.CrashHandler;
 import com.lxkj.shortvideo.imageloader.PicassoImageLoader;
 import com.lxkj.shortvideo.utils.SharePrefUtil;
 import com.lzy.ninegrid.NineGridView;
+import com.tencent.imsdk.v2.V2TIMSDKConfig;
+import com.tencent.qcloud.tim.uikit.TUIKit;
+import com.tencent.qcloud.tim.uikit.config.CustomFaceConfig;
+import com.tencent.qcloud.tim.uikit.config.GeneralConfig;
+import com.tencent.qcloud.tim.uikit.config.TUIKitConfigs;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 
@@ -28,7 +33,8 @@ public class HcbApp extends MultiDexApplication {
 
     public static Application self;
     private static final String TAG = "HcbApp";
-
+    //Im
+    public static final int SDKAPPID = 1400466358; // 您的 SDKAppID
 
     @Override
     public void onCreate() {
@@ -66,6 +72,16 @@ public class HcbApp extends MultiDexApplication {
         closeAndroidPDialog();
 
 
+        /*
+         * 即时通讯初始化
+         * */
+        // 配置 Config，请按需配置
+        TUIKitConfigs configs = TUIKit.getConfigs();
+        configs.setSdkConfig(new V2TIMSDKConfig());
+        configs.setCustomFaceConfig(new CustomFaceConfig());
+        configs.setGeneralConfig(new GeneralConfig());
+
+        TUIKit.init(this, SDKAPPID, configs);
 
 
     }

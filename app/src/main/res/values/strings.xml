@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">短视频社交</string>
+    <string name="app_name">秀评</string>
     <string name="httperror">网络请求失败...</string>
     <string name="press_again_to_leave">再按一次退出程序</string>
     <string name="glide_plus_icon_string">android.resource://</string>

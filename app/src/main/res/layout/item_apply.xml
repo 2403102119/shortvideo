@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:text="视频标签"
+        android:textColor="@color/txt_33"
+        android:textSize="14sp"
+        android:layout_marginTop="29dp"
+        android:layout_marginLeft="11dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:id="@+id/etLable"
+        android:background="@null"
+        android:textSize="12sp"
+        android:hint="请输入视频标签"
+        android:layout_marginLeft="11dp"
+        android:layout_marginTop="8dp"
+        android:gravity="top"
+        android:textColor="@color/txt_66"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"/>
+    <ImageView
+        android:id="@+id/imLableVideo"
+        android:layout_marginLeft="13dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/shangchuanshipin"
+        android:layout_width="80dp"
+        android:layout_height="80dp"/>
+
+</LinearLayout>

@@ -81,7 +81,7 @@ public class DynamicDetailFra extends TitleFragment implements View.OnClickListe
     private ArrayList<String> images = new ArrayList<>();
     private int page = 1, totalPage = 1;
     private CommentAdapter commentAdapter;
-    private String wid, pcid, focused, toMid;
+    private String wid, pcid, focused, toMid,commentCount;
     private int position = 0;
     private TagAdapter<String> adapter;
     private String fmid;
@@ -127,9 +127,9 @@ public class DynamicDetailFra extends TitleFragment implements View.OnClickListe
             @Override
             public void OnDianzanClickListener(int firstPosition) {
                 if (listBeans.get(firstPosition).liked.equals("1")) {
-                    likeWorksComment(listBeans.get(firstPosition).id, "0", firstPosition);
+                    likeMomentsComment(listBeans.get(firstPosition).id, "0", firstPosition);
                 } else {
-                    likeWorksComment(listBeans.get(firstPosition).id, "1", firstPosition);
+                    likeMomentsComment(listBeans.get(firstPosition).id, "1", firstPosition);
                 }
             }
 
@@ -171,7 +171,7 @@ public class DynamicDetailFra extends TitleFragment implements View.OnClickListe
                     ToastUtil.show("请输入评论内容");
                     return;
                 }
-                pubWorksComment(etComment.getText().toString());
+                pubMomentsComment(etComment.getText().toString());
                 break;
         }
     }
@@ -230,7 +230,7 @@ public class DynamicDetailFra extends TitleFragment implements View.OnClickListe
 
 
                 tvPinglun.setText("共计" + resultBean.commentCount + "条评论");
-
+                commentCount = resultBean.commentCount;
                 images.clear();
                 images.addAll(resultBean.images);
                 recycletwoItemAdapter.notifyDataSetChanged();
@@ -248,13 +248,13 @@ public class DynamicDetailFra extends TitleFragment implements View.OnClickListe
     /**
      * 发布评论
      */
-    private void pubWorksComment(String content) {
+    private void pubMomentsComment(String content) {
         Map<String, Object> params = new HashMap<>();
         params.put("mid", userId);
-        params.put("wid", toMid);
+        params.put("fmid", fmid);
         params.put("pcid", pcid);
         params.put("content", content);
-        mOkHttpHelper.post_json(getContext(), Url.pubWorksComment, params, new BaseCallback<ResultBean>() {
+        mOkHttpHelper.post_json(getContext(), Url.pubMomentsComment, params, new BaseCallback<ResultBean>() {
             @Override
             public void onBeforeRequest(Request request) {
             }
@@ -272,6 +272,10 @@ public class DynamicDetailFra extends TitleFragment implements View.OnClickListe
             public void onSuccess(Response response, ResultBean resultBean) {
                 etComment.setText("");
                 friendMomentsCommentList();
+               if (StringUtil.isEmpty(pcid)){
+                   tvPinglun.setText("共计" + (Integer.parseInt(commentCount)+1) + "条评论");
+               }
+
             }
 
             @Override
@@ -286,7 +290,7 @@ public class DynamicDetailFra extends TitleFragment implements View.OnClickListe
     private void friendMomentsCommentList() {
         Map<String, Object> params = new HashMap<>();
         params.put("mid", userId);
-        params.put("wid", wid);
+        params.put("fmid", fmid);
         mOkHttpHelper.post_json(getContext(), Url.friendMomentsCommentList, params, new BaseCallback<ResultBean>() {
             @Override
             public void onBeforeRequest(Request request) {
@@ -317,7 +321,7 @@ public class DynamicDetailFra extends TitleFragment implements View.OnClickListe
     /**
      * 评论点赞/取消点赞
      */
-    private void likeWorksComment(String cid, String type, int position) {
+    private void likeMomentsComment(String cid, String type, int position) {
         Map<String, Object> params = new HashMap<>();
         params.put("mid", userId);
         params.put("cid", cid);
@@ -339,6 +343,12 @@ public class DynamicDetailFra extends TitleFragment implements View.OnClickListe
             @Override
             public void onSuccess(Response response, ResultBean resultBean) {
                 listBeans.get(position).liked = type;
+                if (type.equals("1")){
+                    listBeans.get(position).likedCount = (Integer.parseInt(listBeans.get(position).likedCount)+1)+"";
+                }else {
+                    listBeans.get(position).likedCount = (Integer.parseInt(listBeans.get(position).likedCount)-1)+"";
+                }
+
                 commentAdapter.notifyDataSetChanged();
             }
 
@@ -373,6 +383,11 @@ public class DynamicDetailFra extends TitleFragment implements View.OnClickListe
             @Override
             public void onSuccess(Response response, ResultBean resultBean) {
                 listBeans.get(position).subCommentList.get(position1).liked = type;
+                if (type.equals("1")){
+                    listBeans.get(position).subCommentList.get(position1).likedCount = (Integer.parseInt(listBeans.get(position).subCommentList.get(position1).likedCount)+1)+"";
+                }else {
+                    listBeans.get(position).subCommentList.get(position1).likedCount = (Integer.parseInt(listBeans.get(position).subCommentList.get(position1).likedCount)-1)+"";
+                }
                 commentAdapter.notifyDataSetChanged();
             }
 

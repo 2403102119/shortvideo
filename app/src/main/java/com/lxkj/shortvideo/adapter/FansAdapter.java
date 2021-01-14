@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -49,12 +50,29 @@ public class FansAdapter extends RecyclerView.Adapter<FansAdapter.MyHolder> {
         if (list.get(position).focused.equals("1")){
            if (list.get(position).beFocused.equals("1")){
                holder.tvGuanzhu.setText("互相关注");
+               holder.llSixin.setVisibility(View.VISIBLE);
            }else {
                holder.tvGuanzhu.setText("已关注");
+               holder.llSixin.setVisibility(View.GONE);
            }
         }else {
             holder.tvGuanzhu.setText("+关注");
+            holder.llSixin.setVisibility(View.GONE);
         }
+
+        holder.llSixin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.OnSixinClickListener(position);
+            }
+        });
+
+        holder.tvGuanzhu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.OnItemClickListener(position);
+            }
+        });
     }
 
     @Override
@@ -73,12 +91,14 @@ public class FansAdapter extends RecyclerView.Adapter<FansAdapter.MyHolder> {
         TextView tvTitle;
         TextView tvTime;
         TextView tvGuanzhu;
+        LinearLayout llSixin;
         public MyHolder(View itemView) {
             super(itemView);
             riIcon = itemView.findViewById(R.id.riIcon);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvTime = itemView.findViewById(R.id.tvTime);
             tvGuanzhu = itemView.findViewById(R.id.tvGuanzhu);
+            llSixin = itemView.findViewById(R.id.llSixin);
         }
     }
     private FansAdapter.OnItemClickListener onItemClickListener;
@@ -89,6 +109,7 @@ public class FansAdapter extends RecyclerView.Adapter<FansAdapter.MyHolder> {
 
     public interface OnItemClickListener {
         void OnItemClickListener(int firstPosition);
+        void OnSixinClickListener(int firstPosition);
     }
 }
 

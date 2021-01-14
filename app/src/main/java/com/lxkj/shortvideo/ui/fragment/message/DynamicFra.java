@@ -23,6 +23,7 @@ import com.lxkj.shortvideo.biz.ActivitySwitcher;
 import com.lxkj.shortvideo.http.BaseCallback;
 import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
+import com.lxkj.shortvideo.ui.fragment.dialog.ShareFra;
 import com.lxkj.shortvideo.utils.StringUtil;
 import com.lxkj.shortvideo.utils.ToastUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -102,6 +103,12 @@ public class DynamicFra extends TitleFragment implements View.OnClickListener {
                 Bundle bundle = new Bundle();
                 bundle.putString("fmid",listBeans.get(firstPosition).id);
                 ActivitySwitcher.startFragment(getActivity(), DynamicDetailFra.class,bundle);
+            }
+
+            @Override
+            public void OnFenxiangClickListener(int firstPosition) {//分享
+                shareFriendMoments(listBeans.get(firstPosition).id);
+
             }
         });
         smart.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -252,6 +259,37 @@ public class DynamicFra extends TitleFragment implements View.OnClickListener {
                 friendMomentsList();
 
 
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+            }
+        });
+    }
+    /**
+     * 分享好友动态
+     */
+    private void shareFriendMoments(String fmid) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("mid", userId);
+        params.put("fmid",fmid);
+        mOkHttpHelper.post_json(getContext(), Url.shareFriendMoments, params, new BaseCallback<ResultBean>() {
+            @Override
+            public void onBeforeRequest(Request request) {
+            }
+
+            @Override
+            public void onFailure(Request request, Exception e) {
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, ResultBean resultBean) {
+                new ShareFra().show(act.getSupportFragmentManager(), "Menu");
             }
 
             @Override

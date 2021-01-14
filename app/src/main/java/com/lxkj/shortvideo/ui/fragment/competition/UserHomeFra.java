@@ -22,6 +22,8 @@ import com.lxkj.shortvideo.http.BaseCallback;
 import com.lxkj.shortvideo.http.OkHttpHelper;
 import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
+import com.lxkj.shortvideo.ui.fragment.message.ChatFra;
+import com.lxkj.shortvideo.ui.fragment.message.DynamicDetailFra;
 import com.lxkj.shortvideo.utils.SharePrefUtil;
 import com.lxkj.shortvideo.utils.StringUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -144,6 +146,7 @@ public class UserHomeFra extends TitleFragment implements View.OnClickListener {
         tvGuanzhu.setOnClickListener(this);
         tvPingbi.setOnClickListener(this);
         tvGuanzhu.setOnClickListener(this);
+        llSixin.setOnClickListener(this);
 
         listBeans = new ArrayList<DataListBean>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -219,7 +222,9 @@ public class UserHomeFra extends TitleFragment implements View.OnClickListener {
                 likeAdapter.setOnItemClickListener(new LikeAdapter.OnItemClickListener() {
                     @Override
                     public void OnItemClickListener(int firstPosition) {
-                        ActivitySwitcher.startFragment(getActivity(), WorkDetails.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("wid", listBeans.get(firstPosition).id);
+                        ActivitySwitcher.startFragment(getActivity(), WorkDetails.class, bundle);
                     }
 
                     @Override
@@ -247,7 +252,9 @@ public class UserHomeFra extends TitleFragment implements View.OnClickListener {
                 likeAdapter.setOnItemClickListener(new LikeAdapter.OnItemClickListener() {
                     @Override
                     public void OnItemClickListener(int firstPosition) {
-                        ActivitySwitcher.startFragment(getActivity(), WorkDetails.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("wid", listBeans.get(firstPosition).id);
+                        ActivitySwitcher.startFragment(getActivity(), WorkDetails.class, bundle);
                     }
 
                     @Override
@@ -275,6 +282,9 @@ public class UserHomeFra extends TitleFragment implements View.OnClickListener {
                 dynamicAdapter.setOnItemClickListener(new HomeDynamicAdapter.OnItemClickListener() {
                     @Override
                     public void OnItemClickListener(int firstPosition) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("fmid",listBeans.get(firstPosition).id);
+                        ActivitySwitcher.startFragment(getActivity(), DynamicDetailFra.class,bundle);
                     }
 
                 });
@@ -305,6 +315,11 @@ public class UserHomeFra extends TitleFragment implements View.OnClickListener {
                 } else {
                     focusMember("1");
                 }
+                break;
+            case R.id.llSixin://私信
+                bundle.putString("id",toMid);
+                bundle.putString("title",tvName.getText().toString());
+                ActivitySwitcher.startFragment(getActivity(), ChatFra.class,bundle);
                 break;
         }
     }

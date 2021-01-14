@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hys.utils.MD5Utils;
+import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.bean.ResultBean;
 import com.lxkj.shortvideo.biz.ActivitySwitcher;
@@ -19,8 +21,10 @@ import com.lxkj.shortvideo.http.BaseCallback;
 import com.lxkj.shortvideo.http.OkHttpHelper;
 import com.lxkj.shortvideo.http.SpotsCallBack;
 import com.lxkj.shortvideo.http.Url;
+import com.lxkj.shortvideo.ui.activity.MainActivity;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
 import com.lxkj.shortvideo.ui.fragment.system.WebFra;
+import com.lxkj.shortvideo.utils.SharePrefUtil;
 import com.lxkj.shortvideo.utils.StringUtil;
 import com.lxkj.shortvideo.utils.TimerUtil;
 import com.lxkj.shortvideo.utils.ToastUtil;
@@ -32,6 +36,7 @@ import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.jpush.android.api.JPushInterface;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -60,9 +65,12 @@ public class RegisterFra extends TitleFragment implements View.OnClickListener {
     ImageView imSelect;
     @BindView(R.id.tvYonghu)
     TextView tvYonghu;
+    @BindView(R.id.llPassword)
+    LinearLayout llPassword;
 
     private boolean eyes = false;
     private boolean select = false;
+    private String wx, nickName, userIcon, thirdUid;
 
     @Override
     public String getTitleName() {
@@ -79,6 +87,22 @@ public class RegisterFra extends TitleFragment implements View.OnClickListener {
     }
 
     public void initView() {
+
+        wx = getArguments().getString("wx");
+        nickName = getArguments().getString("nickName");
+        userIcon = getArguments().getString("userIcon");
+        thirdUid = getArguments().getString("thirdUid");
+
+        if (StringUtil.isEmpty(wx)) {
+            act.titleTv.setText("注册");
+            tvConfirm.setText("注册");
+            llPassword.setVisibility(View.VISIBLE);
+        } else {
+            act.titleTv.setText("绑定手机号");
+            tvConfirm.setText("绑定");
+            llPassword.setVisibility(View.GONE);
+        }
+
         tvConfirm.setOnClickListener(this);
         imEys.setOnClickListener(this);
         tvGetCode.setOnClickListener(this);
@@ -98,15 +122,22 @@ public class RegisterFra extends TitleFragment implements View.OnClickListener {
                     ToastUtil.show("请输入验证码");
                     return;
                 }
-                if (StringUtil.isEmpty(etPsw.getText().toString())) {
-                    ToastUtil.show("请输入密码");
-                    return;
+                if (StringUtil.isEmpty(wx)) {
+                    if (StringUtil.isEmpty(etPsw.getText().toString())) {
+                        ToastUtil.show("请输入密码");
+                        return;
+                    }
                 }
                 if (!select) {
                     ToastUtil.show("请阅读并同意《用户协议》");
                     return;
                 }
-                mobileExist();
+                if (StringUtil.isEmpty(wx)) {
+                    mobileExist();
+                } else {
+                    bindMobile();
+                }
+
                 break;
             case R.id.imEys:
                 if (eyes) {
@@ -225,6 +256,37 @@ public class RegisterFra extends TitleFragment implements View.OnClickListener {
         });
     }
 
+    //绑定手机号
+    private void bindMobile() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("mobile", etAccount.getText().toString());
+        params.put("authCode", etCode.getText().toString());
+        params.put("password", MD5Utils.md5(etPsw.getText().toString()));
+        params.put("openid", thirdUid);
+        params.put("avatar", userIcon);
+        params.put("nickname", nickName);
+        params.put("rid", JPushInterface.getRegistrationID(mContext));
+        mOkHttpHelper.post_json(mContext, Url.bindMobile, params, new SpotsCallBack<ResultBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, ResultBean resultBean) {
+                ToastUtil.show("绑定成功");
+                SharePrefUtil.saveString(mContext, AppConsts.UID, resultBean.mid);
+                SharePrefUtil.saveString(mContext, AppConsts.username, resultBean.nickname);
+                SharePrefUtil.saveString(mContext, AppConsts.user_icon, resultBean.avatar);
+                AppConsts.userId = resultBean.mid;
+                AppConsts.userName = resultBean.nickname;
+                SharePrefUtil.saveString(mContext, AppConsts.PHONE, etAccount.getText().toString());
+                ActivitySwitcher.start(act, MainActivity.class);
+                act.finishSelf();
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+    }
 
     @Override
     public void onDestroyView() {

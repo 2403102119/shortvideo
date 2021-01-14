@@ -52,7 +52,7 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.MyHolder> {
         holder.tvTime.setText(list.get(position).uploadDate);
         holder.tvCanping.setText(list.get(position).passNgCount);
         holder.tvCanping.setText(list.get(position).passNgCount);
-        holder.tvXiAi.setText(list.get(position).passRatio);
+        holder.tvXiAi.setText((Double.parseDouble(list.get(position).passRatio)*100)+"%");
         holder.tvXihuan.setText(list.get(position).collectCount);
 
         if (list.get(position).collected.equals("1")){

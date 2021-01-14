@@ -45,6 +45,10 @@ public class DataListBean {
     public String messageType;
     public String correlation;
     public String unread;
+    public Object msgContent;
+    public String senderId;
+    public String sendDate;
+    public int position;
     public Member member;
     public Competition competition;
     public List<SubVideos> subVideos;

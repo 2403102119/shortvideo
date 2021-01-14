@@ -249,4 +249,6 @@ dependencies {
     implementation 'com.lxj:xpopup:1.8.8'
     //处理富文本编辑的问题
     implementation 'org.ccil.cowan.tagsoup:tagsoup:1.2.1'
+    //腾讯云（IM）
+    implementation project(path: ':tuikit')
 }

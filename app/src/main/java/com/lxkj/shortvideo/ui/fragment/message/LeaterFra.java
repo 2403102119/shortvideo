@@ -7,10 +7,18 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.biz.ActivitySwitcher;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
-import com.lxkj.shortvideo.ui.fragment.homemine.IssueFra;
+import com.lxkj.shortvideo.ui.fragment.login.LoginFra;
+import com.lxkj.shortvideo.utils.SharePrefUtil;
+import com.lxkj.shortvideo.view.NormalDialog;
+import com.tencent.imsdk.TIMManager;
+import com.tencent.qcloud.tim.uikit.component.TitleBarLayout;
+import com.tencent.qcloud.tim.uikit.modules.conversation.ConversationLayout;
+import com.tencent.qcloud.tim.uikit.modules.conversation.ConversationListLayout;
+import com.tencent.qcloud.tim.uikit.modules.conversation.base.ConversationInfo;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -28,6 +36,8 @@ public class LeaterFra extends TitleFragment implements View.OnClickListener {
     Unbinder unbinder;
     @BindView(R.id.tvSelectFriend)
     TextView tvSelectFriend;
+    @BindView(R.id.conversation_layout)
+    ConversationLayout conversationLayout;
 
     @Nullable
     @Override
@@ -41,20 +51,78 @@ public class LeaterFra extends TitleFragment implements View.OnClickListener {
 
     public void initView() {
         tvSelectFriend.setOnClickListener(this);
+        // 初始化聊天面板
+        conversationLayout.initDefault();
+        // 获取 TitleBarLayout
+        TitleBarLayout titleBarLayout = conversationLayout.findViewById(R.id.conversation_title);
+        titleBarLayout.setVisibility(View.GONE);
+
+        customizeConversation(conversationLayout);
+    }
+
+    public void customizeConversation(final ConversationLayout layout) {
+        // 从 ConversationLayout 获取会话列表
+        ConversationListLayout listLayout = layout.getConversationList();
+        listLayout.disableItemUnreadDot(false);// 设置 item 是否不显示未读红点，默认显示
+        listLayout.setItemAvatarRadius(90); // 设置 adapter item 头像圆角大小
+        // 长按弹出菜单
+        listLayout.setOnItemClickListener(new ConversationListLayout.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position, ConversationInfo messageInfo) {
+                Bundle bundle = new Bundle();
+                bundle.putString("id",messageInfo.getId());
+                bundle.putString("title",messageInfo.getTitle());
+                ActivitySwitcher.startFragment(getActivity(), ChatFra.class,bundle);
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tvSelectFriend://选择好友
                 ActivitySwitcher.startFragment(getActivity(), SelectFriendFra.class);
                 break;
         }
+
+
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (null== TIMManager.getInstance().getLoginUser()){
+            NormalDialog dialog = new NormalDialog(getContext(), "您的账号已在其它设备登录", "", "确定", true);
+            dialog.show();
+            dialog.setOnButtonClickListener(new NormalDialog.OnButtonClick() {
+                @Override
+                public void OnRightClick() {
+                    SharePrefUtil.saveString(getContext(), AppConsts.UID, "");
+//                    eventCenter.sendType(EventCenter.EventType.EVT_LOGOUT);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("phone",SharePrefUtil.getString(getContext(), AppConsts.PHONE,null));
+                    ActivitySwitcher.startFragment(getContext(), LoginFra.class,bundle);
+                    getActivity().finish();
+                }
+
+                @Override
+                public void OnLeftClick() {
+                    SharePrefUtil.saveString(getContext(), AppConsts.UID, "");
+//                    eventCenter.sendType(EventCenter.EventType.EVT_LOGOUT);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("phone",SharePrefUtil.getString(getContext(), AppConsts.PHONE,null));
+                    ActivitySwitcher.startFragment(getContext(), LoginFra.class,bundle);
+                    getActivity().finish();
+                }
+            });
+        }else {
+            TIMManager.getInstance().getConversationList();
+        }
     }
 }

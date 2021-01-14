@@ -119,11 +119,8 @@ public class HomeShortVideoFra extends CachableFrg implements View.OnClickListen
                     if (imm.isActive()) {
                         imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
                     }
-                    if (!TextUtils.isEmpty(etSearch.getText().toString())) {
-                        setData(list);
-                    } else {
-                        ToastUtil.show("关键字不能为空");
-                    }
+                    AppConsts.keywords = etSearch.getText().toString();
+                    setData(list);
                     return true;
                 }
                 return false;

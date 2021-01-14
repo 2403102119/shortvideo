@@ -66,6 +66,13 @@ public class HomeDynamicAdapter extends RecyclerView.Adapter<HomeDynamicAdapter.
             }
         });
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.OnItemClickListener(position);
+            }
+        });
+
         recycletwoItemAdapter.notifyDataSetChanged();
 
         holder.tvGuanzhu.setVisibility(View.GONE);

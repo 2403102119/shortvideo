@@ -61,7 +61,7 @@ public class IssueFra extends TitleFragment implements View.OnClickListener {
     }
 
     public void initView() {
-
+        tvIssue.setOnClickListener(this);
     }
 
     @Override

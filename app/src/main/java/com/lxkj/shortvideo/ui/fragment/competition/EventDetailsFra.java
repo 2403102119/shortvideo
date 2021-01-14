@@ -3,7 +3,6 @@ package com.lxkj.shortvideo.ui.fragment.competition;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +24,7 @@ import com.lxkj.shortvideo.biz.ActivitySwitcher;
 import com.lxkj.shortvideo.http.BaseCallback;
 import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
+import com.lxkj.shortvideo.ui.fragment.dialog.ShareFra;
 import com.lxkj.shortvideo.utils.PicassoUtil;
 import com.lxkj.shortvideo.utils.StringUtil;
 import com.lxkj.shortvideo.utils.ToastUtil;
@@ -137,12 +137,14 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
     EditText etPinglun;
     @BindView(R.id.llUser)
     LinearLayout llUser;
+    @BindView(R.id.imfenxiang)
+    ImageView imfenxiang;
 
     private ArrayList<DataListBean> listBeans;
     private int page = 1, totalPage = 1;
     private CommentAdapter commentAdapter;
     private boolean CountDownTime = false;
-    private String id, title, toMid, focused, pcid = "",entered;
+    private String id, title, toMid, focused, pcid = "", entered;
     private List<String> BanString = new ArrayList<>();
     private List<DataListBean> dataListBeans = new ArrayList<>();
     private ArrayList<ImageInfo> imageInfo = new ArrayList<>();
@@ -188,19 +190,19 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
 
             @Override
             public void OnDianzanClickListener(int firstPosition) {
-                if (listBeans.get(firstPosition).liked.equals("1")){
-                    likeWorksComment(listBeans.get(firstPosition).id,"0",firstPosition);
-                }else {
-                    likeWorksComment(listBeans.get(firstPosition).id,"1",firstPosition);
+                if (listBeans.get(firstPosition).liked.equals("1")) {
+                    likeWorksComment(listBeans.get(firstPosition).id, "0", firstPosition);
+                } else {
+                    likeWorksComment(listBeans.get(firstPosition).id, "1", firstPosition);
                 }
             }
 
             @Override
             public void OnDianzanItemClickListener(int position, int firstPosition) {
-                if (listBeans.get(position).subCommentList.get(firstPosition).liked.equals("1")){
-                    likeWorksComment1(listBeans.get(position).subCommentList.get(firstPosition).id,"0",position,firstPosition);
-                }else {
-                    likeWorksComment1(listBeans.get(position).subCommentList.get(firstPosition).id,"1",position,firstPosition);
+                if (listBeans.get(position).subCommentList.get(firstPosition).liked.equals("1")) {
+                    likeWorksComment1(listBeans.get(position).subCommentList.get(firstPosition).id, "0", position, firstPosition);
+                } else {
+                    likeWorksComment1(listBeans.get(position).subCommentList.get(firstPosition).id, "1", position, firstPosition);
                 }
             }
         });
@@ -219,6 +221,7 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
         llUser.setOnClickListener(this);
         tvPass.setOnClickListener(this);
         tvNg.setOnClickListener(this);
+        imfenxiang.setOnClickListener(this);
 
         ns.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -250,10 +253,10 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
     public CountDownTimer timer = new CountDownTimer(10000, 1000) {
         @Override
         public void onTick(long millisUntilFinished) {
-            if (null!=tvTime){
+            if (null != tvTime) {
                 tvTime.setText("倒计时" + (millisUntilFinished / 1000) + "s");
             }
-            if (null!=tvTime2){
+            if (null != tvTime2) {
                 tvTime2.setText("倒计时" + (millisUntilFinished / 1000) + "s");
             }
             CountDownTime = false;
@@ -284,25 +287,25 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
         Bundle bundle = new Bundle();
         switch (v.getId()) {
             case R.id.riIcon://用户主页
-                bundle.putString("toMid",toMid);
-                ActivitySwitcher.startFragment(getActivity(), UserHomeFra.class);
+                bundle.putString("toMid", toMid);
+                ActivitySwitcher.startFragment(getActivity(), UserHomeFra.class, bundle);
                 break;
             case R.id.llRank://排行榜
-                bundle.putString("cid",id);
-                bundle.putString("title",title);
-                ActivitySwitcher.startFragment(getActivity(), RankFra.class,bundle);
+                bundle.putString("cid", id);
+                bundle.putString("title", title);
+                ActivitySwitcher.startFragment(getActivity(), RankFra.class, bundle);
                 break;
             case R.id.navi_left:
                 act.finishSelf();
                 break;
             case R.id.tvLookDetail://查看详情
-                bundle.putString("cid",id);
-                bundle.putString("entered",entered);
-                ActivitySwitcher.startFragment(getActivity(), LookDetailFra.class,bundle);
+                bundle.putString("cid", id);
+                bundle.putString("entered", entered);
+                ActivitySwitcher.startFragment(getActivity(), LookDetailFra.class, bundle);
                 break;
             case R.id.navi_right_txt://报名
-                bundle.putString("cid",id);
-                ActivitySwitcher.startFragment(getActivity(), ApplyFra.class,bundle);
+                bundle.putString("cid", id);
+                ActivitySwitcher.startFragment(getActivity(), ApplyFra.class, bundle);
                 break;
             case R.id.imCollected://收藏
                 if (dataListBeans.get(position).collected.equals("1")) {
@@ -332,8 +335,10 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
                 break;
             case R.id.tvGuanzhu://关注
                 if (focused.equals("1")) {
+                    focused = "0";
                     focusMember("0");
                 } else {
+                    focused = "1";
                     focusMember("1");
                 }
                 break;
@@ -355,15 +360,48 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
 
                 break;
             case R.id.tvPass://PASS
-                PNWorks("1",StringUtil.formatTurnSecond(jzVideo.currentTimeTextView.getText().toString())+"");
+                PNWorks("1", StringUtil.formatTurnSecond(jzVideo.currentTimeTextView.getText().toString()) + "");
                 break;
             case R.id.tvNg://NG
-                PNWorks("2",StringUtil.formatTurnSecond(jzVideo.currentTimeTextView.getText().toString())+"");
+                PNWorks("2", StringUtil.formatTurnSecond(jzVideo.currentTimeTextView.getText().toString()) + "");
+                break;
+            case R.id.imfenxiang:
+                shareWorks(id);
                 break;
 
         }
     }
+    /**
+     * 作品分享
+     */
+    private void shareWorks(String wid) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("mid", userId);
+        params.put("wid",wid);
+        mOkHttpHelper.post_json(getContext(), Url.shareWorks, params, new BaseCallback<ResultBean>() {
+            @Override
+            public void onBeforeRequest(Request request) {
+            }
 
+            @Override
+            public void onFailure(Request request, Exception e) {
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, ResultBean resultBean) {
+                new ShareFra().show(act.getSupportFragmentManager(), "Menu");
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+            }
+        });
+    }
 
     /**
      * 赛事详情
@@ -423,10 +461,10 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
                         .execute(BanString);
 
                 entered = resultBean.entered;
-                if (entered.equals("1")){
+                if (entered.equals("1")) {
                     naviRightTxt.setText("已参赛");
-                    naviRightTxt.setEnabled(false);
-                }else {
+                    naviRightTxt.setEnabled(true);
+                } else {
                     naviRightTxt.setText("报名");
                     naviRightTxt.setEnabled(true);
                 }
@@ -616,6 +654,7 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
             @Override
             public void onSuccess(Response response, ResultBean resultBean) {
                 if (focused.equals("1")) {
+
                     tvGuanzhu.setText("已关注");
                 } else {
                     tvGuanzhu.setText("+关注");
@@ -668,11 +707,11 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
     /**
      * 作品PASS或NG
      */
-    private void PNWorks(String type,String duration) {
+    private void PNWorks(String type, String duration) {
         Map<String, Object> params = new HashMap<>();
         params.put("mid", userId);
         params.put("wid", dataListBeans.get(position).id);
-        params.put("pcid", type);
+        params.put("type", type);
         params.put("duration", duration);
         mOkHttpHelper.post_json(getContext(), Url.PNWorks, params, new BaseCallback<ResultBean>() {
             @Override
@@ -708,7 +747,7 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
     /**
      * 评论点赞/取消点赞
      */
-    private void likeWorksComment(String cid,String type,int position) {
+    private void likeWorksComment(String cid, String type, int position) {
         Map<String, Object> params = new HashMap<>();
         params.put("mid", userId);
         params.put("cid", cid);
@@ -742,7 +781,7 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
     /**
      * 评论点赞/取消点赞
      */
-    private void likeWorksComment1(String cid,String type,int position,int position1) {
+    private void likeWorksComment1(String cid, String type, int position, int position1) {
         Map<String, Object> params = new HashMap<>();
         params.put("mid", userId);
         params.put("cid", cid);
@@ -837,7 +876,7 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
         adapter = new TagAdapter<String>(list) {
             @Override
             public View getView(FlowLayout parent, int position, String s) {
-                TextView view = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.item_choose, parent, false);
+                TextView view = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.item_lable, parent, false);
                 view.setText(s);
                 return view;
             }
@@ -848,7 +887,7 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
             @Override
             public boolean onTagClick(View view, int position, FlowLayout parent) {
                 LinkedHashMap map = new LinkedHashMap();
-                String proxyUrl = HcbApp.getProxy(mContext).getProxyUrl( data.subVideos.get(position).video);
+                String proxyUrl = HcbApp.getProxy(mContext).getProxyUrl(data.subVideos.get(position).video);
                 map.put("高清", proxyUrl);
                 JZDataSource jzDataSource = new JZDataSource(map, "");
                 jzDataSource.looping = true;

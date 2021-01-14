@@ -86,6 +86,8 @@ public class SystemMessageFra extends TitleFragment {
                     bundle.putString("url", listBeans.get(firstPosition).url);
                     ActivitySwitcher.startFragment(getContext(), WebFra.class, bundle);
                 }
+                readSysMessage(listBeans.get(firstPosition).id);
+
             }
 
             @Override
@@ -158,6 +160,38 @@ public class SystemMessageFra extends TitleFragment {
                     llNoData.setVisibility(View.GONE);
                 }
                 messageAdapter.notifyDataSetChanged();
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+            }
+        });
+    }
+    /**
+     * 读消息
+     */
+    private void readSysMessage(String msgId) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("mid", userId);
+        params.put("msgId", msgId);
+        mOkHttpHelper.post_json(getContext(), Url.readSysMessage, params, new BaseCallback<ResultBean>() {
+            @Override
+            public void onBeforeRequest(Request request) {
+            }
+
+            @Override
+            public void onFailure(Request request, Exception e) {
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, ResultBean resultBean) {
 
 
             }

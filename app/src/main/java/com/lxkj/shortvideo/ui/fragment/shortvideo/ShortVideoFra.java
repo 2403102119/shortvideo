@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.adapter.CompetitionAdapter;
 import com.lxkj.shortvideo.adapter.ShortVideoAdapter;
@@ -129,7 +130,7 @@ public class ShortVideoFra extends TitleFragment {
         Map<String, Object> params = new HashMap<>();
         params.put("mid", userId);
         params.put("ccid", id);
-        params.put("keywords", keywords);
+        params.put("keywords", AppConsts.keywords);
         params.put("pageNo", page + "");
         params.put("pageSize", "10");
         mOkHttpHelper.post_json(getContext(), Url.worksList, params, new BaseCallback<ResultBean>() {

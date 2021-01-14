@@ -128,4 +128,14 @@ public class StringUtil {
         return OKtime ;
     }
 
+    public static String stampToDate(String s) {
+        String res;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //如果它本来就是long类型的,则不用写这一步
+        long lt = new Long(s);
+        Date date = new Date(lt);
+        res = simpleDateFormat.format(date);
+        return res;
+    }
+
 }

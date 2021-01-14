@@ -11,6 +11,6 @@
     android:paddingLeft="17dp"
     android:paddingTop="3dp"
     android:paddingBottom="3dp"
-    android:background="@drawable/guigexuanze"
-    android:textColor="@drawable/text_color"
+    android:background="@drawable/selector_choice_param_bg"
+    android:textColor="#9A9A9A"
     android:text="标签" />

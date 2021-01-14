@@ -57,6 +57,19 @@ public class AttentionListAdapter extends RecyclerView.Adapter<AttentionListAdap
             holder.tvGuanzhu.setText("+关注");
         }
 
+        holder.tvGuanzhu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.OnItemClickListener(position);
+            }
+        });
+        holder.llSixin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.OnSixinClickListener(position);
+            }
+        });
+
     }
 
     @Override
@@ -91,5 +104,6 @@ public class AttentionListAdapter extends RecyclerView.Adapter<AttentionListAdap
 
     public interface OnItemClickListener {
         void OnItemClickListener(int firstPosition);
+        void OnSixinClickListener(int firstPosition);
     }
 }

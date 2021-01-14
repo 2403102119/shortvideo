@@ -1,1 +1,1 @@
-include ':app', ':beecloud', ':calendar', ':camera', ':indexlib', ':cardgallery', ':dkplayer-java', ':dkplayer-videocache', ':silicompressor',':snapupdowntimerview',':websocketlib'
+include ':app', ':beecloud', ':calendar', ':camera', ':indexlib', ':cardgallery', ':dkplayer-java', ':dkplayer-videocache', ':silicompressor',':snapupdowntimerview',':websocketlib', ':tuikit'

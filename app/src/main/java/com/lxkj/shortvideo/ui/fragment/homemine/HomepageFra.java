@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.gyf.immersionbar.ImmersionBar;
 import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.adapter.HomeDynamicAdapter;
@@ -23,6 +24,7 @@ import com.lxkj.shortvideo.http.OkHttpHelper;
 import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
 import com.lxkj.shortvideo.ui.fragment.competition.WorkDetails;
+import com.lxkj.shortvideo.ui.fragment.message.DynamicDetailFra;
 import com.lxkj.shortvideo.utils.SharePrefUtil;
 import com.lxkj.shortvideo.utils.StringUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -268,6 +270,9 @@ public class HomepageFra extends TitleFragment implements View.OnClickListener {
                 dynamicAdapter.setOnItemClickListener(new HomeDynamicAdapter.OnItemClickListener() {
                     @Override
                     public void OnItemClickListener(int firstPosition) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("fmid",listBeans.get(firstPosition).id);
+                        ActivitySwitcher.startFragment(getActivity(), DynamicDetailFra.class,bundle);
                     }
 
                 });

@@ -14,9 +14,11 @@ import com.lxkj.shortvideo.adapter.AttentionListAdapter;
 import com.lxkj.shortvideo.adapter.FansAdapter;
 import com.lxkj.shortvideo.bean.DataListBean;
 import com.lxkj.shortvideo.bean.ResultBean;
+import com.lxkj.shortvideo.biz.ActivitySwitcher;
 import com.lxkj.shortvideo.http.BaseCallback;
 import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
+import com.lxkj.shortvideo.ui.fragment.message.ChatFra;
 import com.lxkj.shortvideo.utils.StringUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -88,7 +90,19 @@ public class FansFra extends TitleFragment {
         fansAdapter.setOnItemClickListener(new FansAdapter.OnItemClickListener() {
             @Override
             public void OnItemClickListener(int firstPosition) {
+                if (listBeans.get(firstPosition).focused.equals("1")){
+                    focusMember(listBeans.get(firstPosition).id,"0",firstPosition);
+                }else {
+                    focusMember(listBeans.get(firstPosition).id,"1",firstPosition);
+                }
+            }
 
+            @Override
+            public void OnSixinClickListener(int firstPosition) {
+                Bundle bundle = new Bundle();
+                bundle.putString("id",listBeans.get(firstPosition).id);
+                bundle.putString("title",listBeans.get(firstPosition).nickname);
+                ActivitySwitcher.startFragment(getActivity(), ChatFra.class,bundle);
             }
         });
         smart.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -223,6 +237,44 @@ public class FansFra extends TitleFragment {
                 fansAdapter.notifyDataSetChanged();
 
 
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+            }
+        });
+    }
+
+    /**
+     * 关注/取消关注用户
+     */
+    private void focusMember(String toMid,String focused,int position) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("mid", userId);
+        params.put("toMid", toMid);
+        params.put("type", focused);
+        mOkHttpHelper.post_json(getContext(), Url.focusMember, params, new BaseCallback<ResultBean>() {
+            @Override
+            public void onBeforeRequest(Request request) {
+            }
+
+            @Override
+            public void onFailure(Request request, Exception e) {
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, ResultBean resultBean) {
+                if (focused.equals("1")){
+                    listBeans.get(position).focused = "1";
+                }else {
+                    listBeans.get(position).focused = "0";
+                }
+                fansAdapter.notifyDataSetChanged();
             }
 
             @Override

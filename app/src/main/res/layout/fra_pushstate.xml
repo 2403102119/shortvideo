@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
     <EditText
         android:id="@+id/et_itea"
@@ -23,7 +28,7 @@
     <LinearLayout
         android:layout_marginLeft="11dp"
         android:gravity="center_vertical"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -87,4 +92,5 @@
         android:text="发布"
         android:textColor="@color/white"
         android:textSize="16sp" />
-</LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

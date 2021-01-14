@@ -21,9 +21,13 @@ import com.lxkj.shortvideo.biz.ActivitySwitcher;
 import com.lxkj.shortvideo.http.BaseCallback;
 import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
+import com.lxkj.shortvideo.ui.fragment.dialog.ShareFra;
 import com.lxkj.shortvideo.utils.StringUtil;
 import com.lxkj.shortvideo.utils.ToastUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -34,6 +38,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -84,6 +89,12 @@ public class WorkDetails extends TitleFragment implements View.OnClickListener {
     TextView tvSent;
     @BindView(R.id.llDetail)
     LinearLayout llDetail;
+    @BindView(R.id.tvVideoTitle)
+    TextView tvVideoTitle;
+    @BindView(R.id.smart)
+    SmartRefreshLayout smart;
+    @BindView(R.id.imfenxiang)
+    ImageView imfenxiang;
 
     private ArrayList<DataListBean> listBeans;
     private int page = 1, totalPage = 1;
@@ -145,11 +156,32 @@ public class WorkDetails extends TitleFragment implements View.OnClickListener {
             }
         });
 
+        smart.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                if (page >= totalPage) {
+                    refreshLayout.setNoMoreData(true);
+                    return;
+                }
+                page++;
+                worksCommentList();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                page = 1;
+                worksCommentList();
+                refreshLayout.setNoMoreData(false);
+            }
+        });
+
 
         tvSent.setOnClickListener(this);
         llDetail.setOnClickListener(this);
         imShoucang.setOnClickListener(this);
         tvGuanzhu.setOnClickListener(this);
+        tvGuanzhu.setOnClickListener(this);
+        imfenxiang.setOnClickListener(this);
 
         competitionWorksDetail();
         worksCommentList();
@@ -168,26 +200,29 @@ public class WorkDetails extends TitleFragment implements View.OnClickListener {
                 break;
             case R.id.llDetail:
                 Bundle bundle = new Bundle();
-                bundle.putString("toMid",toMid);
-                ActivitySwitcher.startFragment(getActivity(), UserHomeFra.class,bundle);
+                bundle.putString("toMid", toMid);
+                ActivitySwitcher.startFragment(getActivity(), UserHomeFra.class, bundle);
                 break;
             case R.id.imShoucang://收藏
-                if (collected.equals("1")){
+                if (collected.equals("1")) {
                     collected = "0";
                     collectWorks("0");
-                }else {
+                } else {
                     collected = "1";
                     collectWorks("1");
                 }
                 break;
             case R.id.tvGuanzhu://关注
-                if (focused.equals("1")){
+                if (focused.equals("1")) {
                     focused = "0";
                     focusMember("0");
-                }else {
+                } else {
                     focused = "1";
                     focusMember("1");
                 }
+                break;
+            case R.id.imfenxiang:
+                shareWorks(wid);
                 break;
         }
     }
@@ -216,6 +251,7 @@ public class WorkDetails extends TitleFragment implements View.OnClickListener {
             @Override
             public void onSuccess(Response response, ResultBean resultBean) {
                 act.titleTv.setText(resultBean.title);
+                tvVideoTitle.setText(resultBean.title);
                 tvShoucang.setText(resultBean.collectCount);
                 tvFenxiang.setText(resultBean.shareCount);
                 tvName.setText(resultBean.member.nickname);
@@ -283,7 +319,7 @@ public class WorkDetails extends TitleFragment implements View.OnClickListener {
                 adapter = new TagAdapter<String>(list) {
                     @Override
                     public View getView(FlowLayout parent, int position, String s) {
-                        TextView view = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.item_choose, parent, false);
+                        TextView view = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.item_lable, parent, false);
                         view.setText(s);
                         return view;
                     }
@@ -355,6 +391,7 @@ public class WorkDetails extends TitleFragment implements View.OnClickListener {
         Map<String, Object> params = new HashMap<>();
         params.put("mid", userId);
         params.put("wid", wid);
+        params.put("pageNo", page + "");
         mOkHttpHelper.post_json(getContext(), Url.worksCommentList, params, new BaseCallback<ResultBean>() {
             @Override
             public void onBeforeRequest(Request request) {
@@ -371,8 +408,23 @@ public class WorkDetails extends TitleFragment implements View.OnClickListener {
 
             @Override
             public void onSuccess(Response response, ResultBean resultBean) {
-                listBeans.clear();
-                listBeans.addAll(resultBean.dataList);
+                if (!StringUtil.isEmpty(resultBean.totalPage))
+                    totalPage = Integer.parseInt(resultBean.totalPage);
+                smart.finishLoadMore();
+                smart.finishRefresh();
+                if (page == 1) {
+                    listBeans.clear();
+                    commentAdapter.notifyDataSetChanged();
+                }
+                if (null != resultBean.dataList)
+                    listBeans.addAll(resultBean.dataList);
+//                if (listBeans.size() == 0) {
+//                    llNoData.setVisibility(View.VISIBLE);
+//                    recyclerView.setVisibility(View.GONE);
+//                } else {
+//                    recyclerView.setVisibility(View.VISIBLE);
+//                    llNoData.setVisibility(View.GONE);
+//                }
                 commentAdapter.notifyDataSetChanged();
             }
 
@@ -477,10 +529,10 @@ public class WorkDetails extends TitleFragment implements View.OnClickListener {
             public void onSuccess(Response response, ResultBean resultBean) {
                 if (type.equals("1")) {
                     imShoucang.setImageResource(R.mipmap.yishoucang);
-                    tvShoucang.setText((Integer.parseInt(tvShoucang.getText().toString())+1)+"");
+                    tvShoucang.setText((Integer.parseInt(tvShoucang.getText().toString()) + 1) + "");
                 } else {
                     imShoucang.setImageResource(R.mipmap.dianzan);
-                    tvShoucang.setText((Integer.parseInt(tvShoucang.getText().toString())-1)+"");
+                    tvShoucang.setText((Integer.parseInt(tvShoucang.getText().toString()) - 1) + "");
                 }
 
             }
@@ -528,6 +580,36 @@ public class WorkDetails extends TitleFragment implements View.OnClickListener {
             }
         });
     }
+
+    private void shareWorks(String wid) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("mid", userId);
+        params.put("wid",wid);
+        mOkHttpHelper.post_json(getContext(), Url.shareWorks, params, new BaseCallback<ResultBean>() {
+            @Override
+            public void onBeforeRequest(Request request) {
+            }
+
+            @Override
+            public void onFailure(Request request, Exception e) {
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, ResultBean resultBean) {
+                new ShareFra().show(act.getSupportFragmentManager(), "Menu");
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+            }
+        });
+    }
+
 
     @Override
     public void onDestroyView() {
