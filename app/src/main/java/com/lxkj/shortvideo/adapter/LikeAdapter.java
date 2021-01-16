@@ -49,11 +49,11 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.MyHolder> {
         holder.tvTitle.setText(list.get(position).title);
         holder.tvTime.setText(list.get(position).uploadDate);
         holder.tvNumber.setText(list.get(position).collectCount);
-        if (list.get(position).collected.equals("1")){
+//        if (list.get(position).collected.equals("1")){
             holder.inShoucang.setImageResource(R.mipmap.yishoucang);
-        }else {
-            holder.inShoucang.setImageResource(R.mipmap.dianzan);
-        }
+//        }else {
+//            holder.inShoucang.setImageResource(R.mipmap.dianzan);
+//        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

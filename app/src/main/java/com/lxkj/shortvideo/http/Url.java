@@ -120,6 +120,10 @@ public class Url {
     public static String shareFriendMoments = IP + "shareFriendMoments";
     //作品分享
     public static String shareWorks = IP + "shareWorks";
+    //轮播图列表
+    public static String carouselList = IP + "carouselList";
+    //版本更新
+    public static String versionUpdate = IP + "versionUpdate";
 
 
 }

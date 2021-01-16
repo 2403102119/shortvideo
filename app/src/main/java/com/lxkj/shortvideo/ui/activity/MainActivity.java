@@ -17,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.allenliu.versionchecklib.v2.AllenVersionChecker;
+import com.allenliu.versionchecklib.v2.builder.NotificationBuilder;
+import com.allenliu.versionchecklib.v2.builder.UIData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.gyf.immersionbar.ImmersionBar;
@@ -28,6 +31,7 @@ import com.lxkj.shortvideo.bean.SendmessageBean;
 import com.lxkj.shortvideo.biz.EventCenter;
 import com.lxkj.shortvideo.http.BaseCallback;
 import com.lxkj.shortvideo.http.OkHttpHelper;
+import com.lxkj.shortvideo.http.SpotsCallBack;
 import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.socket.WsManager;
 import com.lxkj.shortvideo.ui.fragment.main.HomeClassicalFra;
@@ -35,6 +39,7 @@ import com.lxkj.shortvideo.ui.fragment.main.HomeFra;
 import com.lxkj.shortvideo.ui.fragment.main.HomeMineFra;
 import com.lxkj.shortvideo.ui.fragment.main.MessageListFra;
 import com.lxkj.shortvideo.ui.fragment.main.HomeShortVideoFra;
+import com.lxkj.shortvideo.utils.APKVersionCodeUtils;
 import com.lxkj.shortvideo.utils.PicassoUtil;
 import com.lxkj.shortvideo.utils.SharePrefUtil;
 import com.lxkj.shortvideo.utils.ToastUtil;
@@ -68,6 +73,7 @@ public class MainActivity extends BaseFragAct
     private int curTab = 0, tabIdx = 0;
     private WsManager wsManager;
     public  TextView tvUnreadCount;
+    private int verCode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (GlobalBeans.getSelf() == null) {
@@ -90,8 +96,9 @@ public class MainActivity extends BaseFragAct
         if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
         }
-
+        verCode = APKVersionCodeUtils.getVersionCode(this);
         getUserSig();
+        versionUpdate();
     }
 
 
@@ -156,6 +163,39 @@ public class MainActivity extends BaseFragAct
         });
     }
 
+    /**
+     * 获取版本更新
+     */
+    private void versionUpdate() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("type","1");
+        OkHttpHelper.getInstance().post_json(this, Url.versionUpdate, params, new SpotsCallBack<ResultBean>(MainActivity.this) {
+            @Override
+            public void onSuccess(Response response, ResultBean resultBean) {
+                if (verCode<Integer.parseInt(resultBean.number)){
+                    AllenVersionChecker
+                            .getInstance()
+                            .downloadOnly(
+                                    UIData.create().setDownloadUrl(resultBean.androidFile).setTitle("提示").setContent(resultBean.remarks)
+                            ).setNotificationBuilder(
+                            NotificationBuilder.create()
+                                    .setRingtone(true)
+                                    .setIcon(R.mipmap.logo)
+                                    .setTicker("版本更新")
+                                    .setContentTitle("版本更新")
+                                    .setContentText("正在下载....")
+                    ).setShowNotification(true).setShowDownloadingDialog(true).executeMission(MainActivity.this);
+                } else{
+
+                }
+//                    ToastUtil.show("当前已是最新版本！");
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+            }
+        });
+    }
 
 
     @Override

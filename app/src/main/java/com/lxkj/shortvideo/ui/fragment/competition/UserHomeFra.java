@@ -304,15 +304,19 @@ public class UserHomeFra extends TitleFragment implements View.OnClickListener {
                 break;
             case R.id.tvPingbi://屏蔽
                 if (shielded.equals("1")) {
+                    shielded = "0";
                     shieldMember("0");
                 } else {
+                    shielded = "1";
                     shieldMember("1");
                 }
                 break;
             case R.id.tvGuanzhu://关注
                 if (focused.equals("1")) {
+                    focused = "0";
                     focusMember("0");
                 } else {
+                    focused = "1";
                     focusMember("1");
                 }
                 break;

@@ -3,7 +3,7 @@
     <string name="httperror">网络请求失败...</string>
     <string name="press_again_to_leave">再按一次退出程序</string>
     <string name="glide_plus_icon_string">android.resource://</string>
-    <string name="home">赛事</string>
+    <string name="home">赛评</string>
     <string name="shop">短视频</string>
     <string name="car">消息</string>
     <string name="mine">我的</string>

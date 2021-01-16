@@ -51,7 +51,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickListener.OnDelateClickListener(position);
+                onItemClickListener.OnItemClickListener(position);
             }
         });
     }

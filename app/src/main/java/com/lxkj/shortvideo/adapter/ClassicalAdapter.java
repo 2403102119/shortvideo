@@ -9,8 +9,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.bean.DataListBean;
+import com.lxkj.shortvideo.utils.StringUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
@@ -40,11 +42,20 @@ public class ClassicalAdapter extends RecyclerView.Adapter<ClassicalAdapter.MyHo
 
     @Override
     public void onBindViewHolder(ClassicalAdapter.MyHolder holder, final int position) {
-        Glide.with(context).applyDefaultRequestOptions(new RequestOptions()
-                .error(R.mipmap.imageerror)
-                .placeholder(R.mipmap.imageerror))
-                .load(list.get(position).coverImage)
-                .into(holder.riIcon);
+        if (StringUtil.isEmpty(list.get(position).coverImage)){
+            Glide.with(context).applyDefaultRequestOptions(new RequestOptions()
+                    .error(R.mipmap.imageerror)
+                    .placeholder(R.mipmap.imageerror))
+                    .load(list.get(position).video+ AppConsts.ViDEOEND)
+                    .into(holder.riIcon);
+        }else {
+            Glide.with(context).applyDefaultRequestOptions(new RequestOptions()
+                    .error(R.mipmap.imageerror)
+                    .placeholder(R.mipmap.imageerror))
+                    .load(list.get(position).coverImage)
+                    .into(holder.riIcon);
+        }
+
         holder.tvTitle.setText(list.get(position).title);
         holder.tvTime.setText(list.get(position).uploadDate);
         holder.tvNumber.setText(list.get(position).collectCount);

@@ -38,6 +38,7 @@ public abstract class ChatManagerKit extends V2TIMAdvancedMsgListener implements
 
     private MessageInfo mLastMessageInfo;
 
+
     protected void init() {
         destroyChat();
         V2TIMManager.getMessageManager().addAdvancedMsgListener(this);

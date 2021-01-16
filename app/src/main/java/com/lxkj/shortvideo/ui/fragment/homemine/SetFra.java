@@ -10,6 +10,9 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.allenliu.versionchecklib.v2.AllenVersionChecker;
+import com.allenliu.versionchecklib.v2.builder.NotificationBuilder;
+import com.allenliu.versionchecklib.v2.builder.UIData;
 import com.hys.utils.MD5Utils;
 import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.R;
@@ -21,6 +24,7 @@ import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.ui.activity.MainActivity;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
 import com.lxkj.shortvideo.ui.fragment.login.LoginFra;
+import com.lxkj.shortvideo.utils.APKVersionCodeUtils;
 import com.lxkj.shortvideo.utils.DataCleanManager;
 import com.lxkj.shortvideo.utils.SharePrefUtil;
 import com.lxkj.shortvideo.utils.ToastUtil;
@@ -57,7 +61,7 @@ public class SetFra extends TitleFragment implements View.OnClickListener {
     TextView tvCacheData;
     @BindView(R.id.tvverson)
     TextView tvverson;
-
+    private int verCode ;
     @Override
     public String getTitleName() {
         return "设置";
@@ -74,7 +78,7 @@ public class SetFra extends TitleFragment implements View.OnClickListener {
     }
 
     public void initView() {
-
+        verCode = APKVersionCodeUtils.getVersionCode(getActivity());
 
         try {
             tvverson.setText("V" + getVersionName());
@@ -89,6 +93,7 @@ public class SetFra extends TitleFragment implements View.OnClickListener {
 
         llClean.setOnClickListener(this);
         tvLogout.setOnClickListener(this);
+        llVersoncode.setOnClickListener(this);
     }
     private String getVersionName() throws Exception {
         // 获取packagemanager的实例
@@ -125,7 +130,42 @@ public class SetFra extends TitleFragment implements View.OnClickListener {
             case R.id.tvLogout://退出登录
                 logout();
                 break;
+            case R.id.llVersoncode://版本更新
+                versionUpdate();
+                break;
         }
+    }
+
+    /**
+     * 获取版本更新
+     */
+    private void versionUpdate() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("type","1");
+        mOkHttpHelper.post_json(mContext, Url.versionUpdate, params, new SpotsCallBack<ResultBean>(getContext()) {
+            @Override
+            public void onSuccess(Response response, ResultBean resultBean) {
+                if (verCode<Integer.parseInt(resultBean.number)){
+                    AllenVersionChecker
+                            .getInstance()
+                            .downloadOnly(
+                                    UIData.create().setDownloadUrl(resultBean.androidFile).setTitle("提示").setContent(resultBean.remarks)
+                            ).setNotificationBuilder(
+                            NotificationBuilder.create()
+                                    .setRingtone(true)
+                                    .setIcon(R.mipmap.logo)
+                                    .setTicker("版本更新")
+                                    .setContentTitle("版本更新")
+                                    .setContentText("正在下载....")
+                    ).setShowNotification(true).setShowDownloadingDialog(true).executeMission(getContext());
+                } else
+                    ToastUtil.show("当前已是最新版本！");
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+            }
+        });
     }
 
 

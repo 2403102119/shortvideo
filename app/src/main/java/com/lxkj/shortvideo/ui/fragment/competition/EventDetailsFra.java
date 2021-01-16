@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.HcbApp;
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.adapter.CommentAdapter;
@@ -232,7 +234,10 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
                     llComment.setVisibility(View.GONE);
                     imComment.setVisibility(View.GONE);
 
+
                     llRecycle.setVisibility(View.VISIBLE);
+
+
 
                     tvPass.setEnabled(true);
                     tvNg.setEnabled(true);
@@ -247,6 +252,7 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
 
         competitionDetail();
         competitionWorksList();
+
 
     }
 
@@ -454,7 +460,10 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
                         .setOnClickBannerListener(new OnClickBannerListener<View, String>() {
                             @Override
                             public void onClickBanner(View view, String data, int position) {
-
+                                Bundle bundle = new Bundle();
+                                bundle.putString("cid", id);
+                                bundle.putString("entered", entered);
+                                ActivitySwitcher.startFragment(getActivity(), LookDetailFra.class, bundle);
                             }
                         })
                         //填充数据
@@ -852,7 +861,7 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
         Glide.with(this).applyDefaultRequestOptions(new RequestOptions()
                 .error(R.mipmap.imageerror)
                 .placeholder(R.mipmap.imageerror))
-                .load(data.coverImage)
+                .load(data.video+ AppConsts.ViDEOEND)
                 .into(jzVideo.thumbImageView);
 
         jzVideo.titleTextView.setVisibility(View.GONE);

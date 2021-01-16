@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.bean.DataListBean;
+import com.lxkj.shortvideo.utils.StringUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
@@ -41,12 +43,20 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.MyHolder> {
 
     @Override
     public void onBindViewHolder(RankAdapter.MyHolder holder, final int position) {
+       if (StringUtil.isEmpty(list.get(position).coverImage)){
+           Glide.with(context).applyDefaultRequestOptions(new RequestOptions()
+                   .error(R.mipmap.imageerror)
+                   .placeholder(R.mipmap.imageerror))
+                   .load(list.get(position).video+ AppConsts.ViDEOEND)
+                   .into(holder.riIcon);
+       }else {
+           Glide.with(context).applyDefaultRequestOptions(new RequestOptions()
+                   .error(R.mipmap.imageerror)
+                   .placeholder(R.mipmap.imageerror))
+                   .load(list.get(position).coverImage)
+                   .into(holder.riIcon);
+       }
 
-        Glide.with(context).applyDefaultRequestOptions(new RequestOptions()
-                .error(R.mipmap.imageerror)
-                .placeholder(R.mipmap.imageerror))
-                .load(list.get(position).coverImage)
-                .into(holder.riIcon);
         holder.tvNumber.setText((position+1)+"");
         holder.tvTitle.setText(list.get(position).title);
         holder.tvTime.setText(list.get(position).uploadDate);
@@ -59,6 +69,15 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.MyHolder> {
             holder.imXihuan.setImageResource(R.mipmap.yishoucang);
         }else {
             holder.imXihuan.setImageResource(R.mipmap.dianzan);
+        }
+        if (position==0){
+            holder.imJiao.setImageResource(R.mipmap.rank1);
+        }else if (position==1){
+            holder.imJiao.setImageResource(R.mipmap.rank2);
+        }else if (position == 2){
+            holder.imJiao.setImageResource(R.mipmap.rank3);
+        }else {
+            holder.imJiao.setImageResource(R.mipmap.rank1);
         }
 
         holder.tvName.setText("作者："+list.get(position).member.nickname);
@@ -100,6 +119,7 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.MyHolder> {
         TextView tvXiAi;
         TextView tvXihuan;
         ImageView imXihuan;
+        ImageView imJiao;
         public MyHolder(View itemView) {
             super(itemView);
             llLike = itemView.findViewById(R.id.llLike);
@@ -112,6 +132,7 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.MyHolder> {
             tvXiAi = itemView.findViewById(R.id.tvXiAi);
             tvXihuan = itemView.findViewById(R.id.tvXihuan);
             imXihuan = itemView.findViewById(R.id.imXihuan);
+            imJiao = itemView.findViewById(R.id.imJiao);
         }
     }
     private RankAdapter.OnItemClickListener onItemClickListener;

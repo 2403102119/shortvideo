@@ -1,5 +1,7 @@
 package com.lxkj.shortvideo.ui.fragment.competition;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,13 +19,17 @@ import com.lxkj.shortvideo.biz.ActivitySwitcher;
 import com.lxkj.shortvideo.http.BaseCallback;
 import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
+import com.lxkj.shortvideo.utils.PicassoUtil;
 import com.lxkj.shortvideo.utils.StringUtil;
+import com.lzy.ninegrid.ImageInfo;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
@@ -33,6 +39,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.ymex.widget.banner.Banner;
+import cn.ymex.widget.banner.callback.BindViewCallBack;
+import cn.ymex.widget.banner.callback.CreateViewCallBack;
+import cn.ymex.widget.banner.callback.OnClickBannerListener;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -55,7 +65,10 @@ public class CompetitionFra extends TitleFragment {
     RecyclerView recyclerView;
     @BindView(R.id.smart)
     SmartRefreshLayout smart;
-
+    @BindView(R.id.banner)
+    Banner banner;
+    private List<String> BanString = new ArrayList<>();
+    private ArrayList<ImageInfo> imageInfo = new ArrayList<>();
     private ArrayList<DataListBean> listBeans;
     private int page = 1, totalPage = 1;
     private CompetitionAdapter competitionAdapter;
@@ -65,7 +78,7 @@ public class CompetitionFra extends TitleFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        rootView = inflater.inflate(R.layout.layout_list, container, false);
+        rootView = inflater.inflate(R.layout.fra_competition, container, false);
         unbinder = ButterKnife.bind(this, rootView);
         initView();
         return rootView;
@@ -74,6 +87,8 @@ public class CompetitionFra extends TitleFragment {
     public void initView() {
 
         id = getArguments().getString("id");
+
+
 
         listBeans = new ArrayList<DataListBean>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -84,12 +99,12 @@ public class CompetitionFra extends TitleFragment {
             @Override
             public void OnItemClickListener(int firstPosition) {//赛事详情
                 Bundle bundle = new Bundle();
-                bundle.putString("id",listBeans.get(firstPosition).id);
-                bundle.putString("title",listBeans.get(firstPosition).name);
-                ActivitySwitcher.startFragment(getActivity(), EventDetailsFra.class,bundle);
+                bundle.putString("id", listBeans.get(firstPosition).id);
+                bundle.putString("title", listBeans.get(firstPosition).name);
+                ActivitySwitcher.startFragment(getActivity(), EventDetailsFra.class, bundle);
             }
         });
-
+        smart.setEnableNestedScroll(true);
         smart.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -109,6 +124,7 @@ public class CompetitionFra extends TitleFragment {
             }
         });
         competitionList();
+        carouselList();
     }
 
 
@@ -156,6 +172,74 @@ public class CompetitionFra extends TitleFragment {
                     llNoData.setVisibility(View.GONE);
                 }
                 competitionAdapter.notifyDataSetChanged();
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+            }
+        });
+    }
+
+    /**
+     * 轮播图列表
+     */
+    private void carouselList() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("mid", userId);
+        mOkHttpHelper.post_json(getContext(), Url.carouselList, params, new BaseCallback<ResultBean>() {
+            @Override
+            public void onBeforeRequest(Request request) {
+            }
+
+            @Override
+            public void onFailure(Request request, Exception e) {
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, ResultBean resultBean) {
+                BanString.clear();
+                if (null != resultBean.dataList) {
+                    for (int i = 0; i < resultBean.dataList.size(); i++) {
+                        BanString.add(resultBean.dataList.get(i).image);
+                        ImageInfo info = new ImageInfo();
+                        imageInfo.add(info);
+                    }
+                }
+                banner  //创建布局
+                        .createView(new CreateViewCallBack() {
+                            @Override
+                            public View createView(Context context, ViewGroup parent, int viewType) {
+                                View view = LayoutInflater.from(context).inflate(R.layout.custom_banner_page, null);
+                                return view;
+                            }
+                        })
+                        //布局处理
+                        .bindView(new BindViewCallBack<View, String>() {
+                            @Override
+                            public void bindView(View view, String data, int position) {
+                                RoundedImageView imageView = view.findViewById(R.id.iv_pic);
+                                PicassoUtil.setImag(getContext(), data, imageView);
+                            }
+                        })
+                        //点击事件
+                        .setOnClickBannerListener(new OnClickBannerListener<View, String>() {
+                            @Override
+                            public void onClickBanner(View view, String data, int position) {
+                                Bundle bundle = new Bundle();
+                                bundle.putString("id", resultBean.dataList.get(position).competition.id);
+                                bundle.putString("title", resultBean.dataList.get(position).competition.name);
+                                ActivitySwitcher.startFragment(getActivity(), EventDetailsFra.class, bundle);
+                            }
+                        })
+                        //填充数据
+                        .execute(BanString);
 
 
             }

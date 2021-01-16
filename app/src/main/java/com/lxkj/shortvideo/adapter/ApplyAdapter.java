@@ -60,23 +60,7 @@ public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.MyHolder> {
                 onItemClickListener.OnItemClickListener(position);
             }
         });
-//        //内容
-//        holder.etLable.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-////                if (null != onItemClickListener)
-////                    onItemClickListener.onEvaluate(position, null, editable.toString());
-//                list.get(position).title = editable.toString();
-//            }
-//        });
+
         holder.etLable.addTextChangedListener(new MyTextChangedListener(holder,contents));
     }
 

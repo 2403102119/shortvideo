@@ -53,6 +53,10 @@ public class ResultBean extends BaseBean implements Serializable {
     public String content;
     public String shielded;
     public String userSig;
+    public String number;
+    public String androidFile;
+    public String iosUrl;
+    public String remarks;
     public Member member;
     public List<String> carouselImages;
     public List<String> urls;

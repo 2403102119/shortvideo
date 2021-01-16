@@ -167,11 +167,11 @@ public class WebFra extends TitleFragment {
             ((NaviActivity) getActivity()).setTitle(title);
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkPmsLocation();
-        } else {
-            pmsLocationSuccess();
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            checkPmsLocation();
+//        } else {
+//            pmsLocationSuccess();
+//        }
 
     }
 

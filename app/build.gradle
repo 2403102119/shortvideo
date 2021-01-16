@@ -251,4 +251,5 @@ dependencies {
     implementation 'org.ccil.cowan.tagsoup:tagsoup:1.2.1'
     //腾讯云（IM）
     implementation project(path: ':tuikit')
+    implementation 'com.github.donkingliang:ConsecutiveScroller:4.3.1'
 }

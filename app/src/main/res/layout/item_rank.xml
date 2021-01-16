@@ -26,6 +26,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp">
                 <ImageView
+                    android:id="@+id/imJiao"
                     android:src="@mipmap/rank1"
                     android:layout_width="20dp"
                     android:layout_height="20dp"/>

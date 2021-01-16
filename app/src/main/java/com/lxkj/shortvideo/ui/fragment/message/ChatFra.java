@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,7 +14,6 @@ import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.actlink.NaviRightListener;
 import com.lxkj.shortvideo.adapter.ChatAdapter;
-import com.lxkj.shortvideo.adapter.DynamicAdapter;
 import com.lxkj.shortvideo.bean.DataListBean;
 import com.lxkj.shortvideo.bean.ResultBean;
 import com.lxkj.shortvideo.biz.ActivitySwitcher;
@@ -21,15 +21,11 @@ import com.lxkj.shortvideo.http.BaseCallback;
 import com.lxkj.shortvideo.http.OkHttpHelper;
 import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
-import com.lxkj.shortvideo.ui.fragment.competition.SeachFra;
 import com.lxkj.shortvideo.ui.fragment.login.LoginFra;
 import com.lxkj.shortvideo.utils.SharePrefUtil;
 import com.lxkj.shortvideo.utils.StringUtil;
 import com.lxkj.shortvideo.utils.ToastUtil;
 import com.lxkj.shortvideo.view.NormalDialog;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.tencent.imsdk.TIMManager;
 import com.tencent.imsdk.v2.V2TIMConversation;
 import com.tencent.qcloud.tim.uikit.modules.chat.ChatLayout;
@@ -46,7 +42,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -79,6 +74,8 @@ public class ChatFra extends TitleFragment implements NaviRightListener, View.On
     RecyclerView recyclerView;
     @BindView(R.id.llHuanti)
     LinearLayout llHuanti;
+    @BindView(R.id.imGuanbi)
+    ImageView imGuanbi;
     private String id, title;
     private List<DataListBean> listBeans = new ArrayList<>();
     TagAdapter<String> adapter;
@@ -90,6 +87,7 @@ public class ChatFra extends TitleFragment implements NaviRightListener, View.On
     private ArrayList<DataListBean> listBeans_recycle;
     private int page = 1, totalPage = 1;
     private ChatAdapter chatAdapter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -150,12 +148,13 @@ public class ChatFra extends TitleFragment implements NaviRightListener, View.On
             @Override
             public void onConcelClick(View view, int position, MessageInfo messageInfo) {//选中
                 Log.i("TAG", "onConcelClick: " + position);
-                for (int i = 0; i <listBeans.size() ; i++) {
-                    if (position== listBeans.get(i).position){
+                for (int i = 0; i < listBeans.size(); i++) {
+                    if (position == listBeans.get(i).position) {
                         listBeans.remove(i);
                     }
                 }
                 if (listBeans.size() == 0) {
+                    messageLayout.gone();
                     llhuati.setVisibility(View.GONE);
                 }
 
@@ -186,6 +185,7 @@ public class ChatFra extends TitleFragment implements NaviRightListener, View.On
 
         tvWancheng.setOnClickListener(this);
         llHuanti.setOnClickListener(this);
+        imGuanbi.setOnClickListener(this);
 
 
         adapter = new TagAdapter<String>(hot_list) {
@@ -219,14 +219,13 @@ public class ChatFra extends TitleFragment implements NaviRightListener, View.On
             @Override
             public void OnItemClickListener(int firstPosition) {//详情
                 Bundle bundle = new Bundle();
-                bundle.putString("toMid",id);
-                bundle.putString("tid",listBeans_recycle.get(firstPosition).id);
-                bundle.putString("title",listBeans_recycle.get(firstPosition).name);
-                ActivitySwitcher.startFragment(getActivity(), ChatDetailFra.class,bundle);
+                bundle.putString("toMid", id);
+                bundle.putString("tid", listBeans_recycle.get(firstPosition).id);
+                bundle.putString("title", listBeans_recycle.get(firstPosition).name);
+                ActivitySwitcher.startFragment(getActivity(), ChatDetailFra.class, bundle);
             }
 
         });
-
 
 
     }
@@ -248,6 +247,9 @@ public class ChatFra extends TitleFragment implements NaviRightListener, View.On
             case R.id.llHuanti:
                 listVisibity = false;
                 llHuanti.setVisibility(View.GONE);
+                break;
+            case R.id.imGuanbi:
+                llhuati.setVisibility(View.GONE);
                 break;
         }
     }
@@ -313,6 +315,11 @@ public class ChatFra extends TitleFragment implements NaviRightListener, View.On
             @Override
             public void onSuccess(Response response, ResultBean resultBean) {
                 ToastUtil.show("保存成功");
+                messageLayout.gone();
+                etHuati.setText("");
+                huatiID = "";
+                topicList_ry();
+                topicList();
             }
 
             @Override
@@ -345,6 +352,7 @@ public class ChatFra extends TitleFragment implements NaviRightListener, View.On
 
             @Override
             public void onSuccess(Response response, ResultBean resultBean) {
+                messageLayout.gone();
                 huatiID = resultBean.id;
                 saveTopicMsg(huatiID);
             }
@@ -403,7 +411,7 @@ public class ChatFra extends TitleFragment implements NaviRightListener, View.On
         if (listVisibity) {
             listVisibity = false;
             llHuanti.setVisibility(View.GONE);
-        }else {
+        } else {
             listVisibity = true;
             llHuanti.setVisibility(View.VISIBLE);
         }

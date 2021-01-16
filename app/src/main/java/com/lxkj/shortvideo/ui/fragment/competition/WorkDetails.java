@@ -1,10 +1,12 @@
 package com.lxkj.shortvideo.ui.fragment.competition;
 
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -102,7 +104,7 @@ public class WorkDetails extends TitleFragment implements View.OnClickListener {
     private String wid, pcid, focused, toMid;
     private int position = 0;
     private TagAdapter<String> adapter;
-    private String collected;
+    private String collected,commentCount;
 
     @Nullable
     @Override
@@ -183,10 +185,22 @@ public class WorkDetails extends TitleFragment implements View.OnClickListener {
         tvGuanzhu.setOnClickListener(this);
         imfenxiang.setOnClickListener(this);
 
+
+
         competitionWorksDetail();
         worksCommentList();
     }
+    private ObjectAnimator objectAnimatorX;
 
+    // 属性动画-平移
+    private void startPopsAnimTrans(){
+        if(objectAnimatorX == null){
+            float [] x= {0f,60f,120f,180f};
+            objectAnimatorX = ObjectAnimator.ofFloat(llDetail,"translationX", x);
+            objectAnimatorX.setDuration(2000);
+        }
+        objectAnimatorX.start();
+    }
 
     @Override
     public void onClick(View v) {
@@ -342,6 +356,7 @@ public class WorkDetails extends TitleFragment implements View.OnClickListener {
                 });
 
                 tvPinglun.setText("共计" + resultBean.commentCount + "条评论");
+                commentCount =  resultBean.commentCount;
             }
 
             @Override
@@ -375,6 +390,8 @@ public class WorkDetails extends TitleFragment implements View.OnClickListener {
 
             @Override
             public void onSuccess(Response response, ResultBean resultBean) {
+                etComment.setText("");
+                tvPinglun.setText("共计" +(Integer.parseInt(commentCount)+1)+"条评论");
                 worksCommentList();
             }
 

@@ -86,7 +86,7 @@ public class SystemMessageFra extends TitleFragment {
                     bundle.putString("url", listBeans.get(firstPosition).url);
                     ActivitySwitcher.startFragment(getContext(), WebFra.class, bundle);
                 }
-                readSysMessage(listBeans.get(firstPosition).id);
+                readSysMessage(listBeans.get(firstPosition).id,firstPosition);
 
             }
 
@@ -172,7 +172,7 @@ public class SystemMessageFra extends TitleFragment {
     /**
      * 读消息
      */
-    private void readSysMessage(String msgId) {
+    private void readSysMessage(String msgId,int position) {
         Map<String, Object> params = new HashMap<>();
         params.put("mid", userId);
         params.put("msgId", msgId);
@@ -192,8 +192,8 @@ public class SystemMessageFra extends TitleFragment {
 
             @Override
             public void onSuccess(Response response, ResultBean resultBean) {
-
-
+                listBeans.get(position).unread = "0";
+                messageAdapter.notifyDataSetChanged();
             }
 
             @Override

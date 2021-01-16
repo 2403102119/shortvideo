@@ -167,8 +167,6 @@ public class HomeShortVideoFra extends CachableFrg implements View.OnClickListen
         viewPager.setAdapter(new MFragmentStatePagerAdapter(getChildFragmentManager(), fragments, titles));
         tabLayout.setViewPager(viewPager);
 
-
-
     }
 
     /**

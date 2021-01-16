@@ -39,6 +39,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cc.shinichi.library.ImagePreview;
 import cn.jzvd.JZDataSource;
 import cn.jzvd.JzvdStd;
 import okhttp3.Request;
@@ -152,7 +153,14 @@ public class DynamicDetailFra extends TitleFragment implements View.OnClickListe
         recycletwoItemAdapter.setOnItemClickListener(new Recycle_one_itemAdapter.OnItemClickListener() {
             @Override
             public void OnItemClickListener(int firstPosition) {
-//                onItemClickListener.Onchakandatu(firstPosition,position);
+
+                ImagePreview
+                        .getInstance()
+                        .setContext(getContext())
+                        .setIndex(firstPosition)
+                        .setImageList(images)
+                        .setShowDownButton(true)// 是否显示下载按钮
+                        .start();// 开始跳转
             }
         });
 

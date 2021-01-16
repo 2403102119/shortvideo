@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.HcbApp;
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.bean.DataListBean;
@@ -65,7 +66,7 @@ public class ShortVideoAdapter extends RecyclerView.Adapter<ShortVideoAdapter.My
         Glide.with(context).applyDefaultRequestOptions(new RequestOptions()
                 .error(R.mipmap.imageerror)
                 .placeholder(R.mipmap.imageerror))
-                .load(list.get(position).coverImage)
+                .load(list.get(position).video+ AppConsts.ViDEOEND)
                 .into(holder.jzVideo.thumbImageView);
 
         holder.jzVideo.titleTextView.setVisibility(View.GONE);

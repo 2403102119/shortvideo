@@ -175,6 +175,10 @@ public class MessageLayout extends MessageLayoutUI {
         mPopActions.addAll(mMorePopActions);
     }
 
+    public void gone(){
+        mOnPopActionClickListener.onGoneClick();
+    }
+
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);

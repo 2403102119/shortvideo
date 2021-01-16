@@ -98,7 +98,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         mRecycleView = (MessageLayout) recyclerView;
-        mRecycleView.setItemViewCacheSize(5);
+        mRecycleView.setItemViewCacheSize(mDataSource.size());
     }
 
     public void showLoading() {
