@@ -94,7 +94,7 @@
                     android:layout_height="wrap_content">
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="150dp">
+                        android:layout_height="130dp">
                         <cn.ymex.widget.banner.Banner
                             android:id="@+id/banner"
                             android:layout_width="match_parent"
@@ -282,41 +282,77 @@
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/llUser"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="27dp"
-                        android:layout_marginLeft="11dp"
-                        android:layout_marginRight="11dp"
-                        android:gravity="center_vertical"
+                        android:visibility="gone"
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                        <com.makeramen.roundedimageview.RoundedImageView
-                            android:id="@+id/riIcon"
-                            android:src="@mipmap/touxiang"
-                            android:scaleType="fitXY"
-                            android:layout_width="40dp"
-                            app:riv_oval="true"
-                            android:layout_height="40dp"/>
-                        <TextView
-                            android:id="@+id/tvnickname"
-                            android:text="桑娜啊~"
-                            android:textSize="15sp"
-                            android:textColor="@color/colorBlack"
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_marginTop="27dp"
                             android:layout_marginLeft="11dp"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_marginRight="11dp"
+                            android:gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <com.makeramen.roundedimageview.RoundedImageView
+                                android:id="@+id/riIcon"
+                                android:src="@mipmap/touxiang"
+                                android:scaleType="fitXY"
+                                android:layout_width="40dp"
+                                app:riv_oval="true"
+                                android:layout_height="40dp"/>
+                            <TextView
+                                android:id="@+id/tvnickname"
+                                android:text="桑娜啊~"
+                                android:textSize="15sp"
+                                android:textColor="@color/colorBlack"
+                                android:layout_marginLeft="11dp"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"/>
+                            <TextView
+                                android:id="@+id/tvGuanzhu"
+                                android:background="@drawable/login_20"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textSize="13sp"
+                                android:text="+关注"
+                                android:layout_width="85dp"
+                                android:layout_height="29dp"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginTop="22dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:text="标签"
+                                android:textSize="16sp"
+                                android:textColor="@color/txt_33"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                            <TextView
+                                android:text="点击标签可查看相关视频哦~"
+                                android:textColor="@color/txt_66"
+                                android:textSize="12sp"
+                                android:layout_marginLeft="11dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+                        <com.zhy.view.flowlayout.TagFlowLayout
+                            android:id="@+id/tagFlow"
+                            app:max_select="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
-                        <TextView
-                            android:id="@+id/tvGuanzhu"
-                            android:background="@drawable/login_20"
-                            android:gravity="center"
-                            android:textColor="@color/white"
-                            android:textSize="13sp"
-                            android:text="+关注"
-                            android:layout_width="85dp"
-                            android:layout_height="29dp"/>
                     </LinearLayout>
+
                     <RelativeLayout
-                        android:layout_marginTop="22dp"
+                        android:layout_marginTop="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <LinearLayout
@@ -327,30 +363,7 @@
                             android:orientation="vertical"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
-                            <LinearLayout
-                                android:orientation="horizontal"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                                <TextView
-                                    android:text="标签"
-                                    android:textSize="16sp"
-                                    android:textColor="@color/txt_33"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
-                                <TextView
-                                    android:text="点击标签可查看相关视频哦~"
-                                    android:textColor="@color/txt_66"
-                                    android:textSize="12sp"
-                                    android:layout_marginLeft="11dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
-                            </LinearLayout>
-                            <com.zhy.view.flowlayout.TagFlowLayout
-                                android:id="@+id/tagFlow"
-                                app:max_select="1"
-                                android:layout_marginTop="10dp"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
+
                             <TextView
                                 android:id="@+id/tvcommentCount"
                                 android:layout_marginTop="15dp"

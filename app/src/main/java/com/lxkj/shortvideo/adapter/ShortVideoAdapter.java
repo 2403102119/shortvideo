@@ -12,6 +12,7 @@ import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.HcbApp;
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.bean.DataListBean;
+import com.lxkj.shortvideo.utils.ToastUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.LinkedHashMap;
@@ -79,10 +80,15 @@ public class ShortVideoAdapter extends RecyclerView.Adapter<ShortVideoAdapter.My
         holder.jzVideo.mRetryLayout.setVisibility(View.GONE);
         holder.jzVideo.mRetryBtn.setVisibility(View.GONE);
         holder.jzVideo.clarity.setVisibility(View.GONE);
-        holder.jzVideo.fullscreenButton.setVisibility(View.GONE);
+        holder.jzVideo.fullscreenButton.setVisibility(View.VISIBLE);
         holder.jzVideo.currentTimeTextView.setVisibility(View.GONE);
         holder.jzVideo.thumbImageView.setVisibility(View.VISIBLE);
-
+        holder.jzVideo.fullscreenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.OnFangdaClickListener(position);
+            }
+        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,6 +146,7 @@ public class ShortVideoAdapter extends RecyclerView.Adapter<ShortVideoAdapter.My
     public interface OnItemClickListener {
         void OnItemClickListener(int firstPosition);
         void OnBigClickListener(int firstPosition);
+        void OnFangdaClickListener(int firstPosition);
     }
 }
 

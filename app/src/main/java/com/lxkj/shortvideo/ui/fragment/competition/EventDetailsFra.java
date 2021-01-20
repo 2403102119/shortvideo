@@ -3,6 +3,7 @@ package com.lxkj.shortvideo.ui.fragment.competition;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.lxkj.shortvideo.http.BaseCallback;
 import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
 import com.lxkj.shortvideo.ui.fragment.dialog.ShareFra;
+import com.lxkj.shortvideo.utils.AnimationUtilUP;
 import com.lxkj.shortvideo.utils.PicassoUtil;
 import com.lxkj.shortvideo.utils.StringUtil;
 import com.lxkj.shortvideo.utils.ToastUtil;
@@ -235,7 +237,8 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
                     imComment.setVisibility(View.GONE);
 
 
-                    llRecycle.setVisibility(View.VISIBLE);
+//                    llRecycle.setVisibility(View.VISIBLE);
+                    mHandlercomment.postDelayed(comment, 1000);//延时10秒
 
 
 
@@ -253,8 +256,33 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
         competitionDetail();
         competitionWorksList();
 
+        mHandlergift.postDelayed(gift, 2000);//延时10秒
+
 
     }
+
+    final Handler mHandlergift = new Handler();
+    Runnable gift = new Runnable() {
+        @Override
+        public void run() {
+            if (null!=llUser){
+                llUser.setVisibility(View.VISIBLE);
+                // 向右边移入
+                llUser.setAnimation(AnimationUtils.makeInAnimation(getActivity(), true));
+            }
+        }
+    };
+    final Handler mHandlercomment = new Handler();
+    Runnable comment = new Runnable() {
+        @Override
+        public void run() {
+            if (null!=llUser){
+                llRecycle.setVisibility(View.VISIBLE);
+                // 向上移入
+                llRecycle.setAnimation(AnimationUtilUP.moveToViewLocation());
+            }
+        }
+    };
 
     public CountDownTimer timer = new CountDownTimer(10000, 1000) {
         @Override

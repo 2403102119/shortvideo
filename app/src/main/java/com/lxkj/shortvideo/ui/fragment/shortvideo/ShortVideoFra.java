@@ -101,6 +101,14 @@ public class ShortVideoFra extends TitleFragment {
                 ActivitySwitcher.startFragment(getActivity(), EventDetailsFra.class,bundle);
 
             }
+
+            @Override
+            public void OnFangdaClickListener(int firstPosition) {//大屏
+                Bundle bundle = new Bundle();
+                bundle.putString("video",listBeans.get(firstPosition).video);
+                ActivitySwitcher.startFragment(getActivity(), VideoFra.class,bundle);
+                getActivity().overridePendingTransition(R.anim.anim_zoom_in,R.anim.anim_stay);
+            }
         });
         smart.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
