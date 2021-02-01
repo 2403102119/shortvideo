@@ -158,9 +158,12 @@
                android:layout_marginLeft="10dp"
                android:gravity="center"
                android:textSize="11sp"
+               android:paddingLeft="5dp"
+               android:paddingRight="5dp"
                android:textColor="@color/txt_66"
                android:background="@drawable/homepagelable"
-               android:layout_width="40dp"
+               android:layout_width="wrap_content"
+               android:minWidth="40dp"
                android:layout_height="18dp"/>
            <TextView
                android:id="@+id/tvSite"

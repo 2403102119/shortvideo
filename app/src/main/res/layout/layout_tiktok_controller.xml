@@ -16,7 +16,6 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:background="@drawable/bg_rect_f1f3f6_50dp"
         android:padding="10dp"
         android:src="@drawable/dkplayer_selector_play_button"
         android:visibility="gone"

@@ -27,6 +27,8 @@
                 android:id="@+id/tvTitle"
                 android:text="首届星洲社区脑洞大赛"
                 android:textSize="15sp"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:textColor="@color/txt_33"
                 android:textStyle="bold"
                 android:layout_width="match_parent"

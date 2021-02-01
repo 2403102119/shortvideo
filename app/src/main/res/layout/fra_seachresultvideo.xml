@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <ImageView
+            android:id="@+id/imFinish"
+            android:src="@mipmap/fanhui"
+            android:layout_width="50dp"
+            android:padding="16dp"
+            android:layout_height="match_parent"/>
+        <LinearLayout
+            android:id="@+id/llSeach"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:background="@drawable/sousuoyesousuo"
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="33dp">
+            <ImageView
+                android:src="@mipmap/im_sousuo"
+                android:layout_width="15dp"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/etSearch"
+                android:hint="请输入关键词进行搜索"
+                android:gravity="center_vertical"
+                android:textSize="13sp"
+                android:layout_marginLeft="8dp"
+                android:textColorHint="#B4B4B7"
+                android:singleLine="true"
+                android:imeOptions="actionSearch"
+                android:background="@null"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
+            <ImageView
+                android:id="@+id/imGuanbi"
+                android:src="@mipmap/guanbi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</LinearLayout>

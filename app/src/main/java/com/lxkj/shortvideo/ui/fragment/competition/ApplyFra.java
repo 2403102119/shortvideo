@@ -229,16 +229,35 @@ public class ApplyFra extends TitleFragment implements View.OnClickListener {
                             Message msg = mHandler.obtainMessage();
                             msg.what = 1;
                             Bundle bundle = new Bundle();
-                            bundle.putString("path", media.getPath());
+                            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+                                bundle.putString("path", media.getAndroidQToPath());
+                            } else {
+                                if (StringUtil.isEmpty(media.getPath())) {
+                                    bundle.putString("path", media.getRealPath());
+                                } else {
+                                    bundle.putString("path", media.getPath());
+                                }
+                            }
+
                             msg.setData(bundle);
                             mHandler.sendMessage(msg);
                         } else {
-                            compcompressVideo(media.getPath());
+                            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+                                compcompressVideo(media.getAndroidQToPath());
+                            } else {
+                                if (StringUtil.isEmpty(media.getPath())) {
+                                    compcompressVideo(media.getRealPath());
+                                } else {
+                                    compcompressVideo(media.getPath());
+
+                                }
+                            }
+
                         }
 
-                        Bitmap bitmap = VideoUtils.getInstance().getVideoThumbnail(media.getPath(), 720, 1280, FULL_SCREEN_KIND);
-                        String imagePath = VideoUtils.getInstance().saveBitmap(bitmap, "video");
-                        uploadImage(imagePath);
+//                        Bitmap bitmap = VideoUtils.getInstance().getVideoThumbnail(media.getPath(), 720, 1280, FULL_SCREEN_KIND);
+//                        String imagePath = VideoUtils.getInstance().saveBitmap(bitmap, "video");
+//                        uploadImage(imagePath);
                         return;
                     }
 
@@ -261,7 +280,7 @@ public class ApplyFra extends TitleFragment implements View.OnClickListener {
     });
 
     private void compcompressVideo(final String videoPath) {
-        final String outPutPath = Environment.getExternalStorageDirectory().getPath() + "/Android/data/com.lxkj.nongda/video/";
+        final String outPutPath = Environment.getExternalStorageDirectory().getPath() + "/Android/data/com.lxkj.shortvideo/video/";
         File destDir = new File(outPutPath);
         if (!destDir.exists()) {//如果不存在则创建
             destDir.mkdirs();
@@ -313,7 +332,7 @@ public class ApplyFra extends TitleFragment implements View.OnClickListener {
                     video = resultBean.urls.get(i);
                 }
                 if (videotype.equals("0")) {
-
+                    Glide.with(getActivity()).load(video+AppConsts.ViDEOEND).apply(new RequestOptions().error(R.mipmap.ic_defaut).placeholder(R.mipmap.ic_defaut)).into(imShipin);
                 } else {
                     listBeans.get(videoposition).title = applyAdapter.contents.get(videoposition);
                     listBeans.get(videoposition).video = video;

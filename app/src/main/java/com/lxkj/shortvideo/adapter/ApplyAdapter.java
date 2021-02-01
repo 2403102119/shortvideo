@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
+import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.bean.DataListBean;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -52,7 +53,7 @@ public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.MyHolder> {
         Glide.with(context).applyDefaultRequestOptions(new RequestOptions()
                 .error(R.mipmap.shangchuanshipin)
                 .placeholder(R.mipmap.shangchuanshipin))
-                .load(list.get(position).coverImage)
+                .load(list.get(position).video+ AppConsts.ViDEOEND)
                 .into(holder.imLableVideo);
         holder.imLableVideo.setOnClickListener(new View.OnClickListener() {
             @Override

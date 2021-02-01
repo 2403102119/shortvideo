@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.adapter.DynamicAdapter;
 import com.lxkj.shortvideo.bean.DataListBean;
@@ -24,6 +25,8 @@ import com.lxkj.shortvideo.http.BaseCallback;
 import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
 import com.lxkj.shortvideo.ui.fragment.dialog.ShareFra;
+import com.lxkj.shortvideo.ui.fragment.login.LoginFra;
+import com.lxkj.shortvideo.utils.SharePrefUtil;
 import com.lxkj.shortvideo.utils.StringUtil;
 import com.lxkj.shortvideo.utils.ToastUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -91,6 +94,11 @@ public class DynamicFra extends TitleFragment implements View.OnClickListener {
         dynamicAdapter.setOnItemClickListener(new DynamicAdapter.OnItemClickListener() {
             @Override
             public void OnItemClickListener(int firstPosition) {//关注
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
                 if (listBeans.get(firstPosition).focused.equals("0")){
                     focusMember(listBeans.get(firstPosition).member.id,"1");
                 }else {
@@ -107,6 +115,11 @@ public class DynamicFra extends TitleFragment implements View.OnClickListener {
 
             @Override
             public void OnFenxiangClickListener(int firstPosition) {//分享
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
                 shareFriendMoments(listBeans.get(firstPosition).id);
 
             }
@@ -170,6 +183,11 @@ public class DynamicFra extends TitleFragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvPushState://发表动态
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
                 ActivitySwitcher.startFragment(getActivity(), PushStateFra.class);
                 break;
         }

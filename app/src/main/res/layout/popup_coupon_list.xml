@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_all"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00000000"
+    android:gravity="bottom"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_all_item"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:padding="5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/popup_coupon_drawab"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_marginBottom="35dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                   android:paddingLeft="21dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        android:text="共0条评论"
+                        android:gravity="center_horizontal"
+                        android:textColor="#333333"
+                        android:textSize="16sp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+                    <ImageView
+                        android:id="@+id/im_close"
+                        android:src="@mipmap/guanbi"
+                        android:padding="2dp"
+                        android:layout_marginRight="3dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp" />
+                </LinearLayout>
+                <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                    android:id="@+id/smart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/etPinglun"
+                    android:textColor="@color/txt_33"
+                    android:textSize="14sp"
+                    android:gravity="top"
+                    android:layout_marginLeft="10dp"
+                    android:hint="节奏的魅力，全被你洞悉~"
+                    android:background="@drawable/pinglun_bk"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:minHeight="30dp"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tvPinglun"
+                    android:text="评论"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/main_color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

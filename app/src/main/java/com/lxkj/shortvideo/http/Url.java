@@ -6,7 +6,7 @@ package com.lxkj.shortvideo.http;
  */
 
 public class Url {
-    public static String IP = "http://122.114.49.242:8081/apiService/member/";
+    public static String IP = "http://8.136.116.205/apiService/member/";
     public static String WebIP = "http://62.234.20.192";
 
 
@@ -124,6 +124,14 @@ public class Url {
     public static String carouselList = IP + "carouselList";
     //版本更新
     public static String versionUpdate = IP + "versionUpdate";
+    //评分项列表
+    public static String worksScoreItemList = IP + "worksScoreItemList";
+    //评分
+    public static String giveWorksScore = IP + "giveWorksScore";
+    //未读系统消息数量
+    public static String unreadSysMessageCount = IP + "unreadSysMessageCount";
+    //热搜关键词
+    public static String hotKeywords = IP + "hotKeywords";
 
 
 }

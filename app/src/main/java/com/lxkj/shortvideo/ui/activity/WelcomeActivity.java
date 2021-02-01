@@ -191,10 +191,10 @@ public class WelcomeActivity extends BaseFragAct {
         uiHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (!StringUtil.isEmpty(SharePrefUtil.getString(context, AppConsts.UID, "")))
+//                if (!StringUtil.isEmpty(SharePrefUtil.getString(context, AppConsts.UID, "")))
                     ActivitySwitcher.start(WelcomeActivity.this, MainActivity.class);
-                else
-                    ActivitySwitcher.startFragment(WelcomeActivity.this, LoginFra.class);
+//                else
+//                    ActivitySwitcher.startFragment(WelcomeActivity.this, LoginFra.class);
                 finish();
             }
         });

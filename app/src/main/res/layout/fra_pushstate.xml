@@ -32,38 +32,54 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/imAll"
-            android:src="@mipmap/yixuan"
-            android:layout_width="15dp"
-            android:layout_height="15dp"/>
-        <TextView
-            android:text="所有人可见"
-            android:textColor="@color/txt_33"
-            android:textSize="12sp"
-            android:layout_marginLeft="8.5dp"
+        <LinearLayout
+            android:id="@+id/llAll"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <ImageView
-            android:id="@+id/imJinjin"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imAll"
+                android:src="@mipmap/yixuan"
+                android:layout_width="15dp"
+                android:layout_height="15dp"/>
+            <TextView
+                android:text="所有人可见"
+                android:textColor="@color/txt_33"
+                android:textSize="12sp"
+                android:layout_marginLeft="8.5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llJinjin"
             android:layout_marginLeft="40dp"
-            android:src="@mipmap/weixuan"
-            android:layout_width="15dp"
-            android:layout_height="15dp"/>
-        <TextView
-            android:text="仅好友可见"
-            android:textColor="@color/txt_33"
-            android:textSize="12sp"
-            android:layout_marginLeft="8.5dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imJinjin"
+                android:src="@mipmap/weixuan"
+                android:layout_width="15dp"
+                android:layout_height="15dp"/>
+            <TextView
+                android:text="仅好友可见"
+                android:textColor="@color/txt_33"
+                android:textSize="12sp"
+                android:layout_marginLeft="8.5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/llHaoyou"
         android:layout_marginLeft="11dp"
         android:gravity="center_vertical"
         android:layout_marginTop="20dp"
         android:orientation="horizontal"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/imHaoyou"

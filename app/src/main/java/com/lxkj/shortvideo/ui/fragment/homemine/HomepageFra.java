@@ -325,7 +325,7 @@ public class HomepageFra extends TitleFragment implements View.OnClickListener {
                 tvMotto.setText(resultBean.motto);
                 tvFans.setText(resultBean.focusedCount);
                 tvAttention.setText(resultBean.toFocusedCount);
-                tvAge.setText(resultBean.age + "岁");
+                tvAge.setText(resultBean.birthday);
                 tvSite.setText(resultBean.province + resultBean.city + resultBean.district);
                 if (StringUtil.isEmpty(resultBean.province)) {
                     tvSite.setVisibility(View.GONE);

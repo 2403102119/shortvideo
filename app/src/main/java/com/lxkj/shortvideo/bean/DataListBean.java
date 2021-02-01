@@ -48,6 +48,9 @@ public class DataListBean {
     public Object msgContent;
     public String senderId;
     public String sendDate;
+    public String competitionNumber;
+    public String itemId;
+    public String score;
     public int position;
     public Member member;
     public Competition competition;

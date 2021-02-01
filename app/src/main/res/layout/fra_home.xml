@@ -92,6 +92,7 @@
                 android:layout_height="wrap_content">
                 <ImageView
                     android:id="@+id/imGuanbi"
+                    android:visibility="gone"
                     android:layout_marginRight="11dp"
                     android:layout_marginTop="10dp"
                     android:layout_gravity="right"

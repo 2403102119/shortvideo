@@ -109,31 +109,6 @@ public class ChatFra extends TitleFragment implements NaviRightListener, View.On
         chatLayout.getTitleBar().setVisibility(View.GONE);
 
 
-        if (null == TIMManager.getInstance().getLoginUser()) {
-            NormalDialog dialog = new NormalDialog(getContext(), "您的账号已在其它设备登录", "", "确定", true);
-            dialog.show();
-            dialog.setOnButtonClickListener(new NormalDialog.OnButtonClick() {
-                @Override
-                public void OnRightClick() {
-                    SharePrefUtil.saveString(getContext(), AppConsts.UID, "");
-//                    eventCenter.sendType(EventCenter.EventType.EVT_LOGOUT);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("phone", SharePrefUtil.getString(getContext(), AppConsts.PHONE, null));
-                    ActivitySwitcher.startFragment(getContext(), LoginFra.class, bundle);
-                    getActivity().finish();
-                }
-
-                @Override
-                public void OnLeftClick() {
-                    SharePrefUtil.saveString(getContext(), AppConsts.UID, "");
-//                    eventCenter.sendType(EventCenter.EventType.EVT_LOGOUT);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("phone", SharePrefUtil.getString(getContext(), AppConsts.PHONE, null));
-                    ActivitySwitcher.startFragment(getContext(), LoginFra.class, bundle);
-                    getActivity().finish();
-                }
-            });
-        }
 
 
         messageLayout = chatLayout.getMessageLayout();

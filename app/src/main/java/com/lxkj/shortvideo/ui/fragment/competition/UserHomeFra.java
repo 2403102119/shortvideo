@@ -360,7 +360,7 @@ public class UserHomeFra extends TitleFragment implements View.OnClickListener {
                 tvMotto.setText(resultBean.motto);
                 tvFans.setText(resultBean.focusedCount);
                 tvAttention.setText(resultBean.toFocusedCount);
-                tvAge.setText(resultBean.age + "岁");
+                tvAge.setText(resultBean.birthday);
                 tvSite.setText(resultBean.province + resultBean.city + resultBean.district);
                 if (StringUtil.isEmpty(resultBean.province)) {
                     tvSite.setVisibility(View.GONE);
@@ -534,7 +534,7 @@ public class UserHomeFra extends TitleFragment implements View.OnClickListener {
             @Override
             public void onSuccess(Response response, ResultBean resultBean) {
 
-                if (resultBean.focused.equals("1")) {
+                if (type.equals("1")) {
                     tvPingbi.setText("已屏蔽");
                 } else {
                     tvPingbi.setText("屏蔽此人");
@@ -573,10 +573,10 @@ public class UserHomeFra extends TitleFragment implements View.OnClickListener {
             @Override
             public void onSuccess(Response response, ResultBean resultBean) {
 
-                if (resultBean.focused.equals("1")) {
-                    tvPingbi.setText("已屏蔽");
+                if (type.equals("1")) {
+                    tvPingbi.setText("已关注");
                 } else {
-                    tvPingbi.setText("屏蔽此人");
+                    tvPingbi.setText("+关注");
                 }
 
             }

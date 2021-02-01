@@ -2,7 +2,6 @@ package com.lxkj.shortvideo.ui.fragment.main;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,13 +18,17 @@ import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.adapter.MFragmentStatePagerAdapter;
 import com.lxkj.shortvideo.bean.DataListBean;
 import com.lxkj.shortvideo.bean.ResultBean;
+import com.lxkj.shortvideo.biz.ActivitySwitcher;
 import com.lxkj.shortvideo.http.BaseCallback;
 import com.lxkj.shortvideo.http.OkHttpHelper;
 import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.ui.fragment.CachableFrg;
+import com.lxkj.shortvideo.ui.fragment.login.LoginFra;
+import com.lxkj.shortvideo.ui.fragment.shortvideo.SeachVideoFra;
 import com.lxkj.shortvideo.ui.fragment.shortvideo.ShortVideoFra;
 import com.lxkj.shortvideo.utils.SharePrefUtil;
-import com.lxkj.shortvideo.utils.ToastUtil;
+import com.lxkj.shortvideo.utils.StringUtil;
+import com.lxkj.shortvideo.view.NormalDialog;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -67,6 +70,8 @@ public class HomeShortVideoFra extends CachableFrg implements View.OnClickListen
     List<String> hot_list = new ArrayList<>();
     @BindView(R.id.etSearch)
     EditText etSearch;
+    @BindView(R.id.imSeach)
+    ImageView imSeach;
     private List<Fragment> fragments = new ArrayList<>();
     private List<DataListBean> list = new ArrayList<>();
 
@@ -81,6 +86,8 @@ public class HomeShortVideoFra extends CachableFrg implements View.OnClickListen
 
         imClassify.setOnClickListener(this);
         imGuanbi.setOnClickListener(this);
+        llClassify.setOnClickListener(this);
+        imSeach.setOnClickListener(this);
 
         adapter = new TagAdapter<String>(hot_list) {
             @Override
@@ -140,6 +147,12 @@ public class HomeShortVideoFra extends CachableFrg implements View.OnClickListen
                 break;
             case R.id.imGuanbi:
                 llClassify.setVisibility(View.GONE);
+                break;
+            case R.id.llClassify:
+                llClassify.setVisibility(View.GONE);
+                break;
+            case R.id.imSeach://搜索
+                ActivitySwitcher.startFragment(getActivity(), SeachVideoFra.class);
                 break;
         }
     }
@@ -208,5 +221,25 @@ public class HomeShortVideoFra extends CachableFrg implements View.OnClickListen
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+            if (AppConsts.login.equals("0")){
+                NormalDialog dialog = new NormalDialog(getContext(), "未登录,请登录", "取消", "确定", true);
+                dialog.show();
+                dialog.setOnButtonClickListener(new NormalDialog.OnButtonClick() {
+                    @Override
+                    public void OnRightClick() {
+                        ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    }
 
+                    @Override
+                    public void OnLeftClick() {
+                        AppConsts.login = "1";
+                    }
+                });
+            }
+        }
+    }
 }

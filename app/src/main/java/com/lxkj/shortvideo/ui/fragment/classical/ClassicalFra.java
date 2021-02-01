@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.adapter.ClassicalAdapter;
-import com.lxkj.shortvideo.adapter.ShortVideoAdapter;
 import com.lxkj.shortvideo.bean.DataListBean;
 import com.lxkj.shortvideo.bean.ResultBean;
 import com.lxkj.shortvideo.biz.ActivitySwitcher;

@@ -28,12 +28,14 @@ import com.lxkj.shortvideo.GlobalBeans;
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.bean.ResultBean;
 import com.lxkj.shortvideo.bean.SendmessageBean;
+import com.lxkj.shortvideo.biz.ActivitySwitcher;
 import com.lxkj.shortvideo.biz.EventCenter;
 import com.lxkj.shortvideo.http.BaseCallback;
 import com.lxkj.shortvideo.http.OkHttpHelper;
 import com.lxkj.shortvideo.http.SpotsCallBack;
 import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.socket.WsManager;
+import com.lxkj.shortvideo.ui.fragment.login.LoginFra;
 import com.lxkj.shortvideo.ui.fragment.main.HomeClassicalFra;
 import com.lxkj.shortvideo.ui.fragment.main.HomeFra;
 import com.lxkj.shortvideo.ui.fragment.main.HomeMineFra;
@@ -43,10 +45,23 @@ import com.lxkj.shortvideo.utils.APKVersionCodeUtils;
 import com.lxkj.shortvideo.utils.PicassoUtil;
 import com.lxkj.shortvideo.utils.SharePrefUtil;
 import com.lxkj.shortvideo.utils.ToastUtil;
+import com.lxkj.shortvideo.view.NormalDialog;
 import com.lzy.ninegrid.ImageInfo;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.tencent.imsdk.TIMCallBack;
+import com.tencent.imsdk.TIMFriendshipManager;
 import com.tencent.imsdk.TIMManager;
+import com.tencent.imsdk.TIMMessage;
+import com.tencent.imsdk.TIMMessageListener;
+import com.tencent.imsdk.TIMUserProfile;
+import com.tencent.imsdk.v2.V2TIMManager;
+import com.tencent.imsdk.v2.V2TIMMessage;
+import com.tencent.imsdk.v2.V2TIMMessageManager;
+import com.tencent.imsdk.v2.V2TIMSDKListener;
+import com.tencent.imsdk.v2.V2TIMSimpleMsgListener;
 import com.tencent.qcloud.tim.uikit.TUIKit;
+import com.tencent.qcloud.tim.uikit.TUIKitImpl;
+import com.tencent.qcloud.tim.uikit.base.IMEventListener;
 import com.tencent.qcloud.tim.uikit.base.IUIKitCallBack;
 
 import org.greenrobot.eventbus.EventBus;
@@ -99,6 +114,10 @@ public class MainActivity extends BaseFragAct
         verCode = APKVersionCodeUtils.getVersionCode(this);
         getUserSig();
         versionUpdate();
+
+
+
+
     }
 
 
@@ -146,6 +165,81 @@ public class MainActivity extends BaseFragAct
                     public void onSuccess(Object data) {
                         // 登录成功
                         TIMManager.getInstance().getConversationList();
+
+                        HashMap<String,Object> map = new HashMap<>();
+                        map.put(TIMUserProfile.TIM_PROFILE_TYPE_KEY_NICK,SharePrefUtil.getString(MainActivity.this, AppConsts.username, ""));
+                        map.put(TIMUserProfile.TIM_PROFILE_TYPE_KEY_FACEURL,SharePrefUtil.getString(MainActivity.this, AppConsts.user_icon, ""));
+                        TIMFriendshipManager.getInstance().modifySelfProfile(map, new TIMCallBack() {
+                            @Override
+                            public void onError(int code, String desc) {
+                            }
+
+                            @Override
+                            public void onSuccess() {
+                            }
+                        });
+
+                        TUIKit.addIMEventListener(new IMEventListener() {
+                            @Override
+                            public void onForceOffline() {
+                                NormalDialog dialog = new NormalDialog(MainActivity.this, "您的账号已在其它设备登录", "", "确定", true);
+                                dialog.show();
+                                dialog.setOnButtonClickListener(new NormalDialog.OnButtonClick() {
+                                    @Override
+                                    public void OnRightClick() {
+                                        SharePrefUtil.saveString(MainActivity.this, AppConsts.UID, "");
+//                    eventCenter.sendType(EventCenter.EventType.EVT_LOGOUT);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("phone",SharePrefUtil.getString(MainActivity.this, AppConsts.PHONE,null));
+                                        ActivitySwitcher.startFragment(MainActivity.this, LoginFra.class,bundle);
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void OnLeftClick() {
+                                        SharePrefUtil.saveString(MainActivity.this, AppConsts.UID, "");
+//                    eventCenter.sendType(EventCenter.EventType.EVT_LOGOUT);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("phone",SharePrefUtil.getString(MainActivity.this, AppConsts.PHONE,null));
+                                        ActivitySwitcher.startFragment(MainActivity.this, LoginFra.class,bundle);
+                                        finish();
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onUserSigExpired() {
+                                NormalDialog dialog = new NormalDialog(MainActivity.this, "账号已过期，请重新登录", "", "确定", true);
+                                dialog.show();
+                                dialog.setOnButtonClickListener(new NormalDialog.OnButtonClick() {
+                                    @Override
+                                    public void OnRightClick() {
+                                        SharePrefUtil.saveString(MainActivity.this, AppConsts.UID, "");
+//                    eventCenter.sendType(EventCenter.EventType.EVT_LOGOUT);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("phone",SharePrefUtil.getString(MainActivity.this, AppConsts.PHONE,null));
+                                        ActivitySwitcher.startFragment(MainActivity.this, LoginFra.class,bundle);
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void OnLeftClick() {
+                                        SharePrefUtil.saveString(MainActivity.this, AppConsts.UID, "");
+//                    eventCenter.sendType(EventCenter.EventType.EVT_LOGOUT);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("phone",SharePrefUtil.getString(MainActivity.this, AppConsts.PHONE,null));
+                                        ActivitySwitcher.startFragment(MainActivity.this, LoginFra.class,bundle);
+                                        finish();
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onNewMessage(V2TIMMessage v2TIMMessage) {
+                                super.onNewMessage(v2TIMMessage);
+                            }
+                        });
+
                     }
 
                     @Override

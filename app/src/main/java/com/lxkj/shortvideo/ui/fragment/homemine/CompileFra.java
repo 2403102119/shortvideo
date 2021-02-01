@@ -58,6 +58,8 @@ import org.json.JSONArray;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -190,7 +192,7 @@ public class CompileFra extends TitleFragment implements View.OnClickListener, N
             }
         })
                 .setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
-                .setRangDate(null, Calendar.getInstance())
+                .setRangDate(null, test())
                 .setCancelText("取消")//取消按钮文字
                 .setSubmitText("确定")//确认按钮文字
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
@@ -198,6 +200,13 @@ public class CompileFra extends TitleFragment implements View.OnClickListener, N
 
 
         memberHome();
+    }
+
+    public Calendar test(){
+        //因为Calendar的构造方法是私有的，所以实例化一个Calendar对象用getInstance方法
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -1);    //得到前一天
+        return calendar;
     }
 
     @Override
@@ -264,7 +273,7 @@ public class CompileFra extends TitleFragment implements View.OnClickListener, N
 
                 tvName.setText(resultBean.nickname);
                 tvSigature.setText(resultBean.motto);
-                tvTime.setText(resultBean.age + "岁");
+                tvTime.setText(resultBean.birthday);
                 tvSite.setText(resultBean.province + resultBean.city + resultBean.district);
                 if (resultBean.sex.equals("1")) {
                     tvSex.setText("男");

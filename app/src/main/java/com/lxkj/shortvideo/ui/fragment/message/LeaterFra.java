@@ -13,6 +13,8 @@ import com.lxkj.shortvideo.biz.ActivitySwitcher;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
 import com.lxkj.shortvideo.ui.fragment.login.LoginFra;
 import com.lxkj.shortvideo.utils.SharePrefUtil;
+import com.lxkj.shortvideo.utils.StringUtil;
+import com.lxkj.shortvideo.utils.ToastUtil;
 import com.lxkj.shortvideo.view.NormalDialog;
 import com.tencent.imsdk.TIMManager;
 import com.tencent.qcloud.tim.uikit.component.TitleBarLayout;
@@ -81,6 +83,11 @@ public class LeaterFra extends TitleFragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvSelectFriend://选择好友
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
                 ActivitySwitcher.startFragment(getActivity(), SelectFriendFra.class);
                 break;
         }
@@ -97,32 +104,12 @@ public class LeaterFra extends TitleFragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        if (null== TIMManager.getInstance().getLoginUser()){
-            NormalDialog dialog = new NormalDialog(getContext(), "您的账号已在其它设备登录", "", "确定", true);
-            dialog.show();
-            dialog.setOnButtonClickListener(new NormalDialog.OnButtonClick() {
-                @Override
-                public void OnRightClick() {
-                    SharePrefUtil.saveString(getContext(), AppConsts.UID, "");
-//                    eventCenter.sendType(EventCenter.EventType.EVT_LOGOUT);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("phone",SharePrefUtil.getString(getContext(), AppConsts.PHONE,null));
-                    ActivitySwitcher.startFragment(getContext(), LoginFra.class,bundle);
-                    getActivity().finish();
-                }
-
-                @Override
-                public void OnLeftClick() {
-                    SharePrefUtil.saveString(getContext(), AppConsts.UID, "");
-//                    eventCenter.sendType(EventCenter.EventType.EVT_LOGOUT);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("phone",SharePrefUtil.getString(getContext(), AppConsts.PHONE,null));
-                    ActivitySwitcher.startFragment(getContext(), LoginFra.class,bundle);
-                    getActivity().finish();
-                }
-            });
-        }else {
+        if (!StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
             TIMManager.getInstance().getConversationList();
+            conversationLayout.setVisibility(View.VISIBLE);
+        }else {
+            conversationLayout.setVisibility(View.GONE);
         }
+
     }
 }

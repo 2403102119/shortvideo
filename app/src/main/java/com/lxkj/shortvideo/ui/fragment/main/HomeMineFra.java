@@ -23,9 +23,12 @@ import com.lxkj.shortvideo.ui.fragment.homemine.FansFra;
 import com.lxkj.shortvideo.ui.fragment.homemine.HomepageFra;
 import com.lxkj.shortvideo.ui.fragment.homemine.IssueFra;
 import com.lxkj.shortvideo.ui.fragment.homemine.SetFra;
+import com.lxkj.shortvideo.ui.fragment.login.LoginFra;
 import com.lxkj.shortvideo.ui.fragment.system.WebFra;
 import com.lxkj.shortvideo.utils.SharePrefUtil;
+import com.lxkj.shortvideo.utils.StringUtil;
 import com.lxkj.shortvideo.utils.ToastUtil;
+import com.lxkj.shortvideo.view.NormalDialog;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.zhy.m.permission.MPermissions;
 import com.zhy.m.permission.PermissionDenied;
@@ -94,7 +97,39 @@ public class HomeMineFra extends CachableFrg implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        memberHome();
+        if (!StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+            memberHome();
+        }else {
+            tvName.setText("未登录");
+            tvMotto.setText("");
+            tvtoFocusedCount.setText("--");
+            tvfocusedCount.setText("--");
+            Glide.with(getContext()).applyDefaultRequestOptions(new RequestOptions()
+                    .error(R.mipmap.touxiang)
+                    .placeholder(R.mipmap.touxiang))
+                    .load("")
+                    .into(riIcon);
+
+            if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                if (AppConsts.login.equals("0")){
+                    NormalDialog dialog = new NormalDialog(getContext(), "未登录,请登录", "取消", "确定", true);
+                    dialog.show();
+                    dialog.setOnButtonClickListener(new NormalDialog.OnButtonClick() {
+                        @Override
+                        public void OnRightClick() {
+                            ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                        }
+
+                        @Override
+                        public void OnLeftClick() {
+                            AppConsts.login = "1";
+                        }
+                    });
+                }
+            }
+
+        }
+
 
     }
 
@@ -102,18 +137,43 @@ public class HomeMineFra extends CachableFrg implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvHomepage://个人主页
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
                 ActivitySwitcher.startFragment(getActivity(), HomepageFra.class);
                 break;
             case R.id.llAttention://关注
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
                 ActivitySwitcher.startFragment(getActivity(), AttentionFra.class);
                 break;
             case R.id.llFans://粉丝
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
                 ActivitySwitcher.startFragment(getActivity(), FansFra.class);
                 break;
             case R.id.llIssue://意见反馈
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
                 ActivitySwitcher.startFragment(getActivity(), IssueFra.class);
                 break;
             case R.id.llSet://设置
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
                 ActivitySwitcher.startFragment(getActivity(), SetFra.class);
                 break;
             case R.id.llAbout://关于我们
@@ -157,6 +217,9 @@ public class HomeMineFra extends CachableFrg implements View.OnClickListener {
                 tvMotto.setText(resultBean.motto);
                 tvtoFocusedCount.setText(resultBean.toFocusedCount);
                 tvfocusedCount.setText(resultBean.focusedCount);
+
+                SharePrefUtil.saveString(getContext(), AppConsts.username, resultBean.nickname);
+                SharePrefUtil.saveString(getContext(), AppConsts.user_icon, resultBean.avatar);
 
             }
 

@@ -13,18 +13,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
+            android:orientation="horizontal"
             android:gravity="center"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="23dp"
             android:layout_width="match_parent"
             android:layout_height="30dp">
-           <TextView
-               android:text="视频列表"
-               android:textColor="@color/white"
-
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"/>
+            <TextView
+                android:text="视频列表"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:paddingLeft="20dp"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/imSeach"
+                android:padding="3dp"
+                android:src="@mipmap/sousuo"
+                android:layout_width="20dp"
+                android:layout_height="20dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -59,6 +68,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:background="#F6F6F6"
             android:gravity="center_vertical"
             android:layout_width="match_parent"
@@ -114,6 +124,7 @@
                 android:layout_height="wrap_content">
                 <ImageView
                     android:id="@+id/imGuanbi"
+                    android:visibility="gone"
                     android:layout_marginRight="11dp"
                     android:layout_marginTop="15dp"
                     android:layout_gravity="right"

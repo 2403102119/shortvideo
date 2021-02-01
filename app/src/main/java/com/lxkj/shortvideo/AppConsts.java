@@ -14,6 +14,7 @@ public class AppConsts {
     public static String userId = ""; //余额
     public static String paypassword = "";//支付密码
     public static String keywords = "";
+    public static String login = "0";
     public static final String ISAGREE = "isAgree";//是否同意
     public static final String TOKEN = "token"; //融云token
 
@@ -46,8 +47,8 @@ public class AppConsts {
     public static final int PMS_LOCATION_VIDEO = 1005;// 权限编号，自定义
 
 
-    public static String WXAPPID = "wxa8532f2fe14ac79f";
-    public static String WXAPPSECRET = "8d74c4c0533ae866612aa2e7d0285c91";
+    public static String WXAPPID = "wx514d4bc3909eefbe";
+    public static String WXAPPSECRET = "85d63e0cf259c1ebaabe6651508105c9";
     public static String QQAPPKEY = "26f1p9T6Bk1a8q46";
     public static String QQAPPID = "1110904907";
     public static String WEBAPPID = "3517736518";

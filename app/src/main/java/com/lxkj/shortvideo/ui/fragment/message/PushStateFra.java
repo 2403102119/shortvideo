@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hys.utils.AppUtils;
@@ -75,6 +76,12 @@ public class PushStateFra extends TitleFragment implements View.OnClickListener 
     ImageView imJinjin;
     @BindView(R.id.imHaoyou)
     ImageView imHaoyou;
+    @BindView(R.id.llAll)
+    LinearLayout llAll;
+    @BindView(R.id.llJinjin)
+    LinearLayout llJinjin;
+    @BindView(R.id.llHaoyou)
+    LinearLayout llHaoyou;
 
     private List<String> mBannerSelectPath = new ArrayList<>();
     private PostArticleImgAdapter postArticleImgAdapter;
@@ -136,39 +143,40 @@ public class PushStateFra extends TitleFragment implements View.OnClickListener 
         plusPath = getString(R.string.glide_plus_icon_string) + AppUtils.getPackageInfo(mContext).packageName + "/mipmap/" + R.mipmap.tianjiatupian;
         mBannerSelectPath.add(plusPath);//添加按键，超过9张时在adapter中隐藏
 
-        imAll.setOnClickListener(this);
-        imJinjin.setOnClickListener(this);
-        imHaoyou.setOnClickListener(this);
+
         tvLogin.setOnClickListener(this);
+        llAll.setOnClickListener(this);
+        llJinjin.setOnClickListener(this);
+        llHaoyou.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.imAll://所有人可见
+        switch (v.getId()) {
+            case R.id.tv_login://发布
+                if (StringUtil.isEmpty(etItea.getText().toString())) {
+                    ToastUtil.show("请输入动态内容");
+                    return;
+                }
+                publishFriendMoments();
+                break;
+            case R.id.llAll://全部
                 imAll.setImageResource(R.mipmap.yixuan);
                 imJinjin.setImageResource(R.mipmap.weixuan);
                 imHaoyou.setImageResource(R.mipmap.weixuan);
                 visibilityType = "1";
                 break;
-            case R.id.imJinjin://仅好友可见
+            case R.id.llJinjin://仅好友可见
                 imAll.setImageResource(R.mipmap.weixuan);
                 imJinjin.setImageResource(R.mipmap.yixuan);
                 imHaoyou.setImageResource(R.mipmap.weixuan);
                 visibilityType = "2";
                 break;
-            case R.id.imHaoyou://好友的好友
+            case R.id.llHaoyou://好友的好友
                 imAll.setImageResource(R.mipmap.weixuan);
                 imJinjin.setImageResource(R.mipmap.weixuan);
                 imHaoyou.setImageResource(R.mipmap.yixuan);
                 visibilityType = "3";
-                break;
-            case R.id.tv_login://发布
-                if (StringUtil.isEmpty(etItea.getText().toString())){
-                    ToastUtil.show("请输入动态内容");
-                    return;
-                }
-                publishFriendMoments();
                 break;
         }
     }
@@ -187,17 +195,19 @@ public class PushStateFra extends TitleFragment implements View.OnClickListener 
             @Override
             public void onBeforeRequest(Request request) {
             }
+
             @Override
             public void onFailure(Request request, Exception e) {
             }
+
             @Override
             public void onResponse(Response response) {
             }
 
             @Override
             public void onSuccess(Response response, ResultBean resultBean) {
-                     ToastUtil.show(resultBean.resultNote);
-                     act.finishSelf();
+                ToastUtil.show(resultBean.resultNote);
+                act.finishSelf();
             }
 
             @Override

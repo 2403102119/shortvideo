@@ -7,12 +7,17 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.bean.ResultBean;
 import com.lxkj.shortvideo.biz.ActivitySwitcher;
 import com.lxkj.shortvideo.http.BaseCallback;
 import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
+import com.lxkj.shortvideo.ui.fragment.login.LoginFra;
+import com.lxkj.shortvideo.utils.SharePrefUtil;
+import com.lxkj.shortvideo.utils.StringUtil;
+import com.lxkj.shortvideo.utils.ToastUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -87,6 +92,11 @@ public class LookDetailFra extends TitleFragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvApply://参赛
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
                 Bundle bundle = new Bundle();
                 bundle.putString("cid",cid);
                 ActivitySwitcher.startFragment(getActivity(), ApplyFra.class,bundle);

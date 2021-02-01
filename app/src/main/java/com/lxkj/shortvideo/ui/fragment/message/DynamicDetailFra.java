@@ -10,15 +10,19 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.HcbApp;
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.adapter.CommentAdapter;
 import com.lxkj.shortvideo.adapter.Recycle_one_itemAdapter;
 import com.lxkj.shortvideo.bean.DataListBean;
 import com.lxkj.shortvideo.bean.ResultBean;
+import com.lxkj.shortvideo.biz.ActivitySwitcher;
 import com.lxkj.shortvideo.http.BaseCallback;
 import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
+import com.lxkj.shortvideo.ui.fragment.login.LoginFra;
+import com.lxkj.shortvideo.utils.SharePrefUtil;
 import com.lxkj.shortvideo.utils.StringUtil;
 import com.lxkj.shortvideo.utils.ToastUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -114,6 +118,11 @@ public class DynamicDetailFra extends TitleFragment implements View.OnClickListe
         commentAdapter.setOnItemClickListener(new CommentAdapter.OnItemClickListener() {
             @Override
             public void OnItemClickListener(int firstPosition) {
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
                 pcid = listBeans.get(firstPosition).id;
 
                 tvCommentName.setText(listBeans.get(firstPosition).member.nickname);
@@ -127,6 +136,11 @@ public class DynamicDetailFra extends TitleFragment implements View.OnClickListe
 
             @Override
             public void OnDianzanClickListener(int firstPosition) {
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
                 if (listBeans.get(firstPosition).liked.equals("1")) {
                     likeMomentsComment(listBeans.get(firstPosition).id, "0", firstPosition);
                 } else {
@@ -136,6 +150,11 @@ public class DynamicDetailFra extends TitleFragment implements View.OnClickListe
 
             @Override
             public void OnDianzanItemClickListener(int position, int firstPosition) {
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
                 if (listBeans.get(position).subCommentList.get(firstPosition).liked.equals("1")) {
                     likeWorksComment1(listBeans.get(position).subCommentList.get(firstPosition).id, "0", position, firstPosition);
                 } else {
@@ -175,6 +194,11 @@ public class DynamicDetailFra extends TitleFragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.tvSent://发表评论
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
                 if (StringUtil.isEmpty(etComment.getText().toString())) {
                     ToastUtil.show("请输入评论内容");
                     return;

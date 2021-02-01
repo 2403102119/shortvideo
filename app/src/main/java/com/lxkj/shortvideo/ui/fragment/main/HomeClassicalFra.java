@@ -20,7 +20,10 @@ import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.ui.fragment.CachableFrg;
 import com.lxkj.shortvideo.ui.fragment.classical.ClassicalFra;
 import com.lxkj.shortvideo.ui.fragment.competition.SeachFra;
+import com.lxkj.shortvideo.ui.fragment.login.LoginFra;
 import com.lxkj.shortvideo.utils.SharePrefUtil;
+import com.lxkj.shortvideo.utils.StringUtil;
+import com.lxkj.shortvideo.view.NormalDialog;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -92,6 +95,7 @@ public class HomeClassicalFra extends CachableFrg implements View.OnClickListene
         llSeach.setOnClickListener(this);
         llShoucang.setOnClickListener(this);
         llCanping.setOnClickListener(this);
+        llClassify.setOnClickListener(this);
 
         adapter = new TagAdapter<String>(hot_list) {
             @Override
@@ -131,19 +135,22 @@ public class HomeClassicalFra extends CachableFrg implements View.OnClickListene
                 break;
             case R.id.llShoucang://收藏
                 type = "1";
-                tvShoucang.setTextColor(getResources().getColor(R.color.colorBlack));
-                viewShoucang.setBackgroundColor(getResources().getColor(R.color.colorBlack));
-                viewCanping.setBackgroundColor(getResources().getColor(R.color.white));
-                tvCanping.setTextColor(getResources().getColor(R.color.txt_66));
+                tvShoucang.setTextColor(getResources().getColor(R.color.white));
+                viewShoucang.setBackgroundColor(getResources().getColor(R.color.white));
+                viewCanping.setBackgroundColor(getResources().getColor(R.color.main_color));
+                tvCanping.setTextColor(getResources().getColor(R.color.white));
                 setData(list);
                 break;
             case R.id.llCanping://参评
                 type = "2";
-                tvShoucang.setTextColor(getResources().getColor(R.color.txt_66));
-                viewShoucang.setBackgroundColor(getResources().getColor(R.color.white));
-                viewCanping.setBackgroundColor(getResources().getColor(R.color.colorBlack));
-                tvCanping.setTextColor(getResources().getColor(R.color.colorBlack));
+                tvShoucang.setTextColor(getResources().getColor(R.color.white));
+                viewShoucang.setBackgroundColor(getResources().getColor(R.color.main_color));
+                viewCanping.setBackgroundColor(getResources().getColor(R.color.white));
+                tvCanping.setTextColor(getResources().getColor(R.color.white));
                 setData(list);
+                break;
+            case R.id.llClassify:
+                llClassify.setVisibility(View.GONE);
                 break;
         }
     }
@@ -225,7 +232,23 @@ public class HomeClassicalFra extends CachableFrg implements View.OnClickListene
     @Override
     public void onResume() {
         super.onResume();
+        if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+            if (AppConsts.login.equals("0")){
+                NormalDialog dialog = new NormalDialog(getContext(), "未登录,请登录", "取消", "确定", true);
+                dialog.show();
+                dialog.setOnButtonClickListener(new NormalDialog.OnButtonClick() {
+                    @Override
+                    public void OnRightClick() {
+                        ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    }
 
+                    @Override
+                    public void OnLeftClick() {
+                        AppConsts.login = "1";
+                    }
+                });
+            }
+        }
     }
 }
 

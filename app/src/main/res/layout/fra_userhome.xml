@@ -71,7 +71,7 @@
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/riIcon"
                     android:src="@mipmap/touxiang"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
                     app:riv_oval="true"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
@@ -203,9 +203,11 @@
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
                 android:textSize="11sp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:textColor="@color/txt_66"
                 android:background="@drawable/homepagelable"
-                android:layout_width="40dp"
+                android:layout_width="wrap_content"
                 android:layout_height="18dp"/>
             <TextView
                 android:id="@+id/tvSite"

@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:focusable="true"
+    android:orientation="vertical"
     android:focusableInTouchMode="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="208dp">
+        android:layout_height="0dp"
+        android:layout_weight="1">
         <cn.jzvd.JzvdStd
             android:id="@+id/jzVideo"
             android:layout_width="match_parent"
@@ -32,32 +34,114 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"/>
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llDetail"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="40dp"
+            android:layout_marginLeft="11dp"
+            android:layout_marginRight="11dp"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/riIcon"
+                android:src="@mipmap/touxiang"
+                android:scaleType="centerCrop"
+                app:riv_oval="true"
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
+            <TextView
+                android:id="@+id/tvName"
+                android:text="桑娜啊~"
+                android:textSize="15sp"
+                android:textColor="@color/colorBlack"
+                android:layout_marginLeft="11dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tvGuanzhu"
+                android:background="@drawable/login_20"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:text="+关注"
+                android:layout_width="85dp"
+                android:layout_height="29dp"/>
+        </LinearLayout>
     </RelativeLayout>
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/smart"
-        android:layout_marginTop="208dp"
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        android:layout_height="wrap_content">
+
+
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/tagFlow"
+            app:max_select="1"
+            android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-    <androidx.core.widget.NestedScrollView
-        android:layout_marginBottom="110dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <LinearLayout
-            android:orientation="vertical"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_vertical"
+            android:background="@color/white"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <LinearLayout
-                android:layout_marginLeft="11dp"
-                android:layout_marginRight="11dp"
+                android:id="@+id/llPinglun"
+                android:paddingLeft="10dp"
+                android:background="@drawable/jingdiansousuo"
                 android:gravity="center_vertical"
-                android:layout_marginTop="20dp"
                 android:orientation="horizontal"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="评论 〉"
+                    android:textColor="@color/txt_66"
+                    android:textSize="13sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tvCommentName"
+                    android:text="桑娜啊~"
+                    android:textSize="13sp"
+                    android:textColor="@color/txt_66"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/etComment"
+                    android:hint="节奏的魅力，全被你洞悉~"
+                    android:textSize="13sp"
+                    android:textColor="@color/txt_33"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="33dp"/>
+                <TextView
+                    android:id="@+id/tvSent"
+                    android:text="评论"
+                    android:visibility="gone"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/txt_66"
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ImageView
                     android:visibility="gone"
@@ -83,6 +167,7 @@
                     android:id="@+id/tvShoucang"
                     android:text="0"
                     android:textSize="11sp"
+                    android:visibility="gone"
                     android:textColor="#A7A7A7"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -90,179 +175,20 @@
                 <ImageView
                     android:id="@+id/imfenxiang"
                     android:src="@mipmap/fenxiang"
-                    android:layout_marginLeft="26dp"
                     android:layout_width="wrap_content"
                     android:layout_height="18dp"/>
                 <TextView
                     android:id="@+id/tvFenxiang"
                     android:text="0"
+                    android:visibility="gone"
                     android:textSize="11sp"
                     android:textColor="#A7A7A7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
-            <TextView
-                android:id="@+id/tvVideoTitle"
-                android:text="视频标题"
-                android:layout_marginLeft="11dp"
-                android:layout_marginRight="11dp"
-                android:layout_marginTop="15dp"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <LinearLayout
-                android:id="@+id/llDetail"
-                android:orientation="horizontal"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="11dp"
-                android:layout_marginRight="11dp"
-                android:gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/riIcon"
-                    android:src="@mipmap/touxiang"
-                    android:scaleType="fitXY"
-                    app:riv_oval="true"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"/>
-                <TextView
-                    android:id="@+id/tvName"
-                    android:text="桑娜啊~"
-                    android:textSize="15sp"
-                    android:textColor="@color/colorBlack"
-                    android:layout_marginLeft="11dp"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/tvGuanzhu"
-                    android:background="@drawable/login_20"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:textSize="13sp"
-                    android:text="+关注"
-                    android:layout_width="85dp"
-                    android:layout_height="29dp"/>
-            </LinearLayout>
-            <RelativeLayout
-                android:layout_marginTop="22dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <LinearLayout
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:text="标签"
-                            android:textSize="16sp"
-                            android:textColor="@color/txt_33"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-                        <TextView
-                            android:text="点击标签可查看相关视频哦~"
-                            android:textColor="@color/txt_66"
-                            android:textSize="12sp"
-                            android:layout_marginLeft="11dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-                    </LinearLayout>
-                    <com.zhy.view.flowlayout.TagFlowLayout
-                        android:id="@+id/tagFlow"
-                        app:max_select="1"
-                        android:layout_marginTop="15dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:id="@+id/tvPinglun"
-                        android:layout_marginTop="15dp"
-                        android:text="共计188条评论"
-                        android:textSize="13sp"
-                        android:textColor="@color/txt_33"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rycomment"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-                </LinearLayout>
-            </RelativeLayout>
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-    <LinearLayout
-        android:background="@color/white"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:orientation="vertical"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="67dp">
-            <TextView
-                android:text="评论 〉"
-                android:textColor="@color/txt_33"
-                android:textSize="13sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/riCommentIcon"
-                android:src="@mipmap/touxiang"
-                android:scaleType="fitXY"
-                app:riv_oval="true"
-                android:layout_marginLeft="7dp"
-                android:layout_width="28dp"
-                android:layout_height="28dp"/>
-            <TextView
-                android:id="@+id/tvCommentName"
-                android:text="桑娜啊~"
-                android:textSize="15sp"
-                android:textColor="@color/colorBlack"
-                android:layout_marginLeft="11dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginBottom="10dp"
-            android:gravity="center_vertical"
-            android:paddingRight="10dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <EditText
-                android:id="@+id/etComment"
-                android:hint="节奏的魅力，全被你洞悉~"
-                android:textSize="13sp"
-                android:textColor="@color/txt_33"
-                android:paddingLeft="10dp"
-                android:background="@drawable/jingdiansousuo"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="33dp"/>
-            <TextView
-                android:id="@+id/tvSent"
-                android:text="评论"
-                android:layout_marginLeft="15dp"
-                android:gravity="center_vertical"
-                android:textColor="@color/txt_66"
-                android:textSize="15sp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
         </LinearLayout>
     </LinearLayout>
 
-</RelativeLayout>
+
+
+</LinearLayout>

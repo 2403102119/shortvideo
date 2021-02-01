@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.bean.DataListBean;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -44,7 +45,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.MyHolder> {
         Glide.with(context).applyDefaultRequestOptions(new RequestOptions()
                 .error(R.mipmap.imageerror)
                 .placeholder(R.mipmap.imageerror))
-                .load(list.get(position).coverImage)
+                .load(list.get(position).video+ AppConsts.ViDEOEND)
                 .into(holder.riIcon);
         holder.tvTitle.setText(list.get(position).title);
         holder.tvTime.setText(list.get(position).uploadDate);

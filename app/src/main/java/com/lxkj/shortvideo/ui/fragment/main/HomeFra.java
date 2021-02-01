@@ -21,7 +21,10 @@ import com.lxkj.shortvideo.ui.fragment.CachableFrg;
 import com.lxkj.shortvideo.ui.fragment.competition.CompetitionFra;
 import com.lxkj.shortvideo.ui.fragment.competition.SeachFra;
 import com.lxkj.shortvideo.ui.fragment.homemine.SetFra;
+import com.lxkj.shortvideo.ui.fragment.login.LoginFra;
 import com.lxkj.shortvideo.utils.SharePrefUtil;
+import com.lxkj.shortvideo.utils.StringUtil;
+import com.lxkj.shortvideo.view.NormalDialog;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -181,6 +184,23 @@ public class HomeFra extends CachableFrg implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+        if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+            if (AppConsts.login.equals("0")){
+                NormalDialog dialog = new NormalDialog(getContext(), "未登录,请登录", "取消", "确定", true);
+                dialog.show();
+                dialog.setOnButtonClickListener(new NormalDialog.OnButtonClick() {
+                    @Override
+                    public void OnRightClick() {
+                        ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    }
+
+                    @Override
+                    public void OnLeftClick() {
+                        AppConsts.login = "1";
+                    }
+                });
+            }
+        }
     }
 
 

@@ -1,10 +1,13 @@
 package com.lxkj.shortvideo.ui.fragment.competition;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -12,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,6 +25,7 @@ import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.HcbApp;
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.adapter.CommentAdapter;
+import com.lxkj.shortvideo.adapter.PingFenAdapter;
 import com.lxkj.shortvideo.bean.DataListBean;
 import com.lxkj.shortvideo.bean.ResultBean;
 import com.lxkj.shortvideo.biz.ActivitySwitcher;
@@ -28,12 +33,18 @@ import com.lxkj.shortvideo.http.BaseCallback;
 import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
 import com.lxkj.shortvideo.ui.fragment.dialog.ShareFra;
-import com.lxkj.shortvideo.utils.AnimationUtilUP;
+import com.lxkj.shortvideo.ui.fragment.login.LoginFra;
+import com.lxkj.shortvideo.ui.fragment.shortvideo.VideoFra;
+import com.lxkj.shortvideo.ui.fragment.system.WebFra;
 import com.lxkj.shortvideo.utils.PicassoUtil;
+import com.lxkj.shortvideo.utils.SharePrefUtil;
 import com.lxkj.shortvideo.utils.StringUtil;
 import com.lxkj.shortvideo.utils.ToastUtil;
 import com.lzy.ninegrid.ImageInfo;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -44,8 +55,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -67,7 +78,7 @@ import okhttp3.Response;
  * <p>
  * Interface:赛事详情
  */
-public class EventDetailsFra extends TitleFragment implements View.OnClickListener {
+public class EventDetailsFra extends TitleFragment implements View.OnClickListener, View.OnTouchListener {
     Unbinder unbinder;
     @BindView(R.id.navi_title)
     TextView naviTitle;
@@ -77,83 +88,108 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
     TextView naviRightTxt;
     @BindView(R.id.navi_right_img)
     ImageView naviRightImg;
-    @BindView(R.id.relBackGroundView)
-    RelativeLayout relBackGroundView;
-    @BindView(R.id.tvGuanzhu)
-    TextView tvGuanzhu;
-    @BindView(R.id.rycomment)
-    RecyclerView rycomment;
-    @BindView(R.id.riIcon)
-    RoundedImageView riIcon;
     @BindView(R.id.llRank)
     LinearLayout llRank;
-    @BindView(R.id.tvLookDetail)
-    TextView tvLookDetail;
-    @BindView(R.id.tvTime)
-    TextView tvTime;
-    @BindView(R.id.tvTime2)
-    TextView tvTime2;
-    @BindView(R.id.imVideo)
-    ImageView imVideo;
-    @BindView(R.id.llTime)
-    LinearLayout llTime;
-    @BindView(R.id.imComment)
-    ImageView imComment;
-    @BindView(R.id.llComment)
-    LinearLayout llComment;
-    @BindView(R.id.ns)
-    NestedScrollView ns;
-    @BindView(R.id.llRecycle)
-    LinearLayout llRecycle;
+    @BindView(R.id.relBackGroundView)
+    RelativeLayout relBackGroundView;
     @BindView(R.id.banner)
     Banner banner;
+    @BindView(R.id.tvLookDetail)
+    TextView tvLookDetail;
     @BindView(R.id.tvtitle)
     TextView tvtitle;
-    @BindView(R.id.tvnickname)
-    TextView tvnickname;
-    @BindView(R.id.riCommentIcon)
-    RoundedImageView riCommentIcon;
-    @BindView(R.id.tvCommentName)
-    TextView tvCommentName;
-    @BindView(R.id.tvCollectCount)
-    TextView tvCollectCount;
-    @BindView(R.id.tvshareCount)
-    TextView tvshareCount;
-    @BindView(R.id.imCollected)
-    ImageView imCollected;
     @BindView(R.id.tvPass)
     TextView tvPass;
     @BindView(R.id.tvNg)
     TextView tvNg;
+    @BindView(R.id.tvPingfen)
+    TextView tvPingfen;
+    @BindView(R.id.tvTishiyu)
+    TextView tvTishiyu;
     @BindView(R.id.jzVideo)
     JzvdStd jzVideo;
-    @BindView(R.id.tagFlow)
-    TagFlowLayout tagFlow;
-    @BindView(R.id.tvcommentCount)
-    TextView tvcommentCount;
     @BindView(R.id.imretreat)
     ImageView imretreat;
     @BindView(R.id.imadvance)
     ImageView imadvance;
-    @BindView(R.id.tvPinglun)
-    TextView tvPinglun;
-    @BindView(R.id.etPinglun)
-    EditText etPinglun;
+    @BindView(R.id.ryPingfen)
+    RecyclerView ryPingfen;
+    @BindView(R.id.tvTijiaopingfen)
+    TextView tvTijiaopingfen;
+    @BindView(R.id.llPingfen)
+    LinearLayout llPingfen;
+    @BindView(R.id.riIcon)
+    RoundedImageView riIcon;
+    @BindView(R.id.tvnickname)
+    TextView tvnickname;
+    @BindView(R.id.tvGuanzhu)
+    TextView tvGuanzhu;
     @BindView(R.id.llUser)
     LinearLayout llUser;
+    @BindView(R.id.imVideo)
+    ImageView imVideo;
+    @BindView(R.id.tvTime)
+    TextView tvTime;
+    @BindView(R.id.llTime)
+    LinearLayout llTime;
+    @BindView(R.id.riVideo)
+    RelativeLayout riVideo;
+    @BindView(R.id.tagFlow)
+    TagFlowLayout tagFlow;
+    @BindView(R.id.tvCommentName)
+    TextView tvCommentName;
+    @BindView(R.id.etPinglun)
+    TextView etPinglun;
+    @BindView(R.id.llPinglun)
+    LinearLayout llPinglun;
+    @BindView(R.id.tvPinglun)
+    TextView tvPinglun;
+    @BindView(R.id.imCollected)
+    ImageView imCollected;
+    @BindView(R.id.tvCollectCount)
+    TextView tvCollectCount;
     @BindView(R.id.imfenxiang)
     ImageView imfenxiang;
+    @BindView(R.id.tvshareCount)
+    TextView tvshareCount;
+    @BindView(R.id.imGuanggao)
+    ImageView imGuanggao;
+    @BindView(R.id.imGuanbi)
+    TextView imGuanbi;
+    @BindView(R.id.rlGuanggao)
+    RelativeLayout rlGuanggao;
+    @BindView(R.id.mLinearLayout)
+    LinearLayout mLinearLayout;
+
 
     private ArrayList<DataListBean> listBeans;
+    private ArrayList<DataListBean> PopupcommentList;
+    private ArrayList<DataListBean> PingfenBeans;
     private int page = 1, totalPage = 1;
     private CommentAdapter commentAdapter;
     private boolean CountDownTime = false;
-    private String id, title, toMid, focused, pcid = "", entered;
+    private String id, title, toMid, focused, pcid = "", entered, wid;
     private List<String> BanString = new ArrayList<>();
     private List<DataListBean> dataListBeans = new ArrayList<>();
     private ArrayList<ImageInfo> imageInfo = new ArrayList<>();
     private int position = 0;
     private TagAdapter<String> adapter;
+    private String competitionCategoryId, competitionNumber, url;
+    private PingFenAdapter pingFenAdapter;
+    private List<DataListBean> pingfenlis = new ArrayList<>();
+
+    //手指按下的点为(x1, y1)手指离开屏幕的点为(x2, y2)
+    float x1 = 0;
+    float x2 = 0;
+    float y1 = 0;
+    float y2 = 0;
+    private PopupWindow popupWindow,popupWindow1;
+    private LinearLayout ll_all_item,ll_all_item1;
+    private RelativeLayout ll_all,ll_all1;
+    private ImageView im_close;
+    private String PNWorkstype = "0",commentCount;
+    private SmartRefreshLayout smart;
+    private  TextView tvPupupTitle;
 
     @Nullable
     @Override
@@ -173,42 +209,20 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
         naviTitle.setText(title);
 
 
-        listBeans = new ArrayList<DataListBean>();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        rycomment.setLayoutManager(layoutManager);
-        commentAdapter = new CommentAdapter(getContext(), listBeans);
-        rycomment.setAdapter(commentAdapter);
-        commentAdapter.setOnItemClickListener(new CommentAdapter.OnItemClickListener() {
+        PingfenBeans = new ArrayList<DataListBean>();
+        ryPingfen.setLayoutManager(new LinearLayoutManager(getContext()));
+        pingFenAdapter = new PingFenAdapter(getContext(), PingfenBeans);
+        ryPingfen.setAdapter(pingFenAdapter);
+        pingFenAdapter.setOnItemClickListener(new PingFenAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClickListener(int firstPosition) {
-                pcid = listBeans.get(firstPosition).id;
-
-                tvCommentName.setText(listBeans.get(firstPosition).member.nickname);
-
-                Glide.with(getContext()).applyDefaultRequestOptions(new RequestOptions()
-                        .error(R.mipmap.touxiang)
-                        .placeholder(R.mipmap.touxiang))
-                        .load(listBeans.get(firstPosition).member.avatar)
-                        .into(riCommentIcon);
+            public void OnItemClickListener(int firstPosition, String rating) {
+                pingfenlis.clear();
+                DataListBean dataListBean = new DataListBean();
+                dataListBean.itemId = PingfenBeans.get(firstPosition).id;
+                dataListBean.score = rating;
+                pingfenlis.add(dataListBean);
             }
 
-            @Override
-            public void OnDianzanClickListener(int firstPosition) {
-                if (listBeans.get(firstPosition).liked.equals("1")) {
-                    likeWorksComment(listBeans.get(firstPosition).id, "0", firstPosition);
-                } else {
-                    likeWorksComment(listBeans.get(firstPosition).id, "1", firstPosition);
-                }
-            }
-
-            @Override
-            public void OnDianzanItemClickListener(int position, int firstPosition) {
-                if (listBeans.get(position).subCommentList.get(firstPosition).liked.equals("1")) {
-                    likeWorksComment1(listBeans.get(position).subCommentList.get(firstPosition).id, "0", position, firstPosition);
-                } else {
-                    likeWorksComment1(listBeans.get(position).subCommentList.get(firstPosition).id, "1", position, firstPosition);
-                }
-            }
         });
 
 
@@ -226,63 +240,22 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
         tvPass.setOnClickListener(this);
         tvNg.setOnClickListener(this);
         imfenxiang.setOnClickListener(this);
-
-        ns.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (CountDownTime) {
-                    llTime.setVisibility(View.GONE);
-                    imVideo.setVisibility(View.GONE);
-                    llComment.setVisibility(View.GONE);
-                    imComment.setVisibility(View.GONE);
+        tvPingfen.setOnClickListener(this);
+        llPingfen.setOnClickListener(this);
+        tvTijiaopingfen.setOnClickListener(this);
+        imGuanbi.setOnClickListener(this);
+        rlGuanggao.setOnClickListener(this);
+        llPinglun.setOnClickListener(this);
 
 
-//                    llRecycle.setVisibility(View.VISIBLE);
-                    mHandlercomment.postDelayed(comment, 1000);//延时10秒
-
-
-
-                    tvPass.setEnabled(true);
-                    tvNg.setEnabled(true);
-                    tvPinglun.setEnabled(true);
-
-                }
-
-            }
-        });
-
-        timer.start();
 
         competitionDetail();
         competitionWorksList();
 
-        mHandlergift.postDelayed(gift, 2000);//延时10秒
-
+        imVideo.setOnTouchListener(this);
 
     }
 
-    final Handler mHandlergift = new Handler();
-    Runnable gift = new Runnable() {
-        @Override
-        public void run() {
-            if (null!=llUser){
-                llUser.setVisibility(View.VISIBLE);
-                // 向右边移入
-                llUser.setAnimation(AnimationUtils.makeInAnimation(getActivity(), true));
-            }
-        }
-    };
-    final Handler mHandlercomment = new Handler();
-    Runnable comment = new Runnable() {
-        @Override
-        public void run() {
-            if (null!=llUser){
-                llRecycle.setVisibility(View.VISIBLE);
-                // 向上移入
-                llRecycle.setAnimation(AnimationUtilUP.moveToViewLocation());
-            }
-        }
-    };
 
     public CountDownTimer timer = new CountDownTimer(10000, 1000) {
         @Override
@@ -290,37 +263,85 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
             if (null != tvTime) {
                 tvTime.setText("倒计时" + (millisUntilFinished / 1000) + "s");
             }
-            if (null != tvTime2) {
-                tvTime2.setText("倒计时" + (millisUntilFinished / 1000) + "s");
-            }
+
             CountDownTime = false;
-            tvPass.setEnabled(false);
-            tvNg.setEnabled(false);
-            tvPinglun.setEnabled(false);
             llTime.setVisibility(View.VISIBLE);
             imVideo.setVisibility(View.VISIBLE);
-            llComment.setVisibility(View.VISIBLE);
-            imComment.setVisibility(View.VISIBLE);
             tvTime.setVisibility(View.VISIBLE);
-            tvTime2.setVisibility(View.VISIBLE);
 
-            llRecycle.setVisibility(View.GONE);
+
         }
 
         @Override
         public void onFinish() {
             tvTime.setVisibility(View.GONE);
-            tvTime2.setVisibility(View.GONE);
+
             jzVideo.startVideo();
             CountDownTime = true;
         }
     };
 
     @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (v.getId()) {
+            case R.id.imVideo:
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return false;
+                }
+                //继承了Activity的onTouchEvent方法，直接监听点击事件
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    //当手指按下的时候
+                    x1 = event.getX();
+                    y1 = event.getY();
+                }
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    //当手指离开的时候
+                    x2 = event.getX();
+                    y2 = event.getY();
+                    if (y1 - y2 > 50) {//上滑
+
+                        if (competitionCategoryId.equals("2") && competitionNumber.equals("1")) {
+                            if (CountDownTime) {
+                                if (PNWorkstype.equals("0")) {//是否已滑动
+
+                                    llTime.setVisibility(View.GONE);
+                                    imVideo.setVisibility(View.GONE);
+                                    rlGuanggao.setVisibility(View.GONE);
+                                    PNWorks("1", StringUtil.formatTurnSecond(jzVideo.currentTimeTextView.getText().toString()) + "");
+                                }
+
+                            }
+                        }
+                    } else if (y2 - y1 > 50) {//下滑
+                    } else if (x1 - x2 > 50) {//左滑
+                        if (competitionCategoryId.equals("2") && competitionNumber.equals("1")) {
+                            PNWorkstype = "0";
+
+                            riVideo.setAnimation(AnimationUtils.makeInAnimation(getActivity(), false));
+
+                            PNWorks("2", StringUtil.formatTurnSecond(jzVideo.currentTimeTextView.getText().toString()) + "");
+                        }
+                    } else if (x2 - x1 > 50) {//右滑
+                    }
+                }
+                break;
+        }
+
+        return true;
+    }
+
+    @Override
     public void onClick(View v) {
         Bundle bundle = new Bundle();
         switch (v.getId()) {
             case R.id.riIcon://用户主页
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
                 bundle.putString("toMid", toMid);
                 ActivitySwitcher.startFragment(getActivity(), UserHomeFra.class, bundle);
                 break;
@@ -333,41 +354,58 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
                 act.finishSelf();
                 break;
             case R.id.tvLookDetail://查看详情
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
                 bundle.putString("cid", id);
                 bundle.putString("entered", entered);
                 ActivitySwitcher.startFragment(getActivity(), LookDetailFra.class, bundle);
                 break;
             case R.id.navi_right_txt://报名
+//                bundle.putString("cid", id);
+//                ActivitySwitcher.startFragment(getActivity(), ApplyFra.class, bundle);
                 bundle.putString("cid", id);
-                ActivitySwitcher.startFragment(getActivity(), ApplyFra.class, bundle);
+                bundle.putString("entered", entered);
+                ActivitySwitcher.startFragment(getActivity(), LookDetailFra.class, bundle);
                 break;
             case R.id.imCollected://收藏
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
                 if (dataListBeans.get(position).collected.equals("1")) {
                     collectWorks("0");
                 } else {
                     collectWorks("1");
                 }
-
                 break;
             case R.id.imretreat://上一个
                 if (position == 0) {
                     ToastUtil.show("已是第一个");
                     return;
                 }
+                riVideo.setAnimation(AnimationUtils.makeInAnimation(getActivity(), true));
                 position = position - 1;
                 setData(dataListBeans.get(position));
-                timer.start();
                 break;
             case R.id.imadvance://下一个
-                if (position == dataListBeans.size()) {
+                if (position + 1 == dataListBeans.size()) {
                     ToastUtil.show("已是最后一个");
                     return;
                 }
+                riVideo.setAnimation(AnimationUtils.makeInAnimation(getActivity(), false));
                 position = position + 1;
                 setData(dataListBeans.get(position));
-                timer.start();
                 break;
             case R.id.tvGuanzhu://关注
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
                 if (focused.equals("1")) {
                     focused = "0";
                     focusMember("0");
@@ -375,13 +413,6 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
                     focused = "1";
                     focusMember("1");
                 }
-                break;
-            case R.id.tvPinglun://评论
-                if (StringUtil.isEmpty(etPinglun.getText().toString())) {
-                    ToastUtil.show("请输入评论内容");
-                    return;
-                }
-                pubWorksComment(etPinglun.getText().toString());
                 break;
             case R.id.llUser:
                 pcid = "";
@@ -391,27 +422,276 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
                         .placeholder(R.mipmap.touxiang))
                         .load(dataListBeans.get(position).member.avatar)
                         .into(riIcon);
-
                 break;
             case R.id.tvPass://PASS
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
+                rlGuanggao.setVisibility(View.GONE);
                 PNWorks("1", StringUtil.formatTurnSecond(jzVideo.currentTimeTextView.getText().toString()) + "");
                 break;
             case R.id.tvNg://NG
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
                 PNWorks("2", StringUtil.formatTurnSecond(jzVideo.currentTimeTextView.getText().toString()) + "");
                 break;
             case R.id.imfenxiang:
-                shareWorks(id);
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
+                shareWorks(wid);
+                break;
+            case R.id.llPingfen:
+
+                break;
+            case R.id.tvPingfen://评分
+                llPingfen.setVisibility(View.VISIBLE);
+                break;
+            case R.id.tvTijiaopingfen://提交评分
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
+                giveWorksScore(wid);
+                break;
+            case R.id.imGuanbi://关闭广告
+                rlGuanggao.setVisibility(View.GONE);
+                break;
+            case R.id.rlGuanggao:
+                bundle.putString("title", "秀评");
+                bundle.putString("url", url);
+                ActivitySwitcher.startFragment(getActivity(), WebFra.class, bundle);
+                break;
+            case R.id.llPinglun://评论
+                PopupcommentList();
+                ll_all_item.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.in_from_bottom));
+                popupWindow1.showAtLocation(getView(), Gravity.BOTTOM, 0, 0);
                 break;
 
         }
     }
+
+    /**
+     * 二级评论
+     */
+    public void Popupcomment(String url, String name, String time, String content) {
+        popupWindow = new PopupWindow(mContext);
+        act.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        WindowManager.LayoutParams wl = act.getWindow().getAttributes();
+//        wl.flags=WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+        wl.alpha = 0.6f;   //这句就是设置窗口里崆件的透明度的．０.０全透明．１.０不透明．
+        act.getWindow().setAttributes(wl);
+        View view = getLayoutInflater().inflate(R.layout.popup_coupon, null);
+        ll_all_item1 = view.findViewById(R.id.ll_all_item);
+        popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        popupWindow.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setContentView(view);
+        popupWindow.setAnimationStyle(R.style.ani_bottom);
+        ll_all1 = view.findViewById(R.id.ll_all);
+        ImageView im_close = view.findViewById(R.id.im_close);
+        RoundedImageView ri_icon = view.findViewById(R.id.ri_icon);
+        TextView tv_name = view.findViewById(R.id.tv_name);
+        TextView tv_time = view.findViewById(R.id.tv_time);
+        TextView tv_content = view.findViewById(R.id.tv_content);
+        TextView tvPinglun = view.findViewById(R.id.tvPinglun);
+        EditText etpinglun = view.findViewById(R.id.etPinglun);
+        tv_name.setText(name);
+        tv_time.setText(time);
+        tv_content.setText(content);
+        Glide.with(getContext()).applyDefaultRequestOptions(new RequestOptions()
+                .error(R.mipmap.touxiang)
+                .placeholder(R.mipmap.touxiang))
+                .load(url)
+                .into(ri_icon);
+
+        tvPinglun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
+                if (StringUtil.isEmpty(etpinglun.getText().toString())) {
+                    ToastUtil.show("请输入评论内容");
+                    return;
+                }
+                pubWorksComment(etpinglun.getText().toString());
+                etpinglun.setText("");
+            }
+        });
+        im_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+                ll_all1.clearAnimation();
+                lighton();
+            }
+        });
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+
+            @Override
+            public void onDismiss() {
+                lighton();
+            }
+        });
+
+    }
+
+    /**
+     * 评论列表
+     */
+    public void PopupcommentList() {
+        popupWindow1 = new PopupWindow(mContext);
+        act.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        WindowManager.LayoutParams wl = act.getWindow().getAttributes();
+        wl.alpha = 0.6f;   //这句就是设置窗口里崆件的透明度的．０.０全透明．１.０不透明．
+        act.getWindow().setAttributes(wl);
+        View view = getLayoutInflater().inflate(R.layout.popup_coupon_list, null);
+        ll_all_item = view.findViewById(R.id.ll_all_item);
+        popupWindow1.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        popupWindow1.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+        popupWindow1.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupWindow1.setFocusable(true);
+        popupWindow1.setOutsideTouchable(true);
+        popupWindow1.setContentView(view);
+        popupWindow1.setAnimationStyle(R.style.ani_bottom);
+        ll_all = view.findViewById(R.id.ll_all);
+        im_close = view.findViewById(R.id.im_close);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        smart = view.findViewById(R.id.smart);
+         tvPupupTitle = view.findViewById(R.id.tvTitle);
+        TextView tvPinglun = view.findViewById(R.id.tvPinglun);
+        EditText etPinglun = view.findViewById(R.id.etPinglun);
+        tvPupupTitle.setText("共"+commentCount+"条评论");
+
+        PopupcommentList = new ArrayList<DataListBean>();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        commentAdapter = new CommentAdapter(getContext(), PopupcommentList);
+        recyclerView.setAdapter(commentAdapter);
+        commentAdapter.setOnItemClickListener(new CommentAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClickListener(int firstPosition) {
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
+                pcid = PopupcommentList.get(firstPosition).id;
+                Popupcomment(PopupcommentList.get(firstPosition).member.avatar, PopupcommentList.get(firstPosition).member.nickname, PopupcommentList.get(firstPosition).createDate, PopupcommentList.get(firstPosition).content);
+                ll_all_item1.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.in_from_bottom));
+                popupWindow.showAtLocation(getView(), Gravity.BOTTOM, 0, 0);
+            }
+
+            @Override
+            public void OnDianzanClickListener(int firstPosition) {
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
+                if (PopupcommentList.get(firstPosition).liked.equals("1")) {
+                    likeWorksComment(PopupcommentList.get(firstPosition).id, "0", firstPosition);
+                } else {
+                    likeWorksComment(PopupcommentList.get(firstPosition).id, "1", firstPosition);
+                }
+            }
+
+            @Override
+            public void OnDianzanItemClickListener(int position, int firstPosition) {
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
+                if (PopupcommentList.get(position).subCommentList.get(firstPosition).liked.equals("1")) {
+                    likeWorksComment1(PopupcommentList.get(position).subCommentList.get(firstPosition).id, "0", position, firstPosition);
+                } else {
+                    likeWorksComment1(PopupcommentList.get(position).subCommentList.get(firstPosition).id, "1", position, firstPosition);
+                }
+            }
+        });
+        smart.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                if (page >= totalPage) {
+                    refreshLayout.setNoMoreData(true);
+                    return;
+                }
+                page++;
+                worksCommentList();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                page = 1;
+                worksCommentList();
+                refreshLayout.setNoMoreData(false);
+            }
+        });
+        smart.autoRefresh();
+        tvPinglun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
+                if (StringUtil.isEmpty(etPinglun.getText().toString())) {
+                    ToastUtil.show("请输入评论内容");
+                    return;
+                }
+                pcid = "";
+                pubWorksComment(etPinglun.getText().toString());
+                etPinglun.setText("");
+            }
+        });
+        im_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow1.dismiss();
+                ll_all.clearAnimation();
+                lighton();
+            }
+        });
+        popupWindow1.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                lighton();
+            }
+        });
+
+    }
+
+    /**
+     * 设置手机屏幕亮度显示正常
+     */
+    private void lighton() {
+        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        lp.alpha = 1f;
+        getActivity().getWindow().setAttributes(lp);
+    }
+
     /**
      * 作品分享
      */
     private void shareWorks(String wid) {
         Map<String, Object> params = new HashMap<>();
         params.put("mid", userId);
-        params.put("wid",wid);
+        params.put("wid", wid);
         mOkHttpHelper.post_json(getContext(), Url.shareWorks, params, new BaseCallback<ResultBean>() {
             @Override
             public void onBeforeRequest(Request request) {
@@ -429,6 +709,41 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
             @Override
             public void onSuccess(Response response, ResultBean resultBean) {
                 new ShareFra().show(act.getSupportFragmentManager(), "Menu");
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+            }
+        });
+    }
+
+    /**
+     * 作品分享
+     */
+    private void giveWorksScore(String wid) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("mid", userId);
+        params.put("wid", wid);
+        params.put("scores", pingfenlis);
+        mOkHttpHelper.post_json(getContext(), Url.giveWorksScore, params, new BaseCallback<ResultBean>() {
+            @Override
+            public void onBeforeRequest(Request request) {
+            }
+
+            @Override
+            public void onFailure(Request request, Exception e) {
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, ResultBean resultBean) {
+                ToastUtil.show(resultBean.resultNote);
+                llPingfen.setVisibility(View.GONE);
+                rlGuanggao.setVisibility(View.GONE);
             }
 
             @Override
@@ -498,13 +813,7 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
                         .execute(BanString);
 
                 entered = resultBean.entered;
-                if (entered.equals("1")) {
-                    naviRightTxt.setText("已参赛");
-                    naviRightTxt.setEnabled(true);
-                } else {
-                    naviRightTxt.setText("报名");
-                    naviRightTxt.setEnabled(true);
-                }
+
             }
 
             @Override
@@ -612,8 +921,10 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
 
             @Override
             public void onSuccess(Response response, ResultBean resultBean) {
-                listBeans.clear();
-                listBeans.addAll(resultBean.dataList);
+                smart.finishLoadMore();
+                smart.finishRefresh();
+                PopupcommentList.clear();
+                PopupcommentList.addAll(resultBean.dataList);
                 commentAdapter.notifyDataSetChanged();
             }
 
@@ -655,9 +966,9 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
                 Glide.with(getContext()).applyDefaultRequestOptions(new RequestOptions()
                         .error(R.mipmap.imageerror)
                         .placeholder(R.mipmap.imageerror))
-                        .load(resultBean.advertising.get(1).image)
-                        .into(imComment);
-
+                        .load(resultBean.advertising.get(0).image)
+                        .into(imGuanggao);
+                url = resultBean.advertising.get(0).url;
             }
 
             @Override
@@ -731,7 +1042,8 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
 
             @Override
             public void onSuccess(Response response, ResultBean resultBean) {
-                etPinglun.setText("");
+                ToastUtil.show(resultBean.resultNote);
+                tvPupupTitle.setText("共"+(Integer.parseInt(commentCount)+1)+"条评论");
                 worksCommentList();
             }
 
@@ -766,13 +1078,24 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
 
             @Override
             public void onSuccess(Response response, ResultBean resultBean) {
-                if (position > dataListBeans.size()) {
-                    ToastUtil.show("已是最后一个");
-                    return;
+                PNWorkstype = "1";
+                if (type.equals("1")){
+
+                }else {
+                    if (position + 1 == dataListBeans.size()) {
+                        ToastUtil.show("已是最后一个");
+                        return;
+                    }
+                    position = position + 1;
+                    setData(dataListBeans.get(position));
                 }
-                position = position + 1;
-                setData(dataListBeans.get(position));
-                timer.start();
+//                if (competitionCategoryId.equals("2") && competitionNumber.equals("1") && type.equals("1")) {
+//
+//                } else {
+//
+//                }
+
+
             }
 
             @Override
@@ -805,8 +1128,13 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
 
             @Override
             public void onSuccess(Response response, ResultBean resultBean) {
-                listBeans.get(position).liked = type;
-                adapter.notifyDataChanged();
+                PopupcommentList.get(position).liked = type;
+                if (type.equals("1")) {
+                    PopupcommentList.get(position).likedCount = (Integer.parseInt(PopupcommentList.get(position).likedCount) + 1) + "";
+                } else {
+                    PopupcommentList.get(position).likedCount = (Integer.parseInt(PopupcommentList.get(position).likedCount) - 1) + "";
+                }
+                commentAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -839,8 +1167,49 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
 
             @Override
             public void onSuccess(Response response, ResultBean resultBean) {
-                listBeans.get(position).subCommentList.get(position1).liked = type;
-                adapter.notifyDataChanged();
+                PopupcommentList.get(position).subCommentList.get(position1).liked = type;
+                if (type.equals("1")) {
+                    PopupcommentList.get(position).subCommentList.get(position1).likedCount = (Integer.parseInt(PopupcommentList.get(position).subCommentList.get(position1).likedCount) + 1) + "";
+                } else {
+                    PopupcommentList.get(position).subCommentList.get(position1).likedCount = (Integer.parseInt(PopupcommentList.get(position).subCommentList.get(position1).likedCount) - 1) + "";
+                }
+                commentAdapter.notifyDataSetChanged();
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+            }
+        });
+    }
+
+    /**
+     * 评分项列表
+     */
+    private void worksScoreItemList() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("mid", userId);
+        params.put("competitionCategoryId", competitionCategoryId);
+        mOkHttpHelper.post_json(getContext(), Url.worksScoreItemList, params, new BaseCallback<ResultBean>() {
+            @Override
+            public void onBeforeRequest(Request request) {
+            }
+
+            @Override
+            public void onFailure(Request request, Exception e) {
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, ResultBean resultBean) {
+                PingfenBeans.clear();
+                PingfenBeans.addAll(resultBean.dataList);
+                pingFenAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -850,22 +1219,23 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
     }
 
     public void setData(DataListBean data) {
+        competitionCategoryId = data.competitionCategoryId;
+        competitionNumber = data.competitionNumber;
+        wid = data.id;
         tvtitle.setText(data.title);
         tvCollectCount.setText(data.collectCount);
         tvshareCount.setText(data.shareCount);
         tvnickname.setText(data.member.nickname);
         toMid = data.member.id;
         tvCommentName.setText(data.member.nickname);
+
+        rlGuanggao.setVisibility(View.VISIBLE);
+
         Glide.with(getContext()).applyDefaultRequestOptions(new RequestOptions()
                 .error(R.mipmap.touxiang)
                 .placeholder(R.mipmap.touxiang))
                 .load(data.member.avatar)
                 .into(riIcon);
-        Glide.with(getContext()).applyDefaultRequestOptions(new RequestOptions()
-                .error(R.mipmap.touxiang)
-                .placeholder(R.mipmap.touxiang))
-                .load(data.member.avatar)
-                .into(riCommentIcon);
         if (data.collected.equals("1")) {
             imCollected.setImageResource(R.mipmap.yishoucang);
         } else {
@@ -879,6 +1249,11 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
 
         focused = data.focused;
 
+        DataListBean dataListBean = new DataListBean();
+        dataListBean.itemId = data.id;
+        dataListBean.score = "5";
+        pingfenlis.add(dataListBean);
+
         LinkedHashMap map = new LinkedHashMap();
         String proxyUrl = HcbApp.getProxy(mContext).getProxyUrl(data.video);
         map.put("高清", proxyUrl);
@@ -889,7 +1264,7 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
         Glide.with(this).applyDefaultRequestOptions(new RequestOptions()
                 .error(R.mipmap.imageerror)
                 .placeholder(R.mipmap.imageerror))
-                .load(data.video+ AppConsts.ViDEOEND)
+                .load(data.video + AppConsts.ViDEOEND)
                 .into(jzVideo.thumbImageView);
 
         jzVideo.titleTextView.setVisibility(View.GONE);
@@ -902,9 +1277,19 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
         jzVideo.mRetryLayout.setVisibility(View.GONE);
         jzVideo.mRetryBtn.setVisibility(View.GONE);
         jzVideo.clarity.setVisibility(View.GONE);
-        jzVideo.fullscreenButton.setVisibility(View.GONE);
+        jzVideo.fullscreenButton.setVisibility(View.VISIBLE);
         jzVideo.currentTimeTextView.setVisibility(View.GONE);
         jzVideo.thumbImageView.setVisibility(View.VISIBLE);
+
+        jzVideo.fullscreenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("video", data.video);
+                ActivitySwitcher.startFragment(getActivity(), VideoFra.class, bundle);
+                getActivity().overridePendingTransition(R.anim.anim_zoom_in, R.anim.anim_stay);
+            }
+        });
 
         List<String> list = new ArrayList<>();
         for (int i = 0; i < data.subVideos.size(); i++) {
@@ -935,9 +1320,48 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
             }
         });
 
-        tvcommentCount.setText("共计" + data.commentCount + "条评论");
+        commentCount = data.commentCount;
+        if (data.competitionCategoryId.equals("2")) {//音乐类型
+            timer.start();
+            if (data.competitionNumber.equals("1")) {//第一轮
+                tvPingfen.setVisibility(View.GONE);
+                tvNg.setVisibility(View.GONE);
+                tvPass.setVisibility(View.GONE);
 
-        worksCommentList();
+                tvTishiyu.setText("向上滑动/向左滑动，通过/淘汰该作品");
+            } else if (data.competitionNumber.equals("2")) {//第二轮
+                tvPingfen.setVisibility(View.VISIBLE);
+                tvNg.setVisibility(View.GONE);
+                tvPass.setVisibility(View.GONE);
+                tvTishiyu.setText("点击“评分”，给该作品进行打分");
+
+                worksScoreItemList();
+            }
+        } else {
+            CountDownTime = false;
+            llTime.setVisibility(View.GONE);
+            imVideo.setVisibility(View.GONE);
+            tvTime.setVisibility(View.GONE);
+
+
+            if (data.competitionNumber.equals("1")) {//第一轮
+                tvPingfen.setVisibility(View.GONE);
+                tvNg.setVisibility(View.VISIBLE);
+                tvPass.setVisibility(View.VISIBLE);
+                tvTishiyu.setText("点击PASS/NG,通过/淘汰该作品");
+            } else if (data.competitionNumber.equals("2")) {
+                tvPingfen.setVisibility(View.VISIBLE);
+                tvNg.setVisibility(View.GONE);
+                tvPass.setVisibility(View.GONE);
+                tvTishiyu.setText("点击“评分”，给该作品进行打分");
+                worksScoreItemList();
+            }
+
+        }
+
+
+        jzVideo.startVideo();
+
         getAdvertising();
 
     }
@@ -959,7 +1383,7 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
     @Override
     public void onResume() {
         super.onResume();
-        timer.start();
+//        PNWorkstype = "0";
     }
 
     @Override
@@ -967,4 +1391,6 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
         super.onDestroyView();
         unbinder.unbind();
     }
+
+
 }

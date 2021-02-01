@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.adapter.MessageListAdapter;
 import com.lxkj.shortvideo.bean.DataListBean;
@@ -17,8 +18,11 @@ import com.lxkj.shortvideo.biz.ActivitySwitcher;
 import com.lxkj.shortvideo.http.BaseCallback;
 import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
+import com.lxkj.shortvideo.ui.fragment.login.LoginFra;
 import com.lxkj.shortvideo.ui.fragment.system.WebFra;
+import com.lxkj.shortvideo.utils.SharePrefUtil;
 import com.lxkj.shortvideo.utils.StringUtil;
+import com.lxkj.shortvideo.utils.ToastUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -80,6 +84,11 @@ public class SystemMessageFra extends TitleFragment {
         messageAdapter.setOnItemClickListener(new MessageListAdapter.OnItemClickListener() {
             @Override
             public void OnItemClickListener(int firstPosition) {
+                if (StringUtil.isEmpty(SharePrefUtil.getString(getContext(), AppConsts.UID, ""))){
+                    ToastUtil.show("请先登录");
+                    ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
+                    return;
+                }
                 if (listBeans.get(firstPosition).messageType.equals("1")){
                     Bundle bundle = new Bundle();
                     bundle.putString("title", listBeans.get(firstPosition).title);

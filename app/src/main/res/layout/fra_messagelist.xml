@@ -5,24 +5,30 @@
     android:background="@color/white"
     android:layout_height="match_parent"
     android:orientation="vertical">
+   <LinearLayout
+       android:background="@color/main_color"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <com.flyco.tablayout.SlidingTabLayout
+           android:id="@+id/tabLayout"
+           android:layout_width="match_parent"
+           android:layout_height="45dp"
+           app:tl_indicator_height="2dp"
+           app:tl_indicator_width="35dp"
+           android:layout_marginTop="23dp"
+           android:layout_marginBottom="5dp"
+           app:tl_tab_space_equal="false"
+           app:tl_divider_width="0.5dp"
+           app:tl_divider_color="@color/main_color"
+           app:tl_indicator_corner_radius="1dp"
+           app:tl_textSelectColor="@color/white"
+           app:tl_textBold="SELECT"
+           app:tl_textUnselectColor="@color/white"
+           app:tl_textsize="@dimen/txt_size_13"
+           app:tl_indicator_color="@color/white">
+       </com.flyco.tablayout.SlidingTabLayout>
+   </LinearLayout>
 
-    <com.flyco.tablayout.SlidingTabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        app:tl_indicator_height="2dp"
-        app:tl_indicator_width="35dp"
-        android:layout_marginTop="23dp"
-        app:tl_tab_space_equal="true"
-        app:tl_divider_width="0.5dp"
-        app:tl_divider_color="@color/white"
-        app:tl_indicator_corner_radius="1dp"
-        app:tl_textSelectColor="@color/colorBlack"
-        app:tl_textBold="SELECT"
-        app:tl_textUnselectColor="@color/txt_66"
-        app:tl_textsize="@dimen/txt_size_13"
-        app:tl_indicator_color="@color/colorBlack">
-    </com.flyco.tablayout.SlidingTabLayout>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
