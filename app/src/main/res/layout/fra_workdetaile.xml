@@ -55,7 +55,7 @@
                 android:id="@+id/tvName"
                 android:text="桑娜啊~"
                 android:textSize="15sp"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/white"
                 android:layout_marginLeft="11dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"

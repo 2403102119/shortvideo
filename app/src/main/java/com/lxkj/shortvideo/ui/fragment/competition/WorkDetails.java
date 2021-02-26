@@ -110,7 +110,7 @@ public class WorkDetails extends TitleFragment implements View.OnClickListener {
     private LinearLayout ll_all_item, ll_all_item1;
     private RelativeLayout ll_all, ll_all1;
     private ImageView im_close;
-    private String PNWorkstype = "0";
+    private String PNWorkstype = "0",fengmian;
     private SmartRefreshLayout smart;
     private TextView tvPupupTitle;
 
@@ -481,8 +481,9 @@ public class WorkDetails extends TitleFragment implements View.OnClickListener {
                 Glide.with(getActivity()).applyDefaultRequestOptions(new RequestOptions()
                         .error(R.mipmap.imageerror)
                         .placeholder(R.mipmap.imageerror))
-                        .load(resultBean.coverImage)
+                        .load(resultBean.video+AppConsts.ViDEOEND)
                         .into(jzVideo.thumbImageView);
+                fengmian = resultBean.video+AppConsts.ViDEOEND;
 
                 jzVideo.titleTextView.setVisibility(View.GONE);
                 jzVideo.replayTextView.setVisibility(View.GONE);
@@ -807,7 +808,11 @@ public class WorkDetails extends TitleFragment implements View.OnClickListener {
 
             @Override
             public void onSuccess(Response response, ResultBean resultBean) {
-                new ShareFra().show(act.getSupportFragmentManager(), "Menu");
+                AppConsts.SHAREDES = act.titleTv.getText().toString();
+                AppConsts.FENGMIAN = fengmian;
+                AppConsts.miaoshu =  tvName.getText().toString();
+                AppConsts.SHAREURL = "http://8.136.116.205/videoPage?fmid="+wid;
+                new ShareFra().show(getFragmentManager(), "Menu");
             }
 
             @Override

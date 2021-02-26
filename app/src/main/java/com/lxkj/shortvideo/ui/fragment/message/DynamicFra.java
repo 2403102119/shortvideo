@@ -15,6 +15,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.ImageViewerPopupView;
+import com.lxj.xpopup.interfaces.OnSrcViewUpdateListener;
+import com.lxj.xpopup.interfaces.XPopupImageLoader;
 import com.lxkj.shortvideo.AppConsts;
 import com.lxkj.shortvideo.R;
 import com.lxkj.shortvideo.adapter.DynamicAdapter;
@@ -33,8 +40,10 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
@@ -120,8 +129,21 @@ public class DynamicFra extends TitleFragment implements View.OnClickListener {
                     ActivitySwitcher.startFragment(getActivity(), LoginFra.class);
                     return;
                 }
-                shareFriendMoments(listBeans.get(firstPosition).id);
+                AppConsts.SHAREDES = listBeans.get(firstPosition).content;
+                if (listBeans.get(firstPosition).images.size()>0){
+                    AppConsts.FENGMIAN = listBeans.get(firstPosition).images.get(0);
+                }else {
+                    AppConsts.FENGMIAN = "";
+                }
 
+                AppConsts.miaoshu = listBeans.get(firstPosition).member.nickname;
+                AppConsts.SHAREURL = "http://8.136.116.205/photoPage?fmid="+listBeans.get(firstPosition).id;
+                new ShareFra().show(getFragmentManager(), "Menu");
+            }
+
+            @Override
+            public void Onchakandatu(int positiom, int firstPosition) {
+                showImage(new ImageView(getContext()), firstPosition, listBeans.get(positiom).images);
             }
         });
         smart.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -314,6 +336,39 @@ public class DynamicFra extends TitleFragment implements View.OnClickListener {
             public void onError(Response response, int code, Exception e) {
             }
         });
+    }
+
+
+    private void showImage(final ImageView iv, int position, List<String> list) {
+        List<Object> urls = new ArrayList<>();
+        urls.clear();
+        urls.addAll(list);
+
+        new XPopup.Builder(getContext()).asImageViewer(iv, position, urls, new OnSrcViewUpdateListener() {
+            @Override
+            public void onSrcViewUpdate(ImageViewerPopupView popupView, int position) {
+                popupView.updateSrcView(iv);
+            }
+        }, new ImageLoader())
+                .show();
+    }
+
+    class ImageLoader implements XPopupImageLoader {
+        @Override
+        public void loadImage(int position, @NonNull Object url, @NonNull ImageView imageView) {
+            //必须指定Target.SIZE_ORIGINAL，否则无法拿到原图，就无法享用天衣无缝的动画
+            Glide.with(imageView).load(url).apply(new RequestOptions().placeholder(R.mipmap.logo).override(Target.SIZE_ORIGINAL)).into(imageView);
+        }
+
+        @Override
+        public File getImageFile(@NonNull Context context, @NonNull Object uri) {
+            try {
+                return Glide.with(context).downloadOnly().load(uri).submit().get();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 
     @Override

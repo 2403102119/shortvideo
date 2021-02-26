@@ -106,7 +106,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.MyHolder
         recycletwoItemAdapter.setOnItemClickListener(new Recycle_one_itemAdapter.OnItemClickListener() {
             @Override
             public void OnItemClickListener(int firstPosition) {
-//                onItemClickListener.Onchakandatu(firstPosition,position);
+                onItemClickListener.Onchakandatu(position,firstPosition);
             }
         });
 
@@ -161,6 +161,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.MyHolder
         void OnItemClickListener(int firstPosition);
         void OnDetailClickListener(int firstPosition);
         void OnFenxiangClickListener(int firstPosition);
+        void Onchakandatu(int positiom,int firstPosition);
     }
 }
 

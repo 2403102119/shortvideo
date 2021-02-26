@@ -132,6 +132,8 @@ public class Url {
     public static String unreadSysMessageCount = IP + "unreadSysMessageCount";
     //热搜关键词
     public static String hotKeywords = IP + "hotKeywords";
+    //版本更新
+    public static String versionupdate = IP + "versionupdate";
 
 
 }

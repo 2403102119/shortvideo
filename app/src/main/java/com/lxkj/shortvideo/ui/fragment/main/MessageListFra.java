@@ -88,13 +88,6 @@ public class MessageListFra extends CachableFrg implements View.OnClickListener 
         viewPager.setAdapter(new MFragmentStatePagerAdapter(getChildFragmentManager(), fragments, titles));
         tabLayout.setViewPager(viewPager);
 
-
-
-
-
-
-
-
     }
 
     /**

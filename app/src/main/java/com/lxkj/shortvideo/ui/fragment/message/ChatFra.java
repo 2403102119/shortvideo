@@ -157,6 +157,8 @@ public class ChatFra extends TitleFragment implements NaviRightListener, View.On
         InputLayout inputLayout = chatLayout.getInputLayout();
         inputLayout.enableVideoCall();
         inputLayout.enableAudioCall();
+        inputLayout.disableSendFileAction(true);
+        inputLayout.disableVideoRecordAction(true);
 
         tvWancheng.setOnClickListener(this);
         llHuanti.setOnClickListener(this);

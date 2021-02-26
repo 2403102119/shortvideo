@@ -198,6 +198,7 @@ public class Tiktok2Adapter extends PagerAdapter {
         public int mPosition;
         public ImageView mThumb;//封面图
         public ImageView imShoucang;
+        public ImageView imfenxiang;
         public TikTokView mTikTokView;
         public FrameLayout mPlayerContainer;
         public TextView tvLaiyuan;
@@ -225,6 +226,7 @@ public class Tiktok2Adapter extends PagerAdapter {
             tvTime = itemView.findViewById(R.id.tvTime);
             llDetail = itemView.findViewById(R.id.llDetail);
             llPinglun = itemView.findViewById(R.id.llPinglun);
+            imfenxiang = itemView.findViewById(R.id.imfenxiang);
 
             itemView.setTag(this);
         }

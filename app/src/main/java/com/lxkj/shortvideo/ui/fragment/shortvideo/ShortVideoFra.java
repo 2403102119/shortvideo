@@ -32,6 +32,7 @@ import com.lxkj.shortvideo.http.Url;
 import com.lxkj.shortvideo.ui.fragment.TitleFragment;
 import com.lxkj.shortvideo.ui.fragment.competition.EventDetailsFra;
 import com.lxkj.shortvideo.ui.fragment.competition.UserHomeFra;
+import com.lxkj.shortvideo.ui.fragment.dialog.ShareFra;
 import com.lxkj.shortvideo.ui.fragment.login.LoginFra;
 import com.lxkj.shortvideo.ui.tiktok.Utils;
 import com.lxkj.shortvideo.utils.SharePrefUtil;
@@ -262,6 +263,7 @@ public class ShortVideoFra extends TitleFragment implements View.OnClickListener
             viewHolder.tvLaiyuan.setOnClickListener(this);
             viewHolder.llDetail.setOnClickListener(this);
             viewHolder.llPinglun.setOnClickListener(this);
+            viewHolder.imfenxiang.setOnClickListener(this);
             if (viewHolder.mPosition == position) {
                 mVideoView.release();
                 Utils.removeViewFormParent(mVideoView);
@@ -299,6 +301,13 @@ public class ShortVideoFra extends TitleFragment implements View.OnClickListener
                 PopupcommentList();
                 ll_all_item.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.in_from_bottom));
                 popupWindow1.showAtLocation(getView(), Gravity.BOTTOM, 0, 0);
+                break;
+            case R.id.imfenxiang:
+                AppConsts.SHAREDES = mVideoList.get(mCurPos).title;
+                AppConsts.FENGMIAN = mVideoList.get(mCurPos).video+AppConsts.ViDEOEND;
+                AppConsts.miaoshu = mVideoList.get(mCurPos).competition.name;
+                AppConsts.SHAREURL = "http://8.136.116.205/videoPage?fmid="+mVideoList.get(mCurPos).id;
+                new ShareFra().show(getFragmentManager(), "Menu");
                 break;
         }
     }

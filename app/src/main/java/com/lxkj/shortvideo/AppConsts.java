@@ -56,6 +56,8 @@ public class AppConsts {
     public static String BeeCloudAppSecret = "ce9a5d61-8edb-40d6-8727-9649eb53c04b";
     public static String SHAREURL = "https://www.baidu.com";
     public static String SHAREDES = "欢迎使用秀评";
+    public static String FENGMIAN = "FENGMIAN";
+    public static String miaoshu = "miaoshu";//描述
     public static String MSGSIGN = "lixinkeji";
     public static final String  History = "History";
     public static String ViDEOEND = "?x-oss-process=video/snapshot,t_1000,f_jpg,w_0,h_0,m_fast";

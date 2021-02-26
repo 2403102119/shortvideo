@@ -187,7 +187,7 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
     private LinearLayout ll_all_item,ll_all_item1;
     private RelativeLayout ll_all,ll_all1;
     private ImageView im_close;
-    private String PNWorkstype = "0",commentCount;
+    private String PNWorkstype = "0",commentCount,fengmian;
     private SmartRefreshLayout smart;
     private  TextView tvPupupTitle;
 
@@ -708,7 +708,11 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
 
             @Override
             public void onSuccess(Response response, ResultBean resultBean) {
-                new ShareFra().show(act.getSupportFragmentManager(), "Menu");
+                AppConsts.SHAREDES = tvtitle.getText().toString();
+                AppConsts.FENGMIAN = fengmian;
+                AppConsts.miaoshu = naviTitle.getText().toString();
+                AppConsts.SHAREURL = "http://8.136.116.205/videoPage?fmid="+wid;
+                new ShareFra().show(getFragmentManager(), "Menu");
             }
 
             @Override
@@ -1266,6 +1270,8 @@ public class EventDetailsFra extends TitleFragment implements View.OnClickListen
                 .placeholder(R.mipmap.imageerror))
                 .load(data.video + AppConsts.ViDEOEND)
                 .into(jzVideo.thumbImageView);
+
+        fengmian = data.video + AppConsts.ViDEOEND;
 
         jzVideo.titleTextView.setVisibility(View.GONE);
         jzVideo.replayTextView.setVisibility(View.GONE);

@@ -71,7 +71,26 @@ public class ShareUtil implements UMShareListener {
                 .share();
     }
 
-
+    public void share(Activity activity, String url, String description,String miaoshu,String logo, SHARE_MEDIA share_media) {
+        this.context = activity;
+        UMWeb web = new UMWeb(url);
+//        web.setTitle(activity.getResources().getString(R.string.app_name));//标题
+//        web.setDescription(description);//描述
+        web.setTitle(description);//标题
+        web.setDescription(miaoshu);//描述
+        UMImage image = null;
+        if (StringUtil.isEmpty(logo)){
+            image = new UMImage(activity, R.mipmap.logo);
+        }else {
+            image = new UMImage(activity, logo);
+        }
+        web.setThumb(image);
+        new ShareAction(activity)
+                .setPlatform(share_media)//传入平台
+                .withMedia(web)//分享内容
+                .setCallback(this)//回调监听器
+                .share();
+    }
 
     @Override
     public void onStart(SHARE_MEDIA share_media) {

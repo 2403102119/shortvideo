@@ -85,15 +85,15 @@ public class ShareFra extends DialogFragment implements View.OnClickListener {
                 dismiss();
                 break;
             case R.id.llWx:
-                ShareUtil.getInstance().share(getActivity(), AppConsts.SHAREURL,AppConsts.SHAREDES, SHARE_MEDIA.WEIXIN);
+                ShareUtil.getInstance().share(getActivity(), AppConsts.SHAREURL,AppConsts.SHAREDES,AppConsts.miaoshu,AppConsts.FENGMIAN, SHARE_MEDIA.WEIXIN);
                 dismiss();
                 break;
             case R.id.llPyq:
-                ShareUtil.getInstance().share(getActivity(), AppConsts.SHAREURL,AppConsts.SHAREDES, SHARE_MEDIA.WEIXIN_CIRCLE);
+                ShareUtil.getInstance().share(getActivity(), AppConsts.SHAREURL,AppConsts.SHAREDES,AppConsts.miaoshu,AppConsts.FENGMIAN, SHARE_MEDIA.WEIXIN_CIRCLE);
                 dismiss();
                 break;
             case R.id.llQQ:
-                ShareUtil.getInstance().share(getActivity(), AppConsts.SHAREURL,AppConsts.SHAREDES, SHARE_MEDIA.QQ);
+                ShareUtil.getInstance().share(getActivity(), AppConsts.SHAREURL,AppConsts.SHAREDES,AppConsts.miaoshu,AppConsts.FENGMIAN, SHARE_MEDIA.QQ);
                 dismiss();
                 break;
         }
